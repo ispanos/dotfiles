@@ -1,9 +1,8 @@
 ## Here's a list of programs whose configs can be found here
- - i3 (i3-gaps)
+ - i3 (+gaps)
  - i3blocks
  - dunst
- - pcmanfm
- - pulseaudio-ctl
+ - pcmanfm-qt
  - zathura
  - mpv
  - termite
