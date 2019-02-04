@@ -25,8 +25,9 @@ bindsym $mod+x              exec --no-startup-id $myeditor
 bindsym $mod+c              exec --no-startup-id $fm
 bindsym $mod+g              exec --no-startup-id $calc
 #                           Screen Shots
-bindsym Print               exec --no-startup-id $screencap
-bindsym Shift+Print         exec --no-startup-id $screencapframe
+bindsym Print               exec --no-startup-id $screenshot
+bindsym Shift+Print         exec --no-startup-id $snipwindow
+bindsym ctrl+Print          exec --no-startup-id $sniparea
 #                      Select a yt url/file path to play with mpv
 bindsym $mod+p              exec --no-startup-id $playlink
 #                           MODES
