@@ -26,7 +26,9 @@ alias gs='git status'
 alias ga='git add -A'
 alias gp='git push'
 alias gc='git commit -m'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dotc='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m'
+alias dots='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status'
 
 # Pacman
 alias p='sudo pacman'
