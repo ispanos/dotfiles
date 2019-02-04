@@ -1,0 +1,14 @@
+[Added Associations]
+text/plain=sublime_text_3.desktop;nvim.desktop;
+application/octet-stream=sublime_text_3.desktop;
+application/x-shellscript=sublime_text_3.desktop;
+inode/directory=mpv.desktop;spacefm.desktop;
+application/pdf=org.pwmt.zathura.desktop;
+application/x-partial-download=mpv.desktop;
+
+[Default Applications]
+text/plain=sublime_text_3.desktop
+application/x-shellscript=sublime_text_3.desktop
+inode/directory=spacefm.desktop;
+application/pdf=org.pwmt.zathura.desktop
+application/x-partial-download=mpv.desktop
