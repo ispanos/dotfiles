@@ -1,0 +1,25 @@
+{
+	"binary_file_patterns":
+	[
+		"*.dds",
+		"*.eot",
+		"*.gif",
+		"*.ico",
+		"*.jar",
+		"*.jpeg",
+		"*.jpg",
+		"*.pdf",
+		"*.png",
+		"*.swf",
+		"*.tga",
+		"*.ttf",
+		"*.zip",
+		"/home/yiannis/.bash_profile"
+	],
+	"color_scheme": "Packages/Agila Theme/Markdown/Monokai Markdown.tmTheme",
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"theme": "Agila Monokai.sublime-theme"
+}

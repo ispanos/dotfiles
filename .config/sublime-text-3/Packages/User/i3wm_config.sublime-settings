@@ -1,0 +1,12 @@
+{
+	"extensions":
+	[
+		"1-General",
+		"2-Bar-theme",
+		"3-Gaps",
+		"4-keybinds",
+		"5-MODES",
+		"6-Monitors-X",
+		"7-XF86"
+	]
+}
