@@ -1,0 +1,55 @@
+[options]
+font = Inconsolata 12
+scrollback_lines = 10000
+cursor_shape = ibeam
+scrollbar = right
+
+
+[colors]
+# 20% background transparency (requires a compositor)
+#background = rgba(63, 63, 63, 0.8)
+# If unset, will reverse foreground and background
+highlight = #2f2f2f
+
+
+# https://terminal.sexy
+[colors]
+
+# special
+foreground      = #dcdde5
+foreground_bold = #dcdde5
+cursor          = #00CCF9
+background = rgba(28, 28, 28, 0.8)
+
+# black
+color0  = #20201d
+color8  = #4c4c4c
+
+# red
+color1  = #d73737
+color9  = #d73737
+
+# green
+color2  = #60ac39
+color10 = #60ac39
+
+# yellow
+color3  = #cfb017
+color11 = #cfb017
+
+# blue
+color4  = #6684e1
+color12 = #6684e1
+
+# magenta
+color5  = #b854d4
+color13 = #b854d4
+
+# cyan
+color6  = #1fad83
+color14 = #1fad83
+
+# white
+color7  = #a6a28c
+color15 = #fefbec
+
