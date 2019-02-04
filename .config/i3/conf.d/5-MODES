@@ -1,0 +1,13 @@
+set $Pause-break        System (l)lock, (Shift+l) lock-screen-off, (e) exit, (s) suspend, (r) reboot, (Shift+s) shutdown
+mode "$Pause-break" {
+    bindsym e       exec --no-startup-id i3-msg     exit, mode "default"
+    bindsym s       exec --no-startup-id systemctl  suspend, mode "default"
+    bindsym r       exec --no-startup-id systemctl  reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl  poweroff -i, mode "default"
+    bindsym l       exec --no-startup-id "i3lock -e -f -c 000000 -i ~/.config/wall.png -t", mode "default"
+    bindsym Shift+l exec --no-startup-id "i3lock -e -f -c 000000 -i ~/.config/wall.png -t; sleep 5 && pgrep -x i3lock && xset dpms force off", mode "default"
+
+    bindsym Return  mode "default"
+    bindsym Escape  mode "default"
+}
+

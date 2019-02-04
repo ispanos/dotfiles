@@ -1,0 +1,52 @@
+# General Configurations
+
+set $mod Mod4
+floating_modifier $mod
+font pango:mono 10
+exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
+exec --no-startup-id dunst
+exec --no-startup-id xcompmgr
+exec_always --no-startup-id "(checkup)"
+#exec --no-startup-id "(sleep 10 && getforecast)"
+
+# This is what merges all of the config files into one.
+set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
+
+# Programs
+set $term               $TERMINAL
+set $browsr             $BROWSER
+# set $myeditor         $EDITOR
+set $myeditor           subl3
+set $launcher           i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE' -fn 'monospace-10'\\"
+set $fm                 pcmanfm-qt
+set $calc               galculator
+set $screencap          maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
+set $screencapframe     maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
+set $setwall            xwallpaper --center  
+set $volup              pactl set-sink-volume 0 +1%
+set $voldown            pactl set-sink-volume 0 -1%
+set $volmute            pactl set-sink-mute   0 toggle
+set $playlink           mpv $(xclip -o)
+# set $mediactlplaypause  playerctl       play-pause    # uninstalled
+# set $mediactlnext       playerctl       next          # uninstalled
+# set $mediactlprevious   playerctl       previous      # uninstalled
+# set $netrefresh         sudo -A systemctl restart systemd-networkd.service
+
+# Window settings
+new_window pixel 1
+new_float normal
+hide_edge_borders none
+
+# Application specific rules ($xprop find the name)
+assign      [class="RocketLeague"]   $ws1
+for_window  [class="Galculator"]     floating enable
+for_window  [class="Lxappearance"]   floating enable
+for_window  [class="Gcolor3"]        floating enable
+for_window  [class="Termite"]        border pixel 1
+for_window  [title="pulsemixer"]     floating enable move position center
+for_window  [title="PulseAudio Equalizer"] floating enable move position center
+for_window  [title="qpaeq"] floating enable move position center
+# for_window  [class="Skype"]          floating enable
+# for_window  [class="Spotify"]        move to workspace $ws10
+# for_window [class="(?i)virtualbox"] floating enable border normal
+

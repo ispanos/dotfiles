@@ -1,0 +1,11 @@
+#                                      #-------Warning-------#                                      #
+## This is a file created by merging the files in conf.d
+## Any changes made on this file will be lost when i3 reloads.
+
+# This config file will use environmental variables such as $BROWSER and $TERMINAL,
+# You can set these variables in ~/.profile or ~/.bash_profile if you have it as below:
+# export BROWSER="firefox"
+# export TERMINAL="termite"
+# export EDITOR="vim"
+# otherwise you can set them bellow as variables: "$term" "$browsr" "$myeditor"
+

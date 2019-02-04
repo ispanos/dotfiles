@@ -1,0 +1,39 @@
+set $ws1 "i"
+set $ws2 ">_"
+set $ws3 "iii"
+set $ws4 "iv"
+set $ws5 "v"
+set $ws6 "vi"
+set $ws7 "vii"
+set $ws8 "viii"
+set $ws9 "ix"
+set $ws10 "x"
+
+set $wallpaper ~/.config/wall.png
+exec_always --no-startup-id $setwall $wallpaper
+
+# Class                 BORDER    BACKGRND   TEXT    INDICATOR CHILD_BRDR
+client.focused          #5F676A   #505050    #C6C6C6 #000000   #5F676A
+client.unfocused        #00000000 #3D3D3E    #C6C6C6 #000000   #000000
+client.focused_inactive #00000000 #3D3D3E    #C6C6C6 #000000   #000000
+client.urgent           #4E0000   #3D3D3E    #FF6969 #000000   #000000
+client.background       #FFFFFF
+    
+bar {
+        font pango:mono 10
+        tray_output primary
+        tray_padding 1
+        separator_symbol "-"
+        status_command i3blocks
+        position top
+    colors {
+        background          #3D3D3E
+        statusline          #FFFFFF
+        separator           #FFFFFF
+        focused_workspace   #3D3D3E     #505050      #C6C6C6
+        active_workspace    #3D3D3E     #505050      #C6C6C6
+        inactive_workspace  #3D3D3E     #222222      #C6C6C6
+        urgent_workspace    #4E0000     #222222      #FF6969
+    }
+}
+

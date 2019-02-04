@@ -1,0 +1,20 @@
+# Monitor layout.
+
+set $lgmonitor HDMI-0
+set $samonitor DP-1
+
+exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal --mode 1920x1080 --right-of $lgmonitor
+
+workspace $ws1 output $lgmonitor
+workspace $ws2 output $samonitor
+workspace $ws10 output $samonitor
+
+set $mode_display Monitor layout (m) mirrored, (d) dual, (Shift+d) dual-horrizontal+vertical
+mode "$mode_display" {
+    bindsym m           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --same-as  $lgmonitor; mode "default"
+    bindsym d           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --right-of $lgmonitor; mode "default"
+    bindsym Shift+d     exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate left    --mode 1920x1080 --right-of $lgmonitor, mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
