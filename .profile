@@ -4,7 +4,7 @@
 # ~/.bash_profile
 #
 
-export PATH="$(du $HOME/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
+ export PATH="$PATH:$(du "$HOME/.scripts/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export EDITOR="neovim"
 export VISUAL=/usr/bin/neovim
 export TERMINAL="termite"
