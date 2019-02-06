@@ -3,9 +3,9 @@
 ## Any changes made on this file will be lost when i3 reloads.
 
 # This config file will use environmental variables such as $BROWSER and $TERMINAL,
-# You can set these variables in ~/.profile or ~/.bash_profile if you have it as below:
-# export BROWSER="firefox"
-# export TERMINAL="termite"
-# export EDITOR="vim"
+# You can set these variables in ~/.profile or ~/.bash_profile :
+# 	export BROWSER="firefox"
+# 	export TERMINAL="termite"
+# 	export EDITOR="nvim"
 # otherwise you can set them bellow as variables: "$term" "$browsr" "$myeditor"
 

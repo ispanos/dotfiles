@@ -1,3 +1,4 @@
+floating_modifier $mod
 #       Keybind             Command
 bindsym $mod+d              exec $launcher
 bindsym $mod+grave          bar mode toggle
@@ -28,7 +29,7 @@ bindsym $mod+g              exec --no-startup-id $calc
 bindsym Print               exec --no-startup-id $screenshot
 bindsym Shift+Print         exec --no-startup-id $snipwindow
 bindsym ctrl+Print          exec --no-startup-id $sniparea
-#                      Select a yt url/file path to play with mpv
+#                      		Select a yt url/file path to play with mpv
 bindsym $mod+p              exec --no-startup-id $playlink
 #                           MODES
 bindsym Pause               mode "$Pause-break"

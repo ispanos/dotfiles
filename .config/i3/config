@@ -3,22 +3,21 @@
 ## Any changes made on this file will be lost when i3 reloads.
 
 # This config file will use environmental variables such as $BROWSER and $TERMINAL,
-# You can set these variables in ~/.profile or ~/.bash_profile if you have it as below:
-# export BROWSER="firefox"
-# export TERMINAL="termite"
-# export EDITOR="vim"
+# You can set these variables in ~/.profile or ~/.bash_profile :
+# 	export BROWSER="firefox"
+# 	export TERMINAL="termite"
+# 	export EDITOR="nvim"
 # otherwise you can set them bellow as variables: "$term" "$browsr" "$myeditor"
 
-# General Configurations
+#Autostart Programs
+exec 		--no-startup-id "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
+exec 		--no-startup-id dunst
+exec 		--no-startup-id xcompmgr
+exec_always --no-startup-id (checkup)
+# exec 		--no-startup-id (sleep 10 && getforecast)
 
+# General Configurations
 set $mod Mod4
-floating_modifier $mod
-font pango:mono 10
-exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
-exec --no-startup-id dunst
-exec --no-startup-id xcompmgr
-exec_always --no-startup-id "(checkup)"
-#exec --no-startup-id "(sleep 10 && getforecast)"
 
 # This is what merges all of the config files into one.
 set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
@@ -28,7 +27,7 @@ set $term               $TERMINAL
 set $browsr             $BROWSER
 # set $myeditor         $EDITOR
 set $myeditor           subl3
-set $launcher           i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE' -fn 'monospace-10'\\"
+set $launcher           i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
 set $fm                 pcmanfm-qt
 set $calc               galculator
 set $screenshot         maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
@@ -44,23 +43,37 @@ set $playlink           mpv $(xclip -o)
 # set $mediactlprevious   playerctl       previous      # uninstalled
 # set $netrefresh         sudo -A systemctl restart systemd-networkd.service
 
-# Window settings
+set $Pause-break        System (l)lock, (Shift+l) locktoblack, (e) exit, (s) suspend, (r) reboot, (Shift+s) shutdown
+set $lock               i3lock -e -f -c 000000 -i ~/.config/wall.png -t
+mode "$Pause-break" {
+    bindsym e       	exec --no-startup-id i3-msg     exit, 											mode "default"
+    bindsym s       	exec --no-startup-id systemctl  suspend, 										mode "default"
+    bindsym r       	exec --no-startup-id systemctl  reboot, 										mode "default"
+    bindsym Shift+s 	exec --no-startup-id systemctl  poweroff -i, 									mode "default"
+    bindsym l       	exec --no-startup-id $lock, 													mode "default"
+    bindsym Shift+l 	exec --no-startup-id $lock; sleep 5 && pgrep -x i3lock && xset dpms force off", mode "default"
+
+    bindsym Return  	mode "default"
+    bindsym Escape  	mode "default"
+}
+
+font pango:mono 10
 new_window pixel 1
 new_float normal
 hide_edge_borders none
 
 # Application specific rules ($xprop find the name)
-assign      [class="RocketLeague"]   $ws1
-for_window  [class="Galculator"]     floating enable
-for_window  [class="Lxappearance"]   floating enable
-for_window  [class="Gcolor3"]        floating enable
-for_window  [class="Termite"]        border pixel 1
-for_window  [title="pulsemixer"]     floating enable move position center
-for_window  [title="PulseAudio Equalizer"] floating enable move position center
-for_window  [title="qpaeq"] floating enable move position center
-# for_window  [class="Skype"]          floating enable
-# for_window  [class="Spotify"]        move to workspace $ws10
-# for_window [class="(?i)virtualbox"] floating enable border normal
+assign      [class="RocketLeague"]          $ws1
+for_window  [class="Galculator"]            floating enable
+for_window  [class="Lxappearance"]          floating enable
+for_window  [class="Gcolor3"]               floating enable
+for_window  [class="Termite"]               border pixel 1
+for_window  [title="pulsemixer"]            floating enable move position center
+for_window  [title="PulseAudio Equalizer"]  floating enable move position center
+for_window  [title="qpaeq"]                 floating enable move position center resize set 640 480
+for_window  [class="Skype"]                 floating enable
+for_window  [class="Spotify"]               move to workspace $ws10
+for_window  [class="(?i)virtualbox"]        floating enable border normal
 
 set $ws1 "i"
 set $ws2 ">_"
@@ -101,52 +114,7 @@ bar {
     }
 }
 
-# # Gap settings (uncomment if you are using i3-gaps)
-# gaps inner 6
-# gaps outer -2
-# smart_gaps on
-# smart_borders on
-# 
-# # $mod+Shift+g → gap mode || o or i  →  modifying outer/inner gaps. 
-# # + / - (in-/decrement for current workspace) or 0 remove gaps. 
-# # Shift with these keys → change will be global for all workspaces.
-# set $mode_gaps Gaps: (o) outer, (i) inner
-# set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-# set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-# 
-# mode "$mode_gaps" {
-#     bindsym o      mode "$mode_gaps_outer"
-#     bindsym i      mode "$mode_gaps_inner"
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-# 
-# mode "$mode_gaps_inner" {
-#     bindsym plus  gaps inner current plus 5
-#     bindsym minus gaps inner current minus 5
-#     bindsym 0     gaps inner current set 0
-# 
-#     bindsym Shift+plus  gaps inner all plus 5
-#     bindsym Shift+minus gaps inner all minus 5
-#     bindsym Shift+0     gaps inner all set 0
-# 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-# 
-# mode "$mode_gaps_outer" {
-#     bindsym plus  gaps outer current plus 5
-#     bindsym minus gaps outer current minus 5
-#     bindsym 0     gaps outer current set 0
-# 
-#     bindsym Shift+plus  gaps outer all plus 5
-#     bindsym Shift+minus gaps outer all minus 5
-#     bindsym Shift+0     gaps outer all set 0
-# 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-
+floating_modifier $mod
 #       Keybind             Command
 bindsym $mod+d              exec $launcher
 bindsym $mod+grave          bar mode toggle
@@ -176,8 +144,8 @@ bindsym $mod+g              exec --no-startup-id $calc
 #                           Screen Shots
 bindsym Print               exec --no-startup-id $screenshot
 bindsym Shift+Print         exec --no-startup-id $snipwindow
-bindsym ctrl+Print         exec --no-startup-id $sniparea
-#                      Select a yt url/file path to play with mpv
+bindsym ctrl+Print          exec --no-startup-id $sniparea
+#                      		Select a yt url/file path to play with mpv
 bindsym $mod+p              exec --no-startup-id $playlink
 #                           MODES
 bindsym Pause               mode "$Pause-break"
@@ -232,39 +200,6 @@ bindsym $mod+Mod1+Left      resize shrink width   1 px or 1 ppt
 bindsym $mod+Mod1+Down      resize grow   height  1 px or 1 ppt
 bindsym $mod+Mod1+Up        resize shrink height  1 px or 1 ppt
 bindsym $mod+Mod1+Right     resize grow   width   1 px or 1 ppt
-
-set $Pause-break        System (l)lock, (Shift+l) lock-screen-off, (e) exit, (s) suspend, (r) reboot, (Shift+s) shutdown
-mode "$Pause-break" {
-    bindsym e       exec --no-startup-id i3-msg     exit, mode "default"
-    bindsym s       exec --no-startup-id systemctl  suspend, mode "default"
-    bindsym r       exec --no-startup-id systemctl  reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl  poweroff -i, mode "default"
-    bindsym l       exec --no-startup-id "i3lock -e -f -c 000000 -i ~/.config/wall.png -t", mode "default"
-    bindsym Shift+l exec --no-startup-id "i3lock -e -f -c 000000 -i ~/.config/wall.png -t; sleep 5 && pgrep -x i3lock && xset dpms force off", mode "default"
-
-    bindsym Return  mode "default"
-    bindsym Escape  mode "default"
-}
-
-# Monitor layout.
-
-set $lgmonitor HDMI-0
-set $samonitor DP-1
-
-exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal --mode 1920x1080 --right-of $lgmonitor
-
-workspace $ws1 output $lgmonitor
-workspace $ws2 output $samonitor
-workspace $ws10 output $samonitor
-
-set $mode_display Monitor layout (m) mirrored, (d) dual, (Shift+d) dual-horrizontal+vertical
-mode "$mode_display" {
-    bindsym m           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --same-as  $lgmonitor; mode "default"
-    bindsym d           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --right-of $lgmonitor; mode "default"
-    bindsym Shift+d     exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate left    --mode 1920x1080 --right-of $lgmonitor, mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 
 # Media player controls
 bindsym XF86AudioPlay                   exec --no-startup-id $mediactlplaypause
@@ -354,3 +289,70 @@ bindsym XF86AudioMute                   exec --no-startup-id $volmute
 # bindsym XF86Documents                 exec
 # bindsym XF86Battery                   exec
 # bindsym XF86Bluetooth                 exec
+# # Gap settings (uncomment if you are using i3-gaps)
+# gaps inner 6
+# gaps outer -2
+# smart_gaps on
+# smart_borders on
+# 
+# # $mod+Shift+g → gap mode || o or i  →  modifying outer/inner gaps. 
+# # + / - (in-/decrement for current workspace) or 0 remove gaps. 
+# # Shift with these keys → change will be global for all workspaces.
+# set $mode_gaps Gaps: (o) outer, (i) inner
+# set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+# set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+# 
+# mode "$mode_gaps" {
+#     bindsym o      mode "$mode_gaps_outer"
+#     bindsym i      mode "$mode_gaps_inner"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+# 
+# mode "$mode_gaps_inner" {
+#     bindsym plus  gaps inner current plus 5
+#     bindsym minus gaps inner current minus 5
+#     bindsym 0     gaps inner current set 0
+# 
+#     bindsym Shift+plus  gaps inner all plus 5
+#     bindsym Shift+minus gaps inner all minus 5
+#     bindsym Shift+0     gaps inner all set 0
+# 
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+# 
+# mode "$mode_gaps_outer" {
+#     bindsym plus  gaps outer current plus 5
+#     bindsym minus gaps outer current minus 5
+#     bindsym 0     gaps outer current set 0
+# 
+#     bindsym Shift+plus  gaps outer all plus 5
+#     bindsym Shift+minus gaps outer all minus 5
+#     bindsym Shift+0     gaps outer all set 0
+# 
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+
+# Monitor layout.
+
+set $lgmonitor HDMI-0
+set $samonitor DP-1
+
+exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal --mode 1920x1080 --right-of $lgmonitor
+
+workspace $ws1 	output $lgmonitor
+workspace $ws2 	output $samonitor
+workspace $ws10 output $samonitor
+
+set $mode_display Monitor layout (m) mirrored, (d) dual, (Shift+d) dual-horrizontal+vertical
+mode "$mode_display" {
+    bindsym m           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --same-as  $lgmonitor; mode "default"
+    bindsym d           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --right-of $lgmonitor; mode "default"
+    bindsym Shift+d     exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate left    --mode 1920x1080 --right-of $lgmonitor, mode "default"
+    
+    bindsym Return 		mode "default"
+    bindsym Escape 		mode "default"
+}
+
