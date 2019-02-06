@@ -23,7 +23,7 @@ I keep this list always up to date. It helps me track what I have installed on m
 ## What's up with .config/i3 ?
 I am experimenting with splitting the config file into [multiple smaller parts](https://github.com/ispanos/dotfiles/tree/master/.config/i3/conf.d). All edits must be done on those files, otherwise they will be deleted once i3 reloads using the keybind. [1-general](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/1-General) includes the most important configs, since there I set the "default" programs as variables. This way any changes to the preferred programs (and/or options) can be done in [1-general](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/1-General). [4-keybinds](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/4-keybinds) includes all the key-binds (`bindsym`). The only reason to edit it would be to change the actual key-binds, since the `exec` commands call the variables mentioned previously. 
 
-###A few things you may want to changed are:
+### A few things you may want to changed are:
   - [1-general](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/1-General) `setxkbmap` sets `shift+alt` to toggle between Greek and English. **Remove** the line or **change the "gr"** to your language.
   - [2-Bar-theme](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/2-Bar-theme) I added a wallpaper in `.config/`. You can change `$wallpaper` to change it.
   - [5-Gaps](https://github.com/ispanos/dotfiles/blob/master/.config/i3/conf.d/5-Gaps) If you use `i3-wm` instead of `i3-gaps` you can delete that file.
