@@ -29,12 +29,12 @@ bindsym $mod+g              exec --no-startup-id $calc
 bindsym Print               exec --no-startup-id $screenshot
 bindsym Shift+Print         exec --no-startup-id $snipwindow
 bindsym ctrl+Print          exec --no-startup-id $sniparea
-#                      		Select a yt url/file path to play with mpv
+#                           Select a yt url/file path to play with mpv
 bindsym $mod+p              exec --no-startup-id $playlink
 #                           MODES
 bindsym Pause               mode "$Pause-break"
 bindsym $mod+F12            mode "$mode_display"
-bindsym $mod+Shift+g        mode "$mode_gaps"
+# bindsym $mod+Shift+g        mode "$mode_gaps"
 #                           Change Focus
 bindsym $mod+h              focus left
 bindsym $mod+j              focus down

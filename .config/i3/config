@@ -10,11 +10,11 @@
 # otherwise you can set them bellow as variables: "$term" "$browsr" "$myeditor"
 
 #Autostart Programs
-exec 		--no-startup-id "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
-exec 		--no-startup-id dunst
-exec 		--no-startup-id xcompmgr
-exec_always --no-startup-id (checkup)
-# exec 		--no-startup-id (sleep 10 && getforecast)
+exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
+exec        dunst
+exec        xcompmgr
+exec_always (checkup)
+# exec      (sleep 10 && getforecast)
 
 # General Configurations
 set $mod Mod4
@@ -23,38 +23,38 @@ set $mod Mod4
 set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
 
 # Programs
-set $term               $TERMINAL
-set $browsr             $BROWSER
-# set $myeditor         $EDITOR
-set $myeditor           subl3
-set $launcher           i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
-set $fm                 pcmanfm-qt
-set $calc               galculator
-set $screenshot         maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
-set $snipwindow			maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
-set $sniparea			maim -m 1 -s 							~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
-set $setwall            xwallpaper --center  
-set $volup              pactl set-sink-volume 0 +1%
-set $voldown            pactl set-sink-volume 0 -1%
-set $volmute            pactl set-sink-mute   0 toggle
-set $playlink           mpv $(xclip -o)
-# set $mediactlplaypause  playerctl       play-pause    # uninstalled
-# set $mediactlnext       playerctl       next          # uninstalled
-# set $mediactlprevious   playerctl       previous      # uninstalled
-# set $netrefresh         sudo -A systemctl restart systemd-networkd.service
+set $term         $TERMINAL
+set $browsr       $BROWSER
+# set $myeditor   $EDITOR
+set $myeditor     subl3
+set $launcher     i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
+set $fm           pcmanfm-qt
+set $calc         galculator
+set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
+set $snipwindow   maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
+set $sniparea     maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
+set $setwall      xwallpaper --center  
+set $volup        pactl set-sink-volume 0 +1%
+set $voldown      pactl set-sink-volume 0 -1%
+set $volmute      pactl set-sink-mute   0 toggle
+set $playlink     mpv $(xclip -o)
+# set $mediaplay  playerctl       play-pause    # uninstalled
+# set $medianext  playerctl       next          # uninstalled
+# set $mediaprev  playerctl       previous      # uninstalled
+# set $netrefresh sudo -A systemctl restart systemd-networkd.service
 
-set $Pause-break        System (l)lock, (Shift+l) locktoblack, (e) exit, (s) suspend, (r) reboot, (Shift+s) shutdown
-set $lock               i3lock -e -f -c 000000 -i ~/.config/wall.png -t
+set $Pause-break  System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (end) shutdown
+set $lock         i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 mode "$Pause-break" {
-    bindsym e       	exec --no-startup-id i3-msg     exit, 											mode "default"
-    bindsym s       	exec --no-startup-id systemctl  suspend, 										mode "default"
-    bindsym r       	exec --no-startup-id systemctl  reboot, 										mode "default"
-    bindsym Shift+s 	exec --no-startup-id systemctl  poweroff -i, 									mode "default"
-    bindsym l       	exec --no-startup-id $lock, 													mode "default"
-    bindsym Shift+l 	exec --no-startup-id $lock; sleep 5 && pgrep -x i3lock && xset dpms force off", mode "default"
+    bindsym e       exec --no-startup-id i3-msg     exit,                           mode "default"
+    bindsym s       exec --no-startup-id systemctl  suspend,                        mode "default"
+    bindsym r       exec --no-startup-id systemctl  reboot,                         mode "default"
+    bindsym end     exec --no-startup-id systemctl  poweroff -i,                    mode "default"
+    bindsym l       exec --no-startup-id $lock,                                     mode "default"
+    bindsym k       exec --no-startup-id $lock; sleep 5 && xset dpms force off",    mode "default"
 
-    bindsym Return  	mode "default"
-    bindsym Escape  	mode "default"
+    bindsym Return  mode "default"
+    bindsym Escape  mode "default"
 }
 
 font pango:mono 10
@@ -145,12 +145,12 @@ bindsym $mod+g              exec --no-startup-id $calc
 bindsym Print               exec --no-startup-id $screenshot
 bindsym Shift+Print         exec --no-startup-id $snipwindow
 bindsym ctrl+Print          exec --no-startup-id $sniparea
-#                      		Select a yt url/file path to play with mpv
+#                           Select a yt url/file path to play with mpv
 bindsym $mod+p              exec --no-startup-id $playlink
 #                           MODES
 bindsym Pause               mode "$Pause-break"
 bindsym $mod+F12            mode "$mode_display"
-bindsym $mod+Shift+g        mode "$mode_gaps"
+# bindsym $mod+Shift+g        mode "$mode_gaps"
 #                           Change Focus
 bindsym $mod+h              focus left
 bindsym $mod+j              focus down
@@ -202,9 +202,9 @@ bindsym $mod+Mod1+Up        resize shrink height  1 px or 1 ppt
 bindsym $mod+Mod1+Right     resize grow   width   1 px or 1 ppt
 
 # Media player controls
-bindsym XF86AudioPlay                   exec --no-startup-id $mediactlplaypause
-bindsym XF86AudioNext                   exec --no-startup-id $mediactlnext
-bindsym XF86AudioPrev                   exec --no-startup-id $mediactlprevious
+bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
+bindsym XF86AudioNext                   exec --no-startup-id $medianext
+bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
 
 # Pulse Audio controls 
 bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
@@ -336,23 +336,21 @@ bindsym XF86AudioMute                   exec --no-startup-id $volmute
 # }
 
 # Monitor layout.
-
 set $LG HDMI-0
 set $SG DP-1
+exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG
 
-exec --no-startup-id xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG
-
-workspace $ws1 	output $LG
-workspace $ws2 	output $SG
+workspace $ws1  output $LG
+workspace $ws2  output $SG
 workspace $ws10 output $SG
 
-set $mode_display Monitor layout (m) mirrored, (d) dual, (Shift+d) dual-horrizontal+vertical
+set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
 mode "$mode_display" {
-    bindsym m           exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --same-as  $LG; mode "default"
-    bindsym d           exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG; mode "default"
-    bindsym Shift+d     exec xrandr --output $LG --rotate normal --primary --output $SG --rotate left   --right-of $LG, mode "default"
-    
-    bindsym Return 		mode "default"
-    bindsym Escape 		mode "default"
+bindsym m exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --same-as  $LG; mode "default"
+bindsym d exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG; mode "default"
+bindsym L exec xrandr --output $LG --rotate normal --primary --output $SG --rotate left   --right-of $LG, mode "default"
+
+bindsym Return  mode "default"
+bindsym Escape  mode "default"
 }
 

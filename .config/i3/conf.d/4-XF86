@@ -1,7 +1,7 @@
 # Media player controls
-bindsym XF86AudioPlay                   exec --no-startup-id $mediactlplaypause
-bindsym XF86AudioNext                   exec --no-startup-id $mediactlnext
-bindsym XF86AudioPrev                   exec --no-startup-id $mediactlprevious
+bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
+bindsym XF86AudioNext                   exec --no-startup-id $medianext
+bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
 
 # Pulse Audio controls 
 bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
