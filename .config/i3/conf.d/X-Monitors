@@ -1,19 +1,19 @@
 # Monitor layout.
 
-set $lgmonitor HDMI-0
-set $samonitor DP-1
+set $LG HDMI-0
+set $SG DP-1
 
-exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal --mode 1920x1080 --right-of $lgmonitor
+exec --no-startup-id xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG
 
-workspace $ws1 	output $lgmonitor
-workspace $ws2 	output $samonitor
-workspace $ws10 output $samonitor
+workspace $ws1 	output $LG
+workspace $ws2 	output $SG
+workspace $ws10 output $SG
 
 set $mode_display Monitor layout (m) mirrored, (d) dual, (Shift+d) dual-horrizontal+vertical
 mode "$mode_display" {
-    bindsym m           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --same-as  $lgmonitor; mode "default"
-    bindsym d           exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate normal  --mode 1920x1080 --right-of $lgmonitor; mode "default"
-    bindsym Shift+d     exec --no-startup-id xrandr --output $lgmonitor --mode 1920x1080 --rotate normal --primary --output $samonitor --rotate left    --mode 1920x1080 --right-of $lgmonitor, mode "default"
+    bindsym m           exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --same-as  $LG; mode "default"
+    bindsym d           exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG; mode "default"
+    bindsym Shift+d     exec xrandr --output $LG --rotate normal --primary --output $SG --rotate left   --right-of $LG, mode "default"
     
     bindsym Return 		mode "default"
     bindsym Escape 		mode "default"
