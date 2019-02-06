@@ -7,6 +7,10 @@
 		"4-keybinds",
 		"5-MODES",
 		"6-Monitors-X",
-		"7-XF86"
+		"7-XF86",
+		"X-Monitors",
+		"5-Gaps",
+		"4-XF86",
+		"3-keybinds"
 	]
 }
