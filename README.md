@@ -6,7 +6,6 @@
  - zathura
  - mpv
  - termite
- - guvcview2 (either remove this folder or change the "profile_path=")
 
 There are also dotfiles like
   - .bashrc
