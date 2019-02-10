@@ -1,4 +1,4 @@
-command=~/.scripts/statusbar/$BLOCK_NAME
+command=~/.local/bin/statusbar/$BLOCK_NAME
 separator=false
 separator_block_width=7
 markup=pango
