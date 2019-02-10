@@ -1,0 +1,29 @@
+#!/bin/sh
+alias free="free --mebi"\
+	mkd="mkdir -pv"\
+	yt="youtube-dl --add-metadata"\
+	cp="cp --interactive"\
+	df="df --human-readable"\
+	sb="subl3"\
+	ssb="sudo subl3"\
+	g="git"\
+	gs="git status"\
+	ga="git add -A"\
+	gp="git push"\
+	gc="git commit -m"\
+	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
+	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
+	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
+	p="sudo pacman"\
+	pc="pacman -Qq | wc -l"\
+	ls="ls --literal --human-readable --color=auto --group-directories-first "\
+	grep="grep --colour=auto"\
+	egrep="egrep --colour=auto"\
+	fgrep="fgrep --colour=auto"\
+	hcat="highlight --out-format=ansi"\
+	hcatt="highlight --src-lang"\
+	diff="diff --color=auto"\
+	starwars="telnet towel.blinkenlights.nl"\
+	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"
+
+command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # Use neovim for vim if present.
