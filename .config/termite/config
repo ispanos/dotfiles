@@ -5,21 +5,17 @@ cursor_shape = ibeam
 scrollbar = right
 
 
-[colors]
-# 20% background transparency (requires a compositor)
-#background = rgba(63, 63, 63, 0.8)
-# If unset, will reverse foreground and background
-highlight = #2f2f2f
-
-
 # https://terminal.sexy
 [colors]
+
+# If unset, will reverse foreground and background
+highlight = #2f2f2f
 
 # special
 foreground      = #dcdde5
 foreground_bold = #dcdde5
 cursor          = #00CCF9
-background = rgba(28, 28, 28, 0.8)
+background = rgba(28, 28, 28, 0.9)
 
 # black
 color0  = #20201d
