@@ -1,9 +1,4 @@
 #!/bin/bash
-
-#
-# ~/.bash_profile
-#
-
 export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export EDITOR="neovim"
 export VISUAL=/usr/bin/neovim
