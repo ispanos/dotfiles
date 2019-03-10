@@ -3,13 +3,13 @@ separator=false
 separator_block_width=7
 markup=pango
 
-#[mediaplayer]
-#command=/usr/lib/i3blocks/mediaplayer
-#instance=spotify
-#label=
-#color=#69FF4B
-#interval=4
-#signal=10
+[mediaplayer]
+command=/usr/lib/i3blocks/mediaplayer
+instance=spotify
+label=🎼
+color=#69FF4B
+interval=4
+signal=10
 
 #[music]
 #label=🎼
