@@ -2,9 +2,10 @@
 text/plain=sublime_text_3.desktop;nvim.desktop;
 application/octet-stream=sublime_text_3.desktop;
 application/x-shellscript=sublime_text_3.desktop;
-inode/directory=mpv.desktop;spacefm.desktop;
+inode/directory=imv.desktop;mpv.desktop;spacefm.desktop;
 application/pdf=org.pwmt.zathura.desktop;
 application/x-partial-download=mpv.desktop;
+image/webp=imv.desktop;
 
 [Default Applications]
 text/plain=sublime_text_3.desktop
