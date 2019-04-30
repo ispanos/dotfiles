@@ -2,7 +2,7 @@
  - i3 (+gaps)
  - i3blocks
  - dunst
- - pcmanfm-qt
+ - pcmanfm
  - zathura
  - mpv
  - termite
