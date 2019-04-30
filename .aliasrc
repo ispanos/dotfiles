@@ -16,7 +16,7 @@ alias free="free --mebi"\
 	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
 	p="sudo pacman"\
 	pc="pacman -Qq | wc -l"\
-	ls="ls --literal --human-readable --color=auto --group-directories-first "\
+	ls="lsd --human-readable --color=auto "\
 	grep="grep --colour=auto"\
 	egrep="egrep --colour=auto"\
 	fgrep="fgrep --colour=auto"\
@@ -26,4 +26,7 @@ alias free="free --mebi"\
 	starwars="telnet towel.blinkenlights.nl"\
 	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"
 
+# ls="ls --literal --human-readable --color=auto --group-directories-first "\
+
 command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # Use neovim for vim if present.
+
