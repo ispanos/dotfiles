@@ -17,7 +17,7 @@ set $browsr       $BROWSER
 # set $myeditor   $EDITOR
 set $myeditor     subl3
 set $launcher     i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
-set $fm           pcmanfm-qt
+set $fm           pcmanfm
 set $calc         galculator
 set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
 set $snipwindow   maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
