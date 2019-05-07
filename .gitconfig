@@ -1,0 +1,17 @@
+[user]
+	email = yiannisvspanos@gmail.com
+	name = ispanos
+
+[color]
+    ui = true
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = red
