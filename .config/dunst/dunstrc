@@ -1,5 +1,4 @@
 [global]
-    monitor = 1
     follow = keyboard
     geometry = "350x5-0+24"
     indicate_hidden = yes

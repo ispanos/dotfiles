@@ -1,7 +1,7 @@
 #!/bin/bash
+
 complete -cf sudo
 stty -ixon # Disable ctrl-s and ctrl-q.
-shopt -s checkwinsize
 shopt -s autocd
-export PS1="\e[1;30m[\em\e[1;34m\u@\e[m\e[34m\H:\e[m \w\e[1;30m]\e[m\\$ "
-[ -f "$HOME/.aliasrc" ] && source "$HOME/.aliasrc"
+[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"

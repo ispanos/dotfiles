@@ -6,7 +6,7 @@ inode/directory=imv.desktop;mpv.desktop;spacefm.desktop;
 application/pdf=org.pwmt.zathura.desktop;
 application/x-partial-download=mpv.desktop;
 image/webp=imv.desktop;
-image/jpeg=sublime_text_3.desktop;
+image/jpeg=imv.desktop;sublime_text_3.desktop;
 application/x-sharedlib=sublime_text_3.desktop;
 
 [Default Applications]
@@ -15,3 +15,4 @@ application/x-shellscript=sublime_text_3.desktop
 inode/directory=spacefm.desktop;
 application/pdf=org.pwmt.zathura.desktop
 application/x-partial-download=mpv.desktop
+image/jpeg=imv.desktop

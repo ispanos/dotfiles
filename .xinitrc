@@ -1,9 +1,5 @@
 #!/bin/sh
 
-#
-# ~/.xinitrc
-#
-
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -25,5 +21,7 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
-exec i3
+xcompmgr &      # xcompmgr for transparency
+dunst &         # dunst for notifications
 
+exec i3
