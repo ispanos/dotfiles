@@ -46,5 +46,3 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
-focus_on_window_activation focus
-

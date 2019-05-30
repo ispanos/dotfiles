@@ -1,3 +1,4 @@
+focus_on_window_activation focus
 font pango:mono 10
 new_window pixel 1
 new_float normal
@@ -17,14 +18,14 @@ for_window  [class="Spotify"]               move to workspace $ws10
 for_window  [class="(?i)virtualbox"]        floating enable border normal
 
 set $ws1 ">_"
-set $ws2 "ii"
-set $ws3 "iii"
-set $ws4 "iv"
-set $ws5 "v"
-set $ws6 "vi"
-set $ws7 "vii"
-set $ws8 "viii"
-set $ws9 "ix"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
 set $ws10 "x"
 
 set $wallpaper ~/.config/wall.png
