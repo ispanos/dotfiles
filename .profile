@@ -1,7 +1,6 @@
 #!/bin/bash
 export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export EDITOR="neovim"
-export VISUAL=/usr/bin/neovim
 export TERMINAL="termite"
 export BROWSER="firefox"
 export READER="zathura"

@@ -14,8 +14,6 @@ There are also dotfiles like
 
 These configs are deployed by [YARBS](https://github.com/ispanos/YARBS/blob/master/yarbs.sh), a fork of [LARBS](https://github.com/LukeSmithxyz/LARBS).
 
-I haven't updated the script since my last format, and Luke's updates are useful. Right now if you want to set-up your system like mine, you are better off using [larbs.sh](https://github.com/LukeSmithxyz/LARBS/blob/master/larbs.sh). Download it and edit it to add my [progs.csv](https://raw.githubusercontent.com/ispanos/YARBS/master/progs.csv) file and maybe my [dotfiles](https://github.com/ispanos/dotfiles) repo if you like my set-up. 
-
 ## [programs list](https://github.com/namesyiannis/YARBS/blob/master/progs.csv)
 I keep this list always up to date. It helps me track what I have installed on my system. In order for my configs to work as they are, you probably need most of those programs too. However if you don't like them I tried to make it as easy as possible to change the programs needed in i3's config. Also this list may include packages that I need, but you probably don't, like drivers.
 

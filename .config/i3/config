@@ -27,7 +27,7 @@ set $term         $TERMINAL
 set $browsr       $BROWSER
 # set $myeditor   $EDITOR
 set $myeditor     subl3
-set $launcher     i3-dmenu-desktop \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
+set $launcher     i3-dmenu-desktop # \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
 set $fm           pcmanfm
 set $calc         galculator
 set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
@@ -57,6 +57,8 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
+focus_on_window_activation focus
+
 font pango:mono 10
 new_window pixel 1
 new_float normal
@@ -75,8 +77,8 @@ for_window  [class="Skype"]                 floating enable
 for_window  [class="Spotify"]               move to workspace $ws10
 for_window  [class="(?i)virtualbox"]        floating enable border normal
 
-set $ws1 "i"
-set $ws2 ">_"
+set $ws1 ">_"
+set $ws2 "ii"
 set $ws3 "iii"
 set $ws4 "iv"
 set $ws5 "v"
@@ -103,15 +105,15 @@ bar {
         separator_symbol "-"
         status_command i3blocks
         position top
-    colors {
-        background          #3D3D3E
-        statusline          #FFFFFF
-        separator           #FFFFFF
-        focused_workspace   #3D3D3E     #505050      #C6C6C6
-        active_workspace    #3D3D3E     #505050      #C6C6C6
-        inactive_workspace  #3D3D3E     #222222      #C6C6C6
-        urgent_workspace    #4E0000     #222222      #FF6969
-    }
+    #colors {
+    #    background          #3D3D3E
+    #    statusline          #FFFFFF
+    #    separator           #FFFFFF
+    #    focused_workspace   #3D3D3E     #505050      #C6C6C6
+    #    active_workspace    #3D3D3E     #505050      #C6C6C6
+    #    inactive_workspace  #3D3D3E     #222222      #C6C6C6
+    #    urgent_workspace    #4E0000     #222222      #FF6969
+    #}
 }
 
 floating_modifier $mod
@@ -192,14 +194,14 @@ bindsym $mod+Shift+8        move container to workspace $ws8
 bindsym $mod+Shift+9        move container to workspace $ws9
 bindsym $mod+Shift+0        move container to workspace $ws10
 #                           Resize
-bindsym $mod+Mod1+h         resize shrink width   1 px or 1 ppt
-bindsym $mod+Mod1+j         resize grow   height  1 px or 1 ppt
-bindsym $mod+Mod1+k         resize shrink height  1 px or 1 ppt
-bindsym $mod+Mod1+l         resize grow   width   1 px or 1 ppt
-bindsym $mod+Mod1+Left      resize shrink width   1 px or 1 ppt
-bindsym $mod+Mod1+Down      resize grow   height  1 px or 1 ppt
-bindsym $mod+Mod1+Up        resize shrink height  1 px or 1 ppt
-bindsym $mod+Mod1+Right     resize grow   width   1 px or 1 ppt
+bindsym $mod+Mod1+h         resize shrink width   3 px or 3 ppt
+bindsym $mod+Mod1+j         resize grow   height  3 px or 3 ppt
+bindsym $mod+Mod1+k         resize shrink height  3 px or 3 ppt
+bindsym $mod+Mod1+l         resize grow   width   3 px or 3 ppt
+bindsym $mod+Mod1+Left      resize shrink width   3 px or 3 ppt
+bindsym $mod+Mod1+Down      resize grow   height  3 px or 3 ppt
+bindsym $mod+Mod1+Up        resize shrink height  3 px or 3 ppt
+bindsym $mod+Mod1+Right     resize grow   width   3 px or 3 ppt
 
 # Media player controls
 bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
@@ -289,51 +291,51 @@ bindsym XF86AudioMute                   exec --no-startup-id $volmute
 # bindsym XF86Documents                 exec
 # bindsym XF86Battery                   exec
 # bindsym XF86Bluetooth                 exec
-# # Gap settings (uncomment if you are using i3-gaps)
-# gaps inner 6
-# gaps outer -2
-# smart_gaps on
-# smart_borders on
-# 
-# # $mod+Shift+g → gap mode || o or i  →  modifying outer/inner gaps. 
-# # + / - (in-/decrement for current workspace) or 0 remove gaps. 
-# # Shift with these keys → change will be global for all workspaces.
-# set $mode_gaps Gaps: (o) outer, (i) inner
-# set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-# set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-# 
-# mode "$mode_gaps" {
-#     bindsym o      mode "$mode_gaps_outer"
-#     bindsym i      mode "$mode_gaps_inner"
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-# 
-# mode "$mode_gaps_inner" {
-#     bindsym plus  gaps inner current plus 5
-#     bindsym minus gaps inner current minus 5
-#     bindsym 0     gaps inner current set 0
-# 
-#     bindsym Shift+plus  gaps inner all plus 5
-#     bindsym Shift+minus gaps inner all minus 5
-#     bindsym Shift+0     gaps inner all set 0
-# 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-# 
-# mode "$mode_gaps_outer" {
-#     bindsym plus  gaps outer current plus 5
-#     bindsym minus gaps outer current minus 5
-#     bindsym 0     gaps outer current set 0
-# 
-#     bindsym Shift+plus  gaps outer all plus 5
-#     bindsym Shift+minus gaps outer all minus 5
-#     bindsym Shift+0     gaps outer all set 0
-# 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
+# Gap settings (uncomment if you are using i3-gaps)
+gaps inner 6
+gaps outer -2
+smart_gaps on
+smart_borders on
+
+# $mod+Shift+g → gap mode || o or i  →  modifying outer/inner gaps. 
+# + / - (in-/decrement for current workspace) or 0 remove gaps. 
+# Shift with these keys → change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+mode "$mode_gaps" {
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # Monitor layout.
 set $LG HDMI-0

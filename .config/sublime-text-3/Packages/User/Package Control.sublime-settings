@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Advanced CSV",
 		"Agila Theme",
 		"i3 wm",
 		"Package Control",
