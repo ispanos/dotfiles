@@ -3,6 +3,7 @@ exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_sh
 exec        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec        "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 exec_always (checkup)
+exec_always xwallpaper --center ~/.config/wall.png
 # exec      (sleep 10 && getforecast)
 
 # General Configurations
@@ -22,7 +23,6 @@ set $calc         galculator
 set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
 set $snipwindow   maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
 set $sniparea     maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
-set $setwall      xwallpaper --center  
 set $volup        pactl set-sink-volume 0 +1%
 set $voldown      pactl set-sink-volume 0 -1%
 set $volmute      pactl set-sink-mute   0 toggle

@@ -1,29 +1,31 @@
 command=~/.local/bin/statusbar/$BLOCK_NAME
-separator=false
 separator_block_width=7
 markup=pango
 
 [mediaplayer]
-#command='echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")'
-command=/usr/lib/i3blocks/mediaplayer
+command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")
+#command=/usr/lib/i3blocks/mediaplayer
 instance=spotify
-label=🎼
+label=🎵
 color=#69FF4B
 interval=4
 signal=10
 
+[ip]
+interval=once
+label=🌐
+
 [pacpackages]
-label=📦
+label=
 interval=once
 signal=8
 
 [memory]
 interval=30
-label=🧠
+label=🐏
 
 [cpu]
 interval=15
-label=💻
 
 #[disk]
 #interval=60
@@ -34,7 +36,7 @@ command=battery BAT0
 interval=5
 
 [clock]
-label=📅
+label=🗓️
 interval=5
 
 # AUR package: xkb-switch-git

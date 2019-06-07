@@ -41,7 +41,7 @@ floating_modifier $mod
 # MODES
 	bindsym Pause               mode "$Pause-break"
 	bindsym $mod+F12            mode "$mode_display"
-# 	bindsym $mod+Shift+g        mode "$mode_gaps"
+ 	bindsym $mod+Shift+g        mode "$mode_gaps"
 
 # Change Focus
 	bindsym $mod+h              focus left
