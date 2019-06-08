@@ -35,10 +35,6 @@ interval=15
 #interval=60
 #command=disk /
 
-[battery]
-command=battery BAT0
-interval=5
-
 [clock]
 label=🗓️
 interval=5
