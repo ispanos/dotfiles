@@ -11,6 +11,10 @@ color=#69FF4B
 interval=4
 signal=10
 
+#[nothing]
+#command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
+#interval=once
+
 [ip]
 interval=once
 label=🌐
@@ -39,12 +43,16 @@ interval=5
 label=🗓️
 interval=5
 
+#[sep0]
+#command=echo "<span foreground='#000000' background='#EEFF94'></span>"
+#interval=once
+
 # AUR package: xkb-switch-git
 [keymap]
 label=
+# command=printf "<span foreground='#000000' background='#EEFF94'>" ; bash -c 'xkb-switch;xkb-switch -W' ; echo "</span>"
 command=bash -c 'xkb-switch;xkb-switch -W'
 interval=persist
-color=#616161
 
 [volume]
 interval=1
