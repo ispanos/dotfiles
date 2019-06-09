@@ -2,12 +2,8 @@
 ## This is a file created by merging the files in conf.d
 ## Any changes made on this file will be lost when i3 reloads.
 
-# This config file will use environmental variables such as $BROWSER and $TERMINAL,
-# You can set these variables in ~/.profile or ~/.bash_profile :
-# 	export BROWSER="firefox"
-# 	export TERMINAL="termite"
-# 	export EDITOR="nvim"
-# otherwise you can set them bellow as variables: "$term" "$browsr" "$myeditor"
+# This config file uses environmental variables such as $BROWSER and $TERMINAL,
+# you can set them bellow as variables: "$term" "$browsr" "$myeditor"
 
 #Autostart Programs
 exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
@@ -34,8 +30,8 @@ set $calc         galculator
 set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
 set $snipwindow   maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
 set $sniparea     maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
-set $volup        pactl set-sink-volume 0 +1%
-set $voldown      pactl set-sink-volume 0 -1%
+set $volup        pactl set-sink-volume 0 +2%
+set $voldown      pactl set-sink-volume 0 -4%
 set $volmute      pactl set-sink-mute   0 toggle
 set $playlink     mpv   $(xclip -o)
 set $mediaplay    playerctl play-pause
@@ -59,8 +55,8 @@ mode "$Pause-break" {
 
 focus_on_window_activation focus
 font pango:mono 10
-new_window pixel 1
-new_float normal
+default_border pixel 1
+default_floating_border normal
 hide_edge_borders none
 
 # Application specific rules ($xprop find the name)
@@ -87,29 +83,10 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "x"
 
-## Class                 BORDER    BACKGRND   TEXT    INDICATOR CHILD_BRDR
-#client.focused          #5F676A   #505050    #C6C6C6 #000000   #5F676A
-#client.unfocused        #00000000 #3D3D3E    #C6C6C6 #000000   #000000
-#client.focused_inactive #00000000 #3D3D3E    #C6C6C6 #000000   #000000
-#client.urgent           #4E0000   #3D3D3E    #FF6969 #000000   #000000
-#client.background       #FFFFFF
-    
 bar {
-        font pango:mono 10
-        tray_output primary
-        tray_padding 1
-        #separator_symbol ""
-        separator_symbol " "
-        status_command i3blocks
-    #colors {
-    #    background          #3D3D3E
-    #    statusline          #FFFFFF
-    #    separator           #FFFFFF
-    #    focused_workspace   #3D3D3E     #505050      #C6C6C6
-    #    active_workspace    #3D3D3E     #505050      #C6C6C6
-    #    inactive_workspace  #3D3D3E     #222222      #C6C6C6
-    #    urgent_workspace    #4E0000     #222222      #FF6969
-    #}
+    tray_output primary
+    separator_symbol " "
+    status_command i3blocks
 }
 
 floating_modifier $mod
