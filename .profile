@@ -4,6 +4,7 @@ export EDITOR="neovim"
 export TERMINAL="termite"
 export BROWSER="firefox"
 export READER="zathura"
+export INPUTRC="$HOME/.config/inputrc"
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 [ -f ~/.bashrc ] && source ~/.bashrc
@@ -12,3 +13,5 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 if [ "$(tty)" = "/dev/tty1" ]; then
 	pgrep -x i3 || exec startx
 fi
+# # Alternative 
+# [ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
