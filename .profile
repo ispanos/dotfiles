@@ -10,8 +10,5 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 
 [ -f ~/.bashrc ] && source ~/.bashrc
 
-# Start graphical server if i3 not already running.
-[ "$(tty)" = "/dev/tty1" ] && pgrep -x i3 || exec startx
-
-# # Alternative 
-# [ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
+# Start X if its not already running.
+[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
