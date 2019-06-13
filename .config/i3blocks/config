@@ -1,5 +1,6 @@
 command=~/.local/bin/statusbar/$BLOCK_NAME
-separator_block_width=7
+separator=false
+separator_block_width=6
 markup=pango
 
 [mediaplayer]

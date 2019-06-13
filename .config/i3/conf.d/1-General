@@ -1,16 +1,13 @@
+# This is what merges all of the config files into one.
+set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
+
+
 #Autostart Programs
 exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 exec        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec        "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 exec_always checkup
 exec_always xwallpaper --center ~/.config/wall.png
-# exec      (sleep 10 && getforecast)
-
-# General Configurations
-set $mod Mod4
-
-# This is what merges all of the config files into one.
-set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
 
 # Programs
 set $term         $TERMINAL

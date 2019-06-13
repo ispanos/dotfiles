@@ -1,5 +1,5 @@
 focus_on_window_activation focus
-font pango:mono 10
+font pango:mono 8
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
@@ -15,7 +15,9 @@ for_window  [title="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="qpaeq"]                 floating enable move position center resize set 664 420
 for_window  [class="Skype"]                 floating enable
 for_window  [class="Spotify"]               move to workspace $ws10
-for_window  [class="(?i)virtualbox"]        floating enable border normal
+for_window	[class="Popcorn-Time"]			border pixel 1
+#for_window  [class="(?i)virtualbox"]        floating enable border normal
+
 
 set $ws1 ">_"
 set $ws2 "2"
@@ -29,8 +31,8 @@ set $ws9 "9"
 set $ws10 "x"
 
 bar {
+	font pango:mono 10
     tray_output primary
-    separator_symbol " "
     status_command i3blocks
 }
 
