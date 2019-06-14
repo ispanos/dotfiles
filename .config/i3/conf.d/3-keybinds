@@ -42,6 +42,9 @@ floating_modifier $mod
 	bindsym Shift+Print         exec --no-startup-id $snipwindow
 	bindsym ctrl+Print          exec --no-startup-id $sniparea
 
+# Camera
+	bindsym $mod+F11			exec --no-startup-id camtoggle
+
 # Select a yt url/file path to play with mpv
 	bindsym $mod+p              exec --no-startup-id $playlink
 
