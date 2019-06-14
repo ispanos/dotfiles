@@ -90,6 +90,11 @@ bar {
 
 set $mod Mod4
 
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
 floating_modifier $mod
 
 # Keybind						Command
@@ -136,19 +141,19 @@ floating_modifier $mod
  	bindsym $mod+Shift+g        mode "$mode_gaps"
 
 # Change Focus
-	bindsym $mod+h              focus left
-	bindsym $mod+j              focus down
-	bindsym $mod+k              focus up
-	bindsym $mod+l              focus right
+	bindsym $mod+$left          focus left
+	bindsym $mod+$down          focus down
+	bindsym $mod+$up            focus up
+	bindsym $mod+$right         focus right
 	bindsym $mod+Left           focus left
 	bindsym $mod+Down           focus down
 	bindsym $mod+Up             focus up
 	bindsym $mod+Right          focus right
 # Move
-	bindsym $mod+Shift+h        move left
-	bindsym $mod+Shift+j        move down
-	bindsym $mod+Shift+k        move up
-	bindsym $mod+Shift+l        move right
+	bindsym $mod+Shift+$left    move left
+	bindsym $mod+Shift+$down    move down
+	bindsym $mod+Shift+$up      move up
+	bindsym $mod+Shift+$right   move right
 	bindsym $mod+Shift+Left     move left
 	bindsym $mod+Shift+Down     move down
 	bindsym $mod+Shift+Up       move up
@@ -177,10 +182,10 @@ floating_modifier $mod
 	bindsym $mod+Shift+0        move container to workspace $ws10
 
 # Resize
-	bindsym $mod+Mod1+h         resize shrink width   3 px or 3 ppt
-	bindsym $mod+Mod1+j         resize grow   height  3 px or 3 ppt
-	bindsym $mod+Mod1+k         resize shrink height  3 px or 3 ppt
-	bindsym $mod+Mod1+l         resize grow   width   3 px or 3 ppt
+	bindsym $mod+Mod1+$left     resize shrink width   3 px or 3 ppt
+	bindsym $mod+Mod1+$down     resize grow   height  3 px or 3 ppt
+	bindsym $mod+Mod1+$up       resize shrink height  3 px or 3 ppt
+	bindsym $mod+Mod1+$right    resize grow   width   3 px or 3 ppt
 	bindsym $mod+Mod1+Left      resize shrink width   3 px or 3 ppt
 	bindsym $mod+Mod1+Down      resize grow   height  3 px or 3 ppt
 	bindsym $mod+Mod1+Up        resize shrink height  3 px or 3 ppt
