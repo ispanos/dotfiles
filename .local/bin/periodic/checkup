@@ -4,5 +4,5 @@ ping -q -w 1 -c 1 `ip r | grep -m 1 default | cut -d ' ' -f 3` >/dev/null || exi
 
 notify-send "Checking for pacakge updates..."
 
-checkupdates > /tmp/$(date '+%Y%m%d_Available_Updates') || notify-send "Error Checking for updates."
+checkupdates > /tmp/available_updates || notify-send "Error Checking for updates."
 pkill -RTMIN+8 i3blocks

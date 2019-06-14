@@ -13,7 +13,7 @@ case $BLOCK_BUTTON in
 esac
 
 local -i NUM
-NUM=cat /tmp/"$(date '+%Y%m%d_Available_Updates')" | wc -l 
-if [[ $NUM ! -ge 1 ]]; then
+NUM=$( cat /tmp/available_updates | wc -l )
+if [[ $NUM -ge 1 ]]; then
 	echo "$NUM"
 fi
