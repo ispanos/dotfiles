@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 complete -cf sudo
 stty -ixon # Disable ctrl-s and ctrl-q.
 shopt -s autocd
