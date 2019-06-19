@@ -331,7 +331,7 @@ mode "$mode_gaps_outer" {
 }
 
 # Monitor layout.
-set $LG HDMI-0
+set $LG HDMI-1
 set $SG DP-1
 exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG
 
