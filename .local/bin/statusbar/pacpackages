@@ -5,7 +5,7 @@
 
 case $BLOCK_BUTTON in
 	1) $TERMINAL -e popupgrade ;;
-	2) notify-send "$(cat /tmp/"$(date '+%Y%m%d_Available_Updates')")" ;;
+	2) notify-send "$(cat /tmp/available_updates" ;;
 	3) pgrep -x dunst >/dev/null && notify-send "Upgrade module:
 : number of upgradable packages
 - Left click to upgrade packages
