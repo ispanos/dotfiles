@@ -3,7 +3,7 @@
 printf "Beginning upgrade.\\n"
 
 sudo pacman -Syu && yay -Syu
-chekcup
+checkup
 
 printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
 read -r
