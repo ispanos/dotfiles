@@ -8,7 +8,6 @@ command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")
 #command=/usr/lib/i3blocks/mediaplayer
 instance=spotify
 label=🎵
-color=#69FF4B
 interval=4
 signal=10
 
