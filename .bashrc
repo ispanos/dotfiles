@@ -21,6 +21,7 @@ stty -ixon
 complete -cf sudo
 
 shopt -s autocd
+
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
