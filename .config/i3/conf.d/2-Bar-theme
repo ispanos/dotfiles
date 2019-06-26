@@ -50,7 +50,7 @@ bar
         background #193549
         statusline #70C7D2
         separator  #586e75
-        focused_workspace   #193549 #2A597A #70C7D2
+        focused_workspace   #2A597A #2A597A #70C7D2
         active_workspace    #193549 #193549 #70C7D2
         inactive_workspace  #193549 #193549 #70C7D2
         urgent_workspace    #dc322f #dc322f #fdf6e3

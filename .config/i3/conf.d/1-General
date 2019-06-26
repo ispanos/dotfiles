@@ -16,7 +16,7 @@ set $term         $TERMINAL
 set $browsr       $BROWSER
 # set $myeditor   $EDITOR
 set $myeditor     subl3
-set $launcher     i3-dmenu-desktop # \\"--dmenu=dmenu -i -nf '#BBBBBB' -nb '#505050' -sb '#282828' -sf '#EEEEEE'\\"
+set $launcher     i3-dmenu-desktop  \\"--dmenu=dmenu -i -nf '#70C7D2' -nb '#193549' -sb '#2A597A' -sf '#70C7D2' -fn 'monospace-10' -p 'i3-dmenu-desktop:' \\"
 set $fm           pcmanfm
 set $calc         galculator
 set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png
@@ -29,7 +29,6 @@ set $playlink     mpv   $(xclip -o)
 set $mediaplay    playerctl play-pause 	&& pkill -RTMIN+10 i3blocks
 set $medianext    playerctl next 		&& pkill -RTMIN+10 i3blocks
 set $mediaprev    playerctl previous 	&& pkill -RTMIN+10 i3blocks
-# set $netrefresh sudo -A systemctl restart systemd-networkd.service
 
 set $Pause-break  System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 set $lock         i3lock -e -f -c 000000 -i ~/.config/wall.png -t
