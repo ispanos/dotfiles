@@ -1,3 +1,5 @@
+
+
 # Media player controls
 bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
 bindsym XF86AudioNext                   exec --no-startup-id $medianext

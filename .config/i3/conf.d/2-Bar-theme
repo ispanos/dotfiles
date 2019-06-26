@@ -1,3 +1,5 @@
+
+
 focus_on_window_activation focus
 font pango:mono 8
 default_border pixel 1
@@ -30,9 +32,28 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "x"
 
-bar {
-	font pango:mono 10
+
+# class                     border  bground text    indicator child_border
+client.focused              #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive     #002b36 #193549 #70C7D2 #193549
+client.unfocused            #002b36 #193549 #70C7D2 #193549
+client.urgent               #002b36 #dc322f #fdf6e3 #002b36
+
+bar 
+{
+    font pango:mono 10
     tray_output primary
     status_command i3blocks
+    
+    colors 
+    {
+        background #193549
+        statusline #70C7D2
+        separator  #586e75
+        focused_workspace   #193549 #2A597A #70C7D2
+        active_workspace    #193549 #193549 #70C7D2
+        inactive_workspace  #193549 #193549 #70C7D2
+        urgent_workspace    #dc322f #dc322f #fdf6e3
+    }
 }
 

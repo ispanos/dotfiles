@@ -1,3 +1,5 @@
+
+
 # This is what merges all of the config files into one.
 set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
 
