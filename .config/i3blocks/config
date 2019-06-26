@@ -4,7 +4,7 @@ separator_block_width=6
 markup=pango
 
 [mediaplayer]
-command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")
+command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n") && pkill -RTMIN+10 i3blocks
 #command=/usr/lib/i3blocks/mediaplayer
 instance=spotify
 label=🎵
@@ -25,11 +25,11 @@ interval=once
 signal=8
 
 [memory]
-interval=30
+interval=10
 label=🐏
 
 [cpu]
-interval=15
+interval=10
 
 #[disk]
 #interval=60
@@ -51,5 +51,5 @@ command=bash -c 'xkb-switch;xkb-switch -W'
 interval=persist
 
 [volume]
-interval=1
+interval=50
 signal=10
