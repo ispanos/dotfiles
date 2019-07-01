@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pacman -Qqen > /tmp/temp_native_new_packages
+pacman -Qqem > /tmp/temp_foreign_new_packages
+echo $(tput setaf 2)"Native:"$(tput sgr0)
+diff --color=auto $HOME/.local/Fresh_pack_list /tmp/temp_native_new_packages | grep ">" | tr ">" "-"
+echo $(tput setaf 2)"AUR:"$(tput sgr0)
+diff --color=auto $HOME/.local/Fresh_pack_list /tmp/temp_foreign_new_packages | grep ">" | tr ">" "-"
