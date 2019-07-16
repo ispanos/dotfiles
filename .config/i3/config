@@ -8,10 +8,6 @@
 
 
 
-# This is what merges all of the config files into one.
-set $i3restart "exec cat ~/.config/i3/conf.d/* > ~/.config/i3/config && i3-msg restart"
-
-
 #Autostart Programs
 exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 exec        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -33,7 +29,6 @@ set $sniparea     maim -m 1 -s                            ~/Pictures/Screenshots
 set $volup        pactl set-sink-volume 0 +2%
 set $voldown      pactl set-sink-volume 0 -4%
 set $volmute      pactl set-sink-mute   0 toggle
-set $playlink     mpv   $(xclip -o)
 set $mediaplay    playerctl play-pause 	&& pkill -RTMIN+10 i3blocks
 set $medianext    playerctl next 		&& pkill -RTMIN+10 i3blocks
 set $mediaprev    playerctl previous 	&& pkill -RTMIN+10 i3blocks
@@ -128,7 +123,7 @@ floating_modifier $mod
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
-	bindsym $mod+Shift+r        $i3restart
+	bindsym $mod+Shift+r        wmrestart
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
@@ -160,9 +155,6 @@ floating_modifier $mod
 
 # Camera
 	bindsym $mod+F11			exec --no-startup-id camtoggle
-
-# Select a yt url/file path to play with mpv
-	bindsym $mod+p              exec --no-startup-id $playlink
 
 # MODES
 	bindsym Pause               mode "$Pause-break"
@@ -360,8 +352,6 @@ mode "$mode_gaps_outer" {
 
 
 
-#exec xrandr --output HDMI-0 --rotate normal --primary
-exec xrandr --output DP-1 --rotate normal --primary
 ## Monitor layout.
 #set $LG HDMI-0
 #set $SG DP-1

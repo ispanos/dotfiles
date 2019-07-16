@@ -1,7 +1,5 @@
 
 
-#exec xrandr --output HDMI-0 --rotate normal --primary
-exec xrandr --output DP-1 --rotate normal --primary
 ## Monitor layout.
 #set $LG HDMI-0
 #set $SG DP-1

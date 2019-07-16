@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while getopts "sw" option; do 
+	case "${option}" in
+		s) area="-s" ;;
+		w) area="-i \$\(xdotool getactivewindow\)" ;;
+	esac 
+done
+
+maim -m 1 $area ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+i3lock -e -f -c 000000 -i ~/.config/wall.png -t
+
+#sleep 5 && xset dpms force off

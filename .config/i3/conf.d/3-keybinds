@@ -10,11 +10,11 @@ set $right l
 floating_modifier $mod
 
 # Keybind						Command
-	bindsym $mod+d              exec $launcher
+	bindsym $mod+d              exec wmlauncher
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
-	bindsym $mod+Shift+r        $i3restart
+	bindsym $mod+Shift+r        wmrestart
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
@@ -46,9 +46,6 @@ floating_modifier $mod
 
 # Camera
 	bindsym $mod+F11			exec --no-startup-id camtoggle
-
-# Select a yt url/file path to play with mpv
-	bindsym $mod+p              exec --no-startup-id $playlink
 
 # MODES
 	bindsym Pause               mode "$Pause-break"
