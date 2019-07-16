@@ -20,12 +20,8 @@ set $term         $TERMINAL
 set $browsr       $BROWSER
 # set $myeditor   $EDITOR
 set $myeditor     subl3
-set $launcher     i3-dmenu-desktop  \\"--dmenu=dmenu -i -nf '#70C7D2' -nb '#193549' -sb '#2A597A' -sf '#70C7D2' -fn 'monospace-10' -p 'i3-dmenu-desktop:' \\"
 set $fm           pcmanfm
 set $calc         galculator
-set $screenshot   maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $snipwindow   maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $sniparea     maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $volup        pactl set-sink-volume 0 +2%
 set $voldown      pactl set-sink-volume 0 -4%
 set $volmute      pactl set-sink-mute   0 toggle
@@ -34,15 +30,13 @@ set $medianext    playerctl next 		&& pkill -RTMIN+10 i3blocks
 set $mediaprev    playerctl previous 	&& pkill -RTMIN+10 i3blocks
 
 set $Pause-break  System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (End) shutdown
-set $lock         i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 mode "$Pause-break" {
-    bindsym e       exec --no-startup-id i3-msg     				exit,           mode "default"
-    bindsym s       exec --no-startup-id systemctl 		 			suspend,  		mode "default"
-    bindsym r       exec --no-startup-id systemctl  				reboot,         mode "default"
-    bindsym End     exec --no-startup-id systemctl  				poweroff -i,    mode "default"
-    bindsym l       exec --no-startup-id 							$lock,          mode "default"
-    bindsym k       exec --no-startup-id "$lock; sleep 5 && xset dpms force off",   mode "default"
-
+    bindsym e       exec --no-startup-id wmexit, 				mode "default"
+    bindsym s       exec --no-startup-id systemctl suspend,  	mode "default"
+    bindsym r       exec --no-startup-id systemctl reboot,      mode "default"
+    bindsym End     exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym l       exec --no-startup-id wmlock,          		mode "default"
+    bindsym k       exec --no-startup-id wmlock -o,   			mode "default"
 
     bindsym Return  mode "default"
     bindsym Escape  mode "default"
@@ -119,11 +113,11 @@ set $right l
 floating_modifier $mod
 
 # Keybind						Command
-	bindsym $mod+d              exec $launcher
+	bindsym $mod+d              exec wmlauncher
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
-	bindsym $mod+Shift+r        wmrestart
+	bindsym $mod+Shift+r        exec wmrestart
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
@@ -149,9 +143,9 @@ floating_modifier $mod
 	bindsym $mod+g              exec --no-startup-id $calc
 
 # Screen Shots
-	bindsym Print               exec --no-startup-id $screenshot
-	bindsym Shift+Print         exec --no-startup-id $snipwindow
-	bindsym ctrl+Print          exec --no-startup-id $sniparea
+	bindsym Print               exec --no-startup-id screenshot
+	bindsym Shift+Print         exec --no-startup-id screenshot -w
+	bindsym ctrl+Print          exec --no-startup-id screenshot -s
 
 # Camera
 	bindsym $mod+F11			exec --no-startup-id camtoggle
