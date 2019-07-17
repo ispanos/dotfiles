@@ -1,7 +1,8 @@
 # i3 config file (v4)
 #                                      #-------Warning-------#                                      #
-## This is a file created by merging the files in conf.d
-## Any changes made on this file will be lost when i3 reloads.
+## In i3wm this is a file created by merging (cat) the files in config.d
+## sway uses include /etc/sway/config.d/* to do the same thing.
+## Any changes made on this file will be lost when i3 reloads. 
 
 # This config file uses environmental variables such as $BROWSER and $TERMINAL,
 # you can set them bellow as variables: "$term" "$browsr" "$myeditor"
@@ -77,11 +78,11 @@ set $ws9 "9"
 set $ws10 "x"
 
 
-# class                     border  bground text    indicator child_border
-client.focused              #002b36 #586e75 #fdf6e3 #268bd2
-client.focused_inactive     #002b36 #193549 #70C7D2 #193549
-client.unfocused            #002b36 #193549 #70C7D2 #193549
-client.urgent               #002b36 #dc322f #fdf6e3 #002b36
+# class                     border  bground text    indicator 	child_border
+client.focused              #002b36 #586e75 #fdf6e3 #268bd2 	#002b36
+client.focused_inactive     #002b36 #193549 #70C7D2 #193549 	#002b36
+client.unfocused            #002b36 #193549 #70C7D2 #193549 	#002b36
+client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
 
 bar 
 {
@@ -117,7 +118,7 @@ floating_modifier $mod
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
-	bindsym $mod+Shift+r        exec wmrestart
+	bindsym $mod+Shift+r        exec $wmrestart
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 

@@ -1,10 +1,27 @@
 #!/bin/bash
 
-while getopts "sw" option; do 
-	case "${option}" in
-		s) area="-s" ;;
-		w) area="-i $(xdotool getactivewindow)" ;;
-	esac 
-done
+seassion=$(w --no-header $USER | awk '{print $7}')
+file=~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-maim -m 1 $area  ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+if [ $seassion = swaybg ] || [ $seassion = Xwayland ]; then
+
+	while getopts "sw" option; do 
+		case "${option}" in
+			s) area="-g $(slurp)" ;;
+			w) area="-g $(slurp)" ;;
+		esac 
+	done
+
+	grim "$area" $file
+
+else
+
+	while getopts "sw" option; do 
+		case "${option}" in
+			s) area="-s" ;;
+			w) area="-i $(xdotool getactivewindow)" ;;
+		esac 
+	done
+	
+	maim -m 1 $area $file
+fi

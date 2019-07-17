@@ -1,0 +1,2 @@
+# Read `man 5 sway` for a complete reference.
+include ~/.config/sway/config.d/*

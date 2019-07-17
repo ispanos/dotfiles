@@ -1,10 +1,15 @@
 #!/bin/bash
-
+seassion=$(w --no-header $USER | awk '{print $7}')
+if [ $seassion = swaybg ]; then
+	lock_cmd() { swaylock $@; } 
+else
+	lock_cmd() { i3lock $@; } 
+fi
 
 while getopts "o" option; do 
 	case "${option}" in
-		o) i3lock -e -f -c 000000 -i ~/.config/wall.png -t && sleep 5 && xset dpms force off ;;
+		o) post_lock(){sleep 5 && xset dpms force off; };;
 	esac 
 done
 
-i3lock -e -f -c 000000 -i ~/.config/wall.png -t 
+lock_cmd -e -f -c 000000 -i ~/.config/wall.png -t && post_lock

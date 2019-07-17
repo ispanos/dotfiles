@@ -1,7 +1,8 @@
 # i3 config file (v4)
 #                                      #-------Warning-------#                                      #
-## This is a file created by merging the files in conf.d
-## Any changes made on this file will be lost when i3 reloads.
+## In i3wm this is a file created by merging (cat) the files in config.d
+## sway uses include /etc/sway/config.d/* to do the same thing.
+## Any changes made on this file will be lost when i3 reloads. 
 
 # This config file uses environmental variables such as $BROWSER and $TERMINAL,
 # you can set them bellow as variables: "$term" "$browsr" "$myeditor"

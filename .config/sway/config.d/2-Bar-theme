@@ -33,11 +33,11 @@ set $ws9 "9"
 set $ws10 "x"
 
 
-# class                     border  bground text    indicator child_border
-client.focused              #002b36 #586e75 #fdf6e3 #268bd2
-client.focused_inactive     #002b36 #193549 #70C7D2 #193549
-client.unfocused            #002b36 #193549 #70C7D2 #193549
-client.urgent               #002b36 #dc322f #fdf6e3 #002b36
+# class                     border  bground text    indicator 	child_border
+client.focused              #002b36 #586e75 #fdf6e3 #268bd2 	#002b36
+client.focused_inactive     #002b36 #193549 #70C7D2 #193549 	#002b36
+client.unfocused            #002b36 #193549 #70C7D2 #193549 	#002b36
+client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
 
 bar 
 {

@@ -1,5 +1,8 @@
 
 
+exec_always xwallpaper --center ~/.config/wall.png
+set $wmrestart 		"cat ~/.config/i3/config.d/* > ~/.config/i3/config && i3-msg restart"
+
 ## Monitor layout.
 #set $LG HDMI-0
 #set $SG DP-1

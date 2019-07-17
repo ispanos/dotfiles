@@ -14,7 +14,7 @@ floating_modifier $mod
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
-	bindsym $mod+Shift+r        exec wmrestart
+	bindsym $mod+Shift+r        exec $wmrestart
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
