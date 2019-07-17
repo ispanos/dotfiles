@@ -10,7 +10,7 @@ set $right l
 floating_modifier $mod
 
 # Keybind						Command
-	bindsym $mod+d              exec wmlauncher
+	bindsym $mod+d              exec $wmlauncher
 	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
@@ -40,9 +40,9 @@ floating_modifier $mod
 	bindsym $mod+g              exec --no-startup-id $calc
 
 # Screen Shots
-	bindsym Print               exec --no-startup-id screenshot
-	bindsym Shift+Print         exec --no-startup-id screenshot -w
-	bindsym ctrl+Print          exec --no-startup-id screenshot -s
+	bindsym Print               exec $screenshot
+	bindsym Shift+Print         exec $snipwindow
+	bindsym ctrl+Print          exec $sniparea
 
 # Camera
 	bindsym $mod+F11			exec --no-startup-id camtoggle

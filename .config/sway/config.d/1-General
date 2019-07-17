@@ -4,7 +4,8 @@
 exec        "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 exec        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec        "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec_always checkup
+exec checkup
+#exec_always checkup
 
 # Programs
 set $term       	$TERMINAL
@@ -22,12 +23,12 @@ set $mediaprev  	playerctl previous 	&& pkill -RTMIN+10 i3blocks
 
 set $Pause-break  System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
-    bindsym e       exec --no-startup-id wmexit, 				mode "default"
-    bindsym s       exec --no-startup-id systemctl suspend,  	mode "default"
-    bindsym r       exec --no-startup-id systemctl reboot,      mode "default"
+    bindsym e       exec --no-startup-id $wmexit, 				mode "default"
+    bindsym s       exec --no-startup-id systemctl suspend, 	mode "default"
+    bindsym r       exec --no-startup-id systemctl reboot, 		mode "default"
     bindsym End     exec --no-startup-id systemctl poweroff -i, mode "default"
-    bindsym l       exec --no-startup-id wmlock,          		mode "default"
-    bindsym k       exec --no-startup-id wmlock -o,   			mode "default"
+    bindsym l       exec --no-startup-id $lock, 				mode "default"
+    bindsym k       exec --no-startup-id $locksoff, 			mode "default"
 
     bindsym Return  mode "default"
     bindsym Escape  mode "default"

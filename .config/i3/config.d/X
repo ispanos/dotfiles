@@ -3,6 +3,14 @@
 exec_always xwallpaper --center ~/.config/wall.png
 set $wmrestart 		"cat ~/.config/i3/config.d/* > ~/.config/i3/config && i3-msg restart"
 
+set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $wmlauncher i3-dmenu-desktop  \\"--dmenu=dmenu -i -nf '#70C7D2' -nb '#193549' -sb '#2A597A' -sf '#70C7D2' -fn 'monospace-10' -p 'i3-dmenu-desktop:' \\"
+
+set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
+set $locksoff	"$lock; sleep 5 && xset dpms force off"
+set $wmexit 	i3-msg exit
 ## Monitor layout.
 #set $LG HDMI-0
 #set $SG DP-1

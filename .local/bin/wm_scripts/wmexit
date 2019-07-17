@@ -1,7 +1,0 @@
-#!/bin/bash
-seassion=$(w --no-header $USER | awk '{print $7}')
-if [ $seassion = swaybg ]; then
-	swaymsg  exit
-else
-	i3-msg exit
-fi
