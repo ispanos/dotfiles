@@ -11,24 +11,32 @@ exec_always {
     gsettings set $gnome-schema cursor-theme 'Adwaita'
 }
 
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-#exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' \
-#          resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+          timeout 7190 'swaylock -f -c 000000 -i ~/.config/wall.png' \
+          timeout 7200 'swaymsg "output * dpms off"' \
+          resume 'swaymsg "output * dpms on"' \
+          before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
+          after-resume 'swaymsg "output * dpms on"'
 
+exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-set $wmlauncher j4-dmenu-desktop --dmenu="bemenu -i --nf '#70C7D2' --nb '#193549' --sb '#2A597A' --sf '#70C7D2' --fn 'monospace-8' -p 'bemenu:'" --term='termite'
+set $wmlauncher j4-dmenu-desktop \
+					--dmenu="bemenu -i \
+							--nf '#70C7D2' \
+							--nb '#193549' \
+							--sb '#2A597A' \
+							--sf '#70C7D2' \
+							--fn 'monospace-8' \
+							-p 'bemenu:'" \
+							--term='termite'
 set $wmrestart 	swaymsg reload
 
-set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $locksoff	swaylock -e -f -c 000000 -i ~/.config/wall.png -t
 set $wmexit 	swaymsg exit
-
-
+set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
+set $locksoff	swayidle -w  \
+				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \
+				timeout 2 'swaymsg "output * dpms off"' \
+				resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
