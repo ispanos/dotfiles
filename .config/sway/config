@@ -1,18 +1,8 @@
 # Read `man 5 sway` for a complete reference.
 include ~/.config/sway/config.d/*
 
-output * bg  ~/.config/wall.png fill
+output * bg ~/.config/wall.png fill
 exec mako
-
-set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $wmlauncher j4-dmenu-desktop --dmenu="bemenu -i --nf '#70C7D2' --nb '#193549' --sb '#2A597A' --sf '#70C7D2' --fn 'monospace-8' -p 'bemenu:'" --term='termite'
-set $wmrestart 	swaymsg reload
-
-set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $locksoff	swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $wmexit 	swaymsg exit
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
@@ -21,12 +11,24 @@ exec_always {
     gsettings set $gnome-schema cursor-theme 'Adwaita'
 }
 
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
 #exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
 #          timeout 600 'swaymsg "output * dpms off"' \
 #          resume 'swaymsg "output * dpms on"' \
 #          before-sleep 'swaylock -f -c 000000'
 
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+
+set $wmlauncher j4-dmenu-desktop --dmenu="bemenu -i --nf '#70C7D2' --nb '#193549' --sb '#2A597A' --sf '#70C7D2' --fn 'monospace-8' -p 'bemenu:'" --term='termite'
+set $wmrestart 	swaymsg reload
+
+set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
+set $locksoff	swaylock -e -f -c 000000 -i ~/.config/wall.png -t
+set $wmexit 	swaymsg exit
+
+

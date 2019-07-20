@@ -11,6 +11,7 @@ set $wmlauncher i3-dmenu-desktop  \\"--dmenu=dmenu -i -nf '#70C7D2' -nb '#193549
 set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
+
 ## Monitor layout.
 #set $LG HDMI-0
 #set $SG DP-1
