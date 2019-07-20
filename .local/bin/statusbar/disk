@@ -7,9 +7,9 @@
 [ -z "$1" ] && exit
 
 case $BLOCK_BUTTON in
-	1) pgrep -x dunst >/dev/null && notify-send "💽 Disk space:
+	1) pgrep -x dunst >/dev/null && notify-send -t 3000 "💽 Disk space:
 $(df -h --output=target,used,size)" ;;
-	3) pgrep -x dunst >/dev/null && notify-send "💽 Hard drive space remaining:
+	3) pgrep -x dunst >/dev/null && notify-send -t 3000 "💽 Hard drive space remaining:
 - Shows used hard drive space.
 - Click to show all disk info." ;;
 esac
