@@ -1,7 +1,7 @@
 
 
 exec_always xwallpaper --center ~/.config/wall.png
-set $wmrestart 		"cat ~/.config/i3/config.d/* > ~/.config/i3/config && i3-msg restart"
+set $wmrestart i3confmerge
 
 set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png

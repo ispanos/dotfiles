@@ -3,7 +3,7 @@ include ~/.config/sway/config.d/*
 
 output * bg ~/.config/wall.png fill
 exec mako
-
+input * xkb_numlock enabled
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Minwaita-Dark'

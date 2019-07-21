@@ -1,5 +1,3 @@
-
-
 focus_on_window_activation focus
 font pango:mono 8
 default_border pixel 1
@@ -56,4 +54,3 @@ bar
         urgent_workspace    #dc322f #dc322f #fdf6e3
     }
 }
-

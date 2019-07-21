@@ -1,5 +1,3 @@
-
-
 #Autostart Programs
 #exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -32,4 +30,3 @@ mode "$Pause-break" {
     bindsym Return  mode "default"
     bindsym Escape  mode "default"
 }
-
