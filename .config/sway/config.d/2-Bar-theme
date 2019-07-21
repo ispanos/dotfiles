@@ -23,8 +23,8 @@ client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
 
 bar 
 {
-    font pango:mono 10
-    tray_output primary
+    font pango:mono 10 
+    tray_output none
     status_command i3blocks
     
     colors 

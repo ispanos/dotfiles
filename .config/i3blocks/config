@@ -17,7 +17,8 @@ signal=10
 
 [ip]
 interval=once
-label=🌐
+label=
+#label=
 
 [pacpackages]
 label=
@@ -26,29 +27,24 @@ signal=8
 
 [memory]
 interval=10
-label=🐏
+label=
 
 [cpu]
 interval=10
+label=
 
 #[disk]
 #interval=60
 #command=disk /
 
 [clock]
-label=🗓️
+label=
 interval=5
 
-#[sep0]
-#command=echo "<span foreground='#000000' background='#EEFF94'></span>"
-#interval=once
-
 # AUR package: xkb-switch-git
-[keymap]
-label=
-# command=printf "<span foreground='#000000' background='#EEFF94'>" ; bash -c 'xkb-switch;xkb-switch -W' ; echo "</span>"
-command=bash -c 'xkb-switch;xkb-switch -W'
-interval=persist
+#[keymap]
+#command=bash -c 'xkb-switch;xkb-switch -W'
+#interval=persist
 
 [volume]
 interval=50

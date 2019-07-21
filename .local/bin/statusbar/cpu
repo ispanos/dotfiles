@@ -7,4 +7,4 @@ case $BLOCK_BUTTON in
 - % is of single core." ;;
 esac
 
-printf $(sensors | awk '/temp2/ {print "🌡️"$2}' | tr -d "+" | cut -f 1 -d '.')°C
+printf $(sensors | awk '/temp2/ {print $2}' | tr -d "+" | cut -f 1 -d '.')°C

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# fa-battery-0 (alias) [&#xf244;]
+#4.4
+# fa-battery-1 (alias) [&#xf243;]
+#4.4
+# fa-battery-2 (alias) [&#xf242;]
+#4.4
+# fa-battery-3 (alias) [&#xf241;]
+#4.4
+# fa-battery-4 (alias) [&#xf240;]
+#4.4
+# fa-battery-empty [&#xf244;]
+#4.4
+# fa-battery-full [&#xf240;]
+#4.4
+# fa-battery-half [&#xf242;]
+#4.4
+# fa-battery-quarter [&#xf243;]
+#4.4
+# fa-battery-three-quarters [&#xf241;] 
+# fa-plug [&#xf1e6;]
