@@ -20,6 +20,7 @@ stty -ixon
 
 complete -cf sudo
 shopt -s autocd
+[ -f "$HOME/.config/bash/aliasrc" ] && source "$HOME/.config/bash/aliasrc"
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
 export PS1="\[$(tput setaf 4)\]\u\[$(tput setaf 1)\]@\[$(tput bold)\]\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 7)\] \\$ \[$(tput sgr0)\]"
