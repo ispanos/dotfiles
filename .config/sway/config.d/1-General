@@ -1,7 +1,7 @@
 #Autostart Programs
 #exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
+#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 exec checkup
 
 # Programs
