@@ -16,6 +16,7 @@ export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 export GNUPGHOME=${XDG_CONFIG_HOME}/gnupg
 export INPUTRC="$HOME/.config/inputrc"
 [ -f ~/.config/bash/bashrc ] && source ~/.config/bash/bashrc
+[ -f ~/.config/bash/aliasrc ] && source ~/.config/bash/aliasrc
 
 # Start X if its not already running.
 #[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
