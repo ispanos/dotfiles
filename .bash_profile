@@ -4,7 +4,6 @@ export EDITOR="nvim"
 export TERMINAL="termite"
 export BROWSER="firefox"
 export READER="zathura"
-#export GIT_CONFIG="$HOME/.config/gitconfig" # didn't work.
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 export XKB_DEFAULT_LAYOUT=us,gr
