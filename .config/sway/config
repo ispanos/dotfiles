@@ -1,4 +1,5 @@
 # Read `man 5 sway` for a complete reference.
+#include /etc/sway/security.d/*
 include ~/.config/sway/config.d/*
 
 exec mako
@@ -35,7 +36,7 @@ set $wmlauncher j4-dmenu-desktop \
 							--term='termite'
 set $wmrestart 	swaymsg reload
 
-set $wmexit 	swaymsg exit
+set $wmexit 	"swaymsg exit && exit"
 set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	swayidle -w  \
 				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \

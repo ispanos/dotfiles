@@ -46,7 +46,7 @@ floating_modifier $mod
 	bindsym $mod+F11			exec --no-startup-id camtoggle
 
 # MODES
-	bindsym Pause               mode "$Pause-break"
+	bindsym $mod+Pause          mode "$Pause-break"
 	bindsym $mod+F12            mode "$mode_display"
  	bindsym $mod+Shift+g        mode "$mode_gaps"
 
