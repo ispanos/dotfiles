@@ -19,8 +19,10 @@ export INPUTRC="$HOME/.config/inputrc"
 
 [ -f ~/.bashrc ] && source ~/.bashrc
 
-# Start X if its not already running.
-#[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
-
-# Start sway if its not already running.
-[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null && sway >/dev/null
+if [ -f /usr/bin/sway ]; then
+	# Start sway if its not already running.
+	[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null && sway >/dev/null
+elif [ -f /usr/bin/i3 ]; then
+	# Start X if its not already running.
+	[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
+fi
