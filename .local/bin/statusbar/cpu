@@ -7,4 +7,11 @@ case $BLOCK_BUTTON in
 - % is of single core." ;;
 esac
 
-printf $(sensors | awk '/temp2/ {print $2}' | tr -d "+" | cut -f 1 -d '.')°C
+if [ $(hostname) == "killua" ]; then
+	temp=$(sensors | awk '/temp2/ {print $2}' | tr -d "+" | cut -f 1 -d '.')
+
+else
+	temp=$(sensors | awk '/Core 0/ {print "🌡️"$3}' | tr -d "+" | cut -f 1 -d '.')
+fi
+
+[ "$temp" ] && printf $temp°C
