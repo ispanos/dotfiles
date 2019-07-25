@@ -20,4 +20,4 @@ merge() {
 	done
 }
 
-merge && i3-msg restart
+merge && [ -f /usr/bin/i3 ] && pgrep -x Xorg >/dev/null && i3-msg restart
