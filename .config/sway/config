@@ -5,14 +5,6 @@ include ~/.config/sway/config.d/*
 exec mako
 input * xkb_numlock enabled
 
-output * bg ~/.config/wall.png fill
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    gsettings set $gnome-schema gtk-theme 'Minwaita-Dark'
-    gsettings set $gnome-schema icon-theme 'Adwaita'
-    gsettings set $gnome-schema cursor-theme 'Adwaita'
-}
-
 exec swayidle -w \
           timeout 7190 'swaylock -f -c 000000 -i ~/.config/wall.png' \
           timeout 7200 'swaymsg "output * dpms off"' \
@@ -20,10 +12,14 @@ exec swayidle -w \
           before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
           after-resume 'swaymsg "output * dpms on"'
 
-exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $wmexit 	"swaymsg exit && exit"
+set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
+set $locksoff	swayidle -w  \
+				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \
+				timeout 2 'swaymsg "output * dpms off"' \
+				resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
+
+set $wmrestart 	swaymsg reload
 
 set $wmlauncher j4-dmenu-desktop \
 					--dmenu="bemenu -i \
@@ -34,14 +30,19 @@ set $wmlauncher j4-dmenu-desktop \
 							--fn 'monospace-8' \
 							-p 'bemenu:'" \
 							--term='termite'
-set $wmrestart 	swaymsg reload
 
-set $wmexit 	"swaymsg exit && exit"
-set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $locksoff	swayidle -w  \
-				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \
-				timeout 2 'swaymsg "output * dpms off"' \
-				resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
+set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+
+
+output * bg ~/.config/wall.png fill
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Minwaita-Dark'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+}
 
 for_window  [title="galculator"]            floating enable
 for_window  [class="Gcolor3"]               floating enable
@@ -52,3 +53,5 @@ for_window  [title="qpaeq"]                 resize set 664 420
 for_window  [title="skype"]                 floating enable
 for_window  [title="spotify"]               move to workspace $ws10
 #for_window  [class="(?i)virtualbox"]        floating enable border normal
+
+
