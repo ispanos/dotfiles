@@ -7,22 +7,29 @@ export BROWSER="firefox"
 export READER="zathura"
 export QT_QPA_PLATFORMTHEME=qt5ct
 
-export XKB_DEFAULT_LAYOUT=us,gr
-export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
-#export QT_QPA_PLATFORM=wayland
-export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-#export MOZ_ENABLE_WAYLAND=1
-
 # Declutter ~
 export GNUPGHOME=${XDG_CONFIG_HOME}/gnupg
 export INPUTRC="$HOME/.config/inputrc"
 
 [ -f ~/.bashrc ] && source ~/.bashrc
 
-if [ -f /usr/bin/sway ]; then
-	# Start sway if its not already running.
-	[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null && sway >/dev/null
-elif [ -f /usr/bin/i3 ]; then
-	# Start X if its not already running.
-	[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
+if [[ -z $DISPLAY ]]; then
+
+	if [ -f /usr/bin/i3 ]; then
+		# Start X if its not already running.
+		[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
+
+	elif [ -f /usr/bin/sway ]; then
+		# Variables needed by only by sway.
+		export XKB_DEFAULT_LAYOUT=us,gr
+		export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+		#export QT_QPA_PLATFORM=wayland
+		export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+		#export MOZ_ENABLE_WAYLAND=1
+		
+		# Start sway if its not already running.
+		[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null && sway >/dev/null
+
+	fi
+
 fi
