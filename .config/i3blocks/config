@@ -42,9 +42,9 @@ label=
 interval=5
 
 # AUR package: xkb-switch-git
-#[keymap]
-#command=bash -c 'xkb-switch;xkb-switch -W'
-#interval=persist
+[keymap]
+command=bash -c 'xkb-switch;xkb-switch -W'
+interval=persist
 
 [volume]
 interval=50

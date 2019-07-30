@@ -3,7 +3,14 @@ exec_always xwallpaper --center ~/.config/wall.png
 exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 
 set $wmrestart i3confmerge
-set $wmlauncher i3-dmenu-desktop  \\"--dmenu=dmenu -i -nf '#70C7D2' -nb '#193549' -sb '#2A597A' -sf '#70C7D2' -fn 'monospace-10' -p 'i3-dmenu-desktop:' \\"
+set $wmlauncher i3-dmenu-desktop  \
+				\\"--dmenu=dmenu -i \
+				-nf '#70C7D2' \
+				-nb '#193549' \
+				-sb '#2A597A' \
+				-sf '#70C7D2' \
+				-fn 'monospace-10' \
+				-p 'i3-dmenu-desktop:' \\"
 
 set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
@@ -29,23 +36,39 @@ for_window	[class="Popcorn-Time"]			border pixel 1
 #for_window  [class="(?i)virtualbox"]        floating enable border normal
 
 
-## Monitor layout.
+# Monitor layout.
+
+# With Nvidia driver
 #set $LG HDMI-0
+
+# With Nouveau driver
+#set $LG HDMI-1
+
 #set $SG DP-1
-#exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG
-#
+
+exec xrandr --output $LG --rotate normal --primary \
+#				--output $SG --rotate normal --right-of $LG
+
 #workspace $ws1  output $LG
 #workspace $ws2  output $SG
 #workspace $ws10 output $SG
-#
-#set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
-#mode "$mode_display" {
-#bindsym m exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --same-as  $LG; mode "default"
-#bindsym d exec xrandr --output $LG --rotate normal --primary --output $SG --rotate normal --right-of $LG; mode "default"
-#bindsym L exec xrandr --output $LG --rotate normal --primary --output $SG --rotate left   --right-of $LG, mode "default"
-#
-#bindsym Return  mode "default"
-#bindsym Escape  mode "default"
-#}
-#
-#
+
+set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
+mode "$mode_display" {
+
+#bindsym m exec xrandr 	--output $LG --rotate normal 	--primary \
+#						--output $SG --rotate normal 	--same-as  $LG; \
+#		mode "default"
+
+#bindsym d exec xrandr 	--output $LG --rotate normal 	--primary \
+#						--output $SG --rotate normal 	--right-of $LG; \
+#		mode "default"
+
+#bindsym L exec xrandr 	--output $LG --rotate normal 	--primary \
+#						--output $SG --rotate left 		--right-of $LG, \
+#		mode "default"
+
+bindsym Return  mode "default"
+
+bindsym Escape  mode "default"
+}
