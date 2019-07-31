@@ -1,4 +1,5 @@
 set $mod Mod4
+set $alt Mod1
 
 set $left  h
 set $down  j
@@ -7,9 +8,13 @@ set $right l
 
 floating_modifier $mod
 
+# Scratchpad
+bindsym $mod+Tab scratchpad show
+bindsym $mod+Shift+grave move scratchpad
+bindsym $alt+grave exec termite -t dropdown
+
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
-	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
 	bindsym $mod+Shift+r        exec $wmrestart

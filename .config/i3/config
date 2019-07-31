@@ -29,6 +29,16 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
+# dropdown TERMINAL
+# $alt+grave to start new instance
+# $mod+Tab show
+for_window [title="dropdown"] floating enable
+for_window [title="dropdown"] move scratchpad
+for_window [title="dropdown"] sticky enable
+for_window [title="dropdown"] scratchpad show
+for_window [title="dropdown"] resize set 1280 420
+for_window [title="dropdown"] move position 320 20
+
 # Application specific rules ($xprop find the name)
 assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
@@ -86,6 +96,7 @@ bindsym Escape  mode "default"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 exec checkup
+exec termite -t dropdown
 
 # Programs
 set $term       	$TERMINAL
@@ -161,6 +172,7 @@ bar
 }
 
 set $mod Mod4
+set $alt Mod1
 
 set $left  h
 set $down  j
@@ -169,9 +181,13 @@ set $right l
 
 floating_modifier $mod
 
+# Scratchpad
+bindsym $mod+Tab scratchpad show
+bindsym $mod+Shift+grave move scratchpad
+bindsym $alt+grave exec termite -t dropdown
+
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
-	bindsym $mod+grave          bar mode toggle
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
 	bindsym $mod+Shift+r        exec $wmrestart

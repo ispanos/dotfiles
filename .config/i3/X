@@ -21,6 +21,16 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
+# dropdown TERMINAL
+# $alt+grave to start new instance
+# $mod+Tab show
+for_window [title="dropdown"] floating enable
+for_window [title="dropdown"] move scratchpad
+for_window [title="dropdown"] sticky enable
+for_window [title="dropdown"] scratchpad show
+for_window [title="dropdown"] resize set 1280 420
+for_window [title="dropdown"] move position 320 20
+
 # Application specific rules ($xprop find the name)
 assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
