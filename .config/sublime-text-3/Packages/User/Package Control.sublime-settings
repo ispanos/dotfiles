@@ -5,7 +5,10 @@
 	],
 	"installed_packages":
 	[
+		"Agila Theme",
 		"i3 wm",
-		"Package Control"
+		"Package Control",
+		"Seti_UI",
+		"SideBarEnhancements"
 	]
 }
