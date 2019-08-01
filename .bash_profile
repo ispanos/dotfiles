@@ -8,7 +8,7 @@ export READER="zathura"
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Declutter ~
-export GNUPGHOME=${XDG_CONFIG_HOME}/gnupg
+export GNUPGHOME="$HOME/.config/gnupg"
 export INPUTRC="$HOME/.config/inputrc"
 
 [ -f ~/.bashrc ] && source ~/.bashrc

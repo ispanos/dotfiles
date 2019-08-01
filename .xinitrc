@@ -1,6 +1,4 @@
 #!/bin/sh
-
-xcompmgr &
+#xcompmgr &
 dunst &
-
 exec i3
