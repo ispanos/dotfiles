@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 local fgc bgc vals seq0
 printf "Color escapes are %s\n" '\e[${value};...;${value}m'

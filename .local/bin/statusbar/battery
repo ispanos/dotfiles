@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # fa-battery-0 (alias) [&#xf244;]
 #4.4

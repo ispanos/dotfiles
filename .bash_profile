@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export EDITOR="nvim"
@@ -14,9 +14,7 @@ export INPUTRC="$HOME/.config/inputrc"
 [ -f ~/.bashrc ] && source ~/.bashrc
 
 if [[ -z $DISPLAY ]]; then
-
 	if [ -f /usr/bin/i3 ]; then
-		# Start X if its not already running.
 		[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
 
 	elif [ -f /usr/bin/sway ]; then
@@ -27,9 +25,6 @@ if [[ -z $DISPLAY ]]; then
 		export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 		#export MOZ_ENABLE_WAYLAND=1
 		
-		# Start sway if its not already running.
 		[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null && sway >/dev/null
-
 	fi
-
 fi

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 pacman -Qqen > /tmp/temp_native_new_packages
 pacman -Qqem > /tmp/temp_foreign_new_packages
