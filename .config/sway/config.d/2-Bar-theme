@@ -1,5 +1,6 @@
 focus_on_window_activation focus
-font pango:mono 8
+#font pango:mono 8
+font pango:SourceCodePro-ExtraLight 7
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
@@ -23,7 +24,7 @@ client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
 
 bar 
 {
-    font pango:mono 10 
+    font pango:SourceCodePro-ExtraLight 8
     tray_output none
     status_command i3blocks
     

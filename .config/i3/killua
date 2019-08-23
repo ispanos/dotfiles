@@ -1,0 +1,36 @@
+# Monitor layout.
+
+# With Nvidia driver
+#set $LG HDMI-0
+
+# With Nouveau driver
+set $LG HDMI-1
+
+set $SG DP-1
+
+exec xrandr --output $LG --rotate normal --primary \
+				--output $SG --rotate normal --right-of $LG
+
+workspace $ws1  output $LG
+workspace $ws2  output $SG
+workspace $ws10 output $SG
+
+set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
+mode "$mode_display" {
+
+	bindsym m exec xrandr 	--output $LG --rotate normal 	--primary \
+							--output $SG --rotate normal 	--same-as  $LG; \
+			mode "default"
+	
+	bindsym d exec xrandr 	--output $LG --rotate normal 	--primary \
+							--output $SG --rotate normal 	--right-of $LG; \
+			mode "default"
+	
+	bindsym L exec xrandr 	--output $LG --rotate normal 	--primary \
+							--output $SG --rotate left 		--right-of $LG, \
+			mode "default"
+	
+	bindsym Return  mode "default"
+	
+	bindsym Escape  mode "default"
+}

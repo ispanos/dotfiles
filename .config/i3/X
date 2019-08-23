@@ -35,7 +35,7 @@ assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
 for_window  [class="Lxappearance"]          floating enable
 for_window  [class="Gcolor3"]               floating enable
-for_window  [class="Termite"]               border pixel 1
+#for_window  [class="Termite"]               border pixel 1
 for_window  [title="pulsemixer"]            floating enable move position center
 for_window  [title="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="qpaeq"]                 floating enable move position center resize set 664 420
@@ -43,41 +43,3 @@ for_window  [class="Skype"]                 floating enable
 for_window  [class="Spotify"]               move to workspace $ws10
 for_window	[class="Popcorn-Time"]			border pixel 1
 #for_window  [class="(?i)virtualbox"]        floating enable border normal
-
-
-# Monitor layout.
-
-# With Nvidia driver
-#set $LG HDMI-0
-
-# With Nouveau driver
-#set $LG HDMI-1
-
-#set $SG DP-1
-
-#exec xrandr --output $LG --rotate normal --primary \
-#				--output $SG --rotate normal --right-of $LG
-
-#workspace $ws1  output $LG
-#workspace $ws2  output $SG
-#workspace $ws10 output $SG
-
-set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
-mode "$mode_display" {
-
-#bindsym m exec xrandr 	--output $LG --rotate normal 	--primary \
-#						--output $SG --rotate normal 	--same-as  $LG; \
-#		mode "default"
-
-#bindsym d exec xrandr 	--output $LG --rotate normal 	--primary \
-#						--output $SG --rotate normal 	--right-of $LG; \
-#		mode "default"
-
-#bindsym L exec xrandr 	--output $LG --rotate normal 	--primary \
-#						--output $SG --rotate left 		--right-of $LG, \
-#		mode "default"
-
-bindsym Return  mode "default"
-
-bindsym Escape  mode "default"
-}

@@ -2,7 +2,7 @@
 
 export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export EDITOR="nvim"
-export TERMINAL="termite"
+export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
 export READER="zathura"
 export QT_QPA_PLATFORMTHEME=qt5ct

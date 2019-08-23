@@ -4,7 +4,7 @@
 ## sway uses include /etc/sway/config.d/* to do the same thing.
 ## Any changes made on this file will be lost when i3 reloads. 
 
-# This config file uses environmental variables such as firefox and termite,
+# This config file uses environmental variables such as firefox and gnome-terminal,
 # you can set them bellow as variables: "" "" ""
 exec_always xwallpaper --center ~/.config/wall.png
 
@@ -43,7 +43,7 @@ assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
 for_window  [class="Lxappearance"]          floating enable
 for_window  [class="Gcolor3"]               floating enable
-for_window  [class="Termite"]               border pixel 1
+#for_window  [class="Termite"]               border pixel 1
 for_window  [title="pulsemixer"]            floating enable move position center
 for_window  [title="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="qpaeq"]                 floating enable move position center resize set 664 420
@@ -95,7 +95,7 @@ bindsym Escape  mode "default"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 exec checkup
-exec termite -t dropdown
+#exec $TERMINAL -t dropdown
 
 # Programs
 set $term       	$TERMINAL
@@ -130,7 +130,8 @@ mode "$Pause-break" {
 # smart_borders on
 
 focus_on_window_activation focus
-font pango:mono 8
+#font pango:mono 8
+font pango:SourceCodePro-ExtraLight 7
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
@@ -154,7 +155,7 @@ client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
 
 bar 
 {
-    font pango:mono 10 
+    font pango:SourceCodePro-ExtraLight 8
     tray_output none
     status_command i3blocks
     
@@ -183,7 +184,7 @@ floating_modifier $mod
 # Scratchpad
 bindsym $mod+Tab scratchpad show
 bindsym $mod+Shift+grave move scratchpad
-bindsym $alt+grave exec termite -t dropdown
+#bindsym $alt+grave exec $TERMINAL -t dropdown
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher

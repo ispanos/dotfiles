@@ -14,7 +14,10 @@ merge() {
 	
 	cat ~/.config/i3/X >> ~/.config/i3/config
 	
-	for i in ~/.config/sway/config.d/* ; do
+	printf "\\n\\n" >> ~/.config/i3/config
+	#[ $(hostname) = "killua" ] && cat ~/.config/i3/killua >> ~/.config/i3/config
+
+	for i in ~/.config/i3/config.d/* ; do
 		printf "\\n\\n" >> ~/.config/i3/config
 		cat $i >> ~/.config/i3/config
 	done

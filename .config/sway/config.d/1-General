@@ -3,7 +3,7 @@
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 exec checkup
-exec termite -t dropdown
+#exec $TERMINAL -t dropdown
 
 # Programs
 set $term       	$TERMINAL
