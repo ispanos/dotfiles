@@ -1,5 +1,4 @@
 exec_always xwallpaper --center ~/.config/wall.png
-
 exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 
 set $wmrestart i3confmerge
@@ -16,30 +15,16 @@ set $screenshot maim -m 1                               ~/Pictures/Screenshots/$
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-
 set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
-# dropdown TERMINAL
-# $alt+grave to start new instance
-# $mod+Tab show
-for_window [title="dropdown"] floating enable
-for_window [title="dropdown"] resize set 1280 420
-for_window [title="dropdown"] move position 320 20
-for_window [title="dropdown"] move scratchpad
-for_window [title="dropdown"] sticky enable
-
 # Application specific rules ($xprop find the name)
 assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
-for_window  [class="Lxappearance"]          floating enable
 for_window  [class="Gcolor3"]               floating enable
-#for_window  [class="Termite"]               border pixel 1
-for_window  [title="pulsemixer"]            floating enable move position center
-for_window  [title="PulseAudio Equalizer"]  floating enable move position center
+for_window  [class="pulsemixer"]            floating enable move position center
+for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="qpaeq"]                 floating enable move position center resize set 664 420
 for_window  [class="Skype"]                 floating enable
-for_window  [class="Spotify"]               move to workspace $ws10
-for_window	[class="Popcorn-Time"]			border pixel 1
 #for_window  [class="(?i)virtualbox"]        floating enable border normal

@@ -9,7 +9,7 @@ command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n") && pkil
 instance=spotify
 label=🎵
 interval=4
-signal=10
+signal=8
 
 #[nothing]
 #command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
@@ -23,7 +23,7 @@ label=
 [pacpackages]
 label=
 interval=once
-signal=8
+signal=9
 
 [memory]
 interval=10
@@ -41,7 +41,7 @@ label=
 label=
 interval=5
 
-# AUR package: xkb-switch-git
+# Needs xkb-switch
 [keymap]
 command=bash -c 'xkb-switch;xkb-switch -W'
 interval=persist

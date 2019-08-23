@@ -2,9 +2,9 @@
 
 case $BLOCK_BUTTON in
 	1) setsid "$TERMINAL" -e pulsemixer & ;;
-	2) pulsemixer --toggle-mute ;;
-	4) pulsemixer --change-volume +5 ;;
-	5) pulsemixer --change-volume -5 ;;
+	2) pulsemixer --toggle-mute && pkill -RTMIN+10 i3blocks ;;
+	4) pulsemixer --change-volume +5 && pkill -RTMIN+10 i3blocks ;;
+	5) pulsemixer --change-volume -5 && pkill -RTMIN+10 i3blocks ;;
 	3) qpaeq
 #	3) pulseaudio-equalizer-gtk ;;
 esac

@@ -2,9 +2,19 @@
 
 # i3blocks module for pacman upgrades.
 # Displays number of upgradeable packages.
+upg_sys() {
+	printf "Beginning upgrade.\\n"
+	
+	sudo pacman -Syu && yay -Syu
+	checkup && pkill -SIGRTMIN+9 i3blocks
+	
+	printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
+	read -r
+}
 
 case $BLOCK_BUTTON in
-	1) $TERMINAL -e popupgrade ;;
+	#1) $TERMINAL -e popupgrade ;;
+	1) $TERMINAL -e upg_sys ;;
 	2) notify-send -t 3000 "$(cat /tmp/available_updates)" ;;
 	3) pgrep -x dunst >/dev/null && notify-send "Upgrade module:
 : number of upgradable packages
