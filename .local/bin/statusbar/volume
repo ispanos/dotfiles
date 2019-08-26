@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 case $BLOCK_BUTTON in
-	1) setsid "$TERMINAL" -e pulsemixer & ;;
-	2) pulsemixer --toggle-mute && pkill -RTMIN+10 i3blocks ;;
-	4) pulsemixer --change-volume +5 && pkill -RTMIN+10 i3blocks ;;
-	5) pulsemixer --change-volume -5 && pkill -RTMIN+10 i3blocks ;;
+	1) pavucontrol ;;
+	2) pactl set-sink-mute   0 toggle 	&& pkill -RTMIN+10 i3blocks ;;
+	4) pactl set-sink-volume 0 +2% 		&& pkill -RTMIN+10 i3blocks ;;
+	5) pactl set-sink-volume 0 -4% 		&& pkill -RTMIN+10 i3blocks ;;
 	3) qpaeq
 #	3) pulseaudio-equalizer-gtk ;;
 esac

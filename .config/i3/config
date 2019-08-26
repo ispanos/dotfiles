@@ -27,16 +27,6 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
-# Application specific rules ($xprop find the name)
-assign      [class="RocketLeague"]          $ws1
-for_window  [class="Galculator"]            floating enable
-for_window  [class="Gcolor3"]               floating enable
-for_window  [class="pulsemixer"]            floating enable move position center
-for_window  [class="PulseAudio Equalizer"]  floating enable move position center
-for_window  [class="qpaeq"]                 floating enable move position center resize set 664 420
-for_window  [class="Skype"]                 floating enable
-#for_window  [class="(?i)virtualbox"]        floating enable border normal
-
 
 
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -44,14 +34,6 @@ for_window  [class="Skype"]                 floating enable
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 exec checkup
-
-# $alt+grave to start new instance --- $mod+Tab show
-exec $TERMINAL --title="dropdownGT" --hide-menubar
-for_window [title="dropdownGT"] floating enable
-for_window [title="dropdownGT"] resize set 1280 420
-for_window [title="dropdownGT"] move position 320 20
-for_window [title="dropdownGT"] move scratchpad
-for_window [title="dropdownGT"] sticky enable
 
 # Programs
 set $term       	$TERMINAL --hide-menubar
@@ -78,6 +60,32 @@ mode "$Pause-break" {
     bindsym Return  mode "default"
     bindsym Escape  mode "default"
 }
+
+# $alt+grave to start new instance --- $mod+Tab show
+exec $term --title=dropdownGT
+for_window [title="dropdownGT"] floating enable
+for_window [title="dropdownGT"] resize set 1280 420
+for_window [title="dropdownGT"] move position 320 20
+for_window [title="dropdownGT"] move scratchpad
+for_window [title="dropdownGT"] sticky enable
+
+# Application specific rules ($xprop find the name)
+assign      [class="RocketLeague"]          $ws1
+for_window  [class="Galculator"]            floating enable
+for_window  [class="Gcolor3"]               floating enable
+for_window  [title="pulsemixerGT"]          floating enable move position center
+for_window  [class="PulseAudio Equalizer"]  floating enable move position center
+for_window  [class="Skype"]                 floating enable
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] resize set 1280 420
+for_window [class="Pavucontrol"] move position 320 20
+for_window [class="Pavucontrol"] sticky enable
+
+for_window [class="qpaeq"] floating enable
+for_window [class="qpaeq"] resize set 1280 420
+for_window [class="qpaeq"] move position 320 20
+for_window [class="qpaeq"] sticky enable
 
 # # Gap settings
 # gaps inner 6
@@ -140,7 +148,7 @@ floating_modifier $mod
 # Scratchpad
 bindsym $mod+Tab scratchpad show
 bindsym $mod+Shift+grave move scratchpad
-bindsym $alt+grave exec $TERMINAL --title="dropdownGT" --hide-menubar
+bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher

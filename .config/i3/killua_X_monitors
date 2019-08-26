@@ -1,8 +1,5 @@
-# Monitor layout.
-
 # With Nvidia driver
 #set $LG HDMI-0
-
 # With Nouveau driver
 set $LG HDMI-1
 

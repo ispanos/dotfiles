@@ -4,6 +4,9 @@ pacman -Qqen > /tmp/temp_native_new_packages
 pacman -Qqem > /tmp/temp_foreign_new_packages
 pacman -Qq > /tmp/temp_all_new_packages
 
+printf "Number of new packages: "
+expr $(pacman -Qq | wc -l) - $(wc -l < .local/Fresh_pack_list)
+
 echo $(tput setaf 2)"Native:"$(tput sgr0)
 diff $HOME/.local/Fresh_pack_list /tmp/temp_native_new_packages | grep ">" | tr ">" "-"
 
@@ -12,3 +15,4 @@ diff $HOME/.local/Fresh_pack_list /tmp/temp_foreign_new_packages | grep ">" | tr
 
 echo $(tput setaf 1)"Removed:"$(tput sgr0)
 diff $HOME/.local/Fresh_pack_list /tmp/temp_all_new_packages | grep "<" | tr "<" "-"
+

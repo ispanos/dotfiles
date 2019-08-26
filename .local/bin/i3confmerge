@@ -15,7 +15,7 @@ merge() {
 	cat ~/.config/i3/X >> ~/.config/i3/config
 	
 	printf "\\n\\n" >> ~/.config/i3/config
-	#[ $(hostname) = "killua" ] && cat ~/.config/i3/killua >> ~/.config/i3/config
+	#[ $(hostname) = "killua" ] && cat ~/.config/i3/killua_X_monitors >> ~/.config/i3/config
 
 	for i in ~/.config/i3/config.d/* ; do
 		printf "\\n\\n" >> ~/.config/i3/config

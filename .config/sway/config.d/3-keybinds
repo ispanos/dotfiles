@@ -11,7 +11,7 @@ floating_modifier $mod
 # Scratchpad
 bindsym $mod+Tab scratchpad show
 bindsym $mod+Shift+grave move scratchpad
-bindsym $alt+grave exec $TERMINAL --title="dropdownGT" --hide-menubar
+bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
