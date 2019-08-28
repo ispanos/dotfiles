@@ -1,30 +1,29 @@
 #!/bin/sh
 alias free="free --mebi"\
-	mkd="mkdir -pv"\
-	yt="youtube-dl --add-metadata"\
 	cp="cp --interactive"\
 	df="df --human-readable"\
-	sb="subl3"\
-	ssb="sudo subl3"\
-	g="git"\
-	gs="git status"\
-	ga="git add -A"\
-	gp="git push"\
-	gc="git commit -m"\
-	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
+	diff="diff --color=auto"\
 	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
 	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
-	p="sudo pacman"\
-	pc="pacman -Qq | wc -l"\
-	ls="lsd --human-readable --color=auto "\
-	grep="grep --colour=auto"\
+	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
 	egrep="egrep --colour=auto"\
 	fgrep="fgrep --colour=auto"\
+	ga="git add -A"\
+	gc="git commit -m"\
+	g="git"\
+	gp="git push"\
+	grep="grep --colour=auto"\
+	gs="git status"\
 	hcat="highlight --out-format=ansi"\
 	hcatt="highlight --src-lang"\
-	diff="diff --color=auto"\
+	ll="lsd --human-readable --color=auto -al"\
+	ls="lsd --human-readable --color=auto "\
+	mkd="mkdir -pv"\
+	pc="pacman -Qq | wc -l"\
+	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"\
+	sb="subl3"\
 	starwars="telnet towel.blinkenlights.nl"\
-	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"
+	yt="youtube-dl --add-metadata"\
 
 # ls="ls --literal --human-readable --color=auto --group-directories-first "\
 
