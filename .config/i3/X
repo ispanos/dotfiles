@@ -1,4 +1,4 @@
-exec_always xwallpaper --center ~/.config/wall.png
+exec_always feh --bg-max ~/.config/wall.png
 exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 
 set $wmrestart i3confmerge

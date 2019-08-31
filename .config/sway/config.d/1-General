@@ -5,7 +5,7 @@ exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots
 exec checkup
 
 # Programs
-set $term       	$TERMINAL --hide-menubar
+set $term       	$TERMINAL
 set $browsr     	$BROWSER
 set $myeditor   	subl3
 set $fm         	pcmanfm
@@ -30,14 +30,6 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
-# $alt+grave to start new instance --- $mod+Tab show
-exec sleep 2 && $term --title=dropdownGT
-for_window [title="dropdownGT"] floating enable
-for_window [title="dropdownGT"] resize set 1280 420
-for_window [title="dropdownGT"] move position 320 20
-for_window [title="dropdownGT"] move scratchpad
-for_window [title="dropdownGT"] sticky enable
-
 # Application specific rules ($xprop find the name)
 assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
@@ -46,15 +38,27 @@ for_window  [title="pulsemixerGT"]          floating enable move position center
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="Skype"]                 floating enable
 
+# $alt+grave to start new instance --- $mod+Tab show
+exec sleep 2 && $term --title=dropdownGT
+for_window [title="dropdownGT"] floating enable
+for_window [title="dropdownGT"] resize set 1080 420
+for_window [title="dropdownGT"] move position center
+for_window [title="dropdownGT"] move position up
+for_window [title="dropdownGT"] move scratchpad
+for_window [title="dropdownGT"] sticky enable
+for_window [title="dropdownGT"] border none
+
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Pavucontrol"] resize set 1280 420
-for_window [class="Pavucontrol"] move position 320 20
+for_window [class="Pavucontrol"] resize set 1080 420
+for_window [class="Pavucontrol"] move position center
 for_window [class="Pavucontrol"] sticky enable
+for_window [class="Pavucontrol"] border none
 
 for_window [class="qpaeq"] floating enable
-for_window [class="qpaeq"] resize set 1280 420
-for_window [class="qpaeq"] move position 320 20
+for_window [class="qpaeq"] resize set 1080 420
+for_window [class="qpaeq"] move position center
 for_window [class="qpaeq"] sticky enable
+for_window [class="qpaeq"] border none
 
 # # Gap settings
 # gaps inner 6

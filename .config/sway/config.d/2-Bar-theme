@@ -1,5 +1,4 @@
 focus_on_window_activation focus
-#font pango:mono 8
 font pango:SourceCodePro-ExtraLight 7
 default_border pixel 1
 default_floating_border normal
