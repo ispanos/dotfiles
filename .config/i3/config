@@ -36,7 +36,7 @@ exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots
 exec checkup
 
 # Programs
-set $term       	$TERMINAL --hide-menubar
+set $term       	$TERMINAL
 set $browsr     	$BROWSER
 set $myeditor   	subl3
 set $fm         	pcmanfm
