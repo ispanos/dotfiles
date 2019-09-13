@@ -14,8 +14,8 @@ export INPUTRC="$HOME/.config/inputrc"
 [ -f ~/.bashrc ] && source ~/.bashrc
 
 if [[ -z $DISPLAY ]]; then
-	if [ -f /usr/bin/i3 ]; then
-		[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx
+	if [ -f /usr/bin/i3 ] && [ "$(tty)" = "/dev/tty1" ]; then
+		! pgrep -x Xorg >/dev/null && exec startx > ~/.local/xorg/$(date +%s).log 2>&1
 
 	elif [ -f /usr/bin/sway ]; then
 		# Variables needed by only by sway.

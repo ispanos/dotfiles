@@ -1,4 +1,4 @@
-exec_always feh --bg-max ~/.config/wall.png
+exec_always feh --no-fehbg --bg-max ~/.config/wall.png
 exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 
 set $wmrestart i3confmerge
@@ -8,7 +8,6 @@ set $wmlauncher i3-dmenu-desktop  \
 				-nb '#193549' \
 				-sb '#2A597A' \
 				-sf '#70C7D2' \
-				-fn 'monospace-10' \
 				-p 'i3-dmenu-desktop:' \\"
 
 set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png

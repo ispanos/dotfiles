@@ -10,3 +10,5 @@ esac
 percent=$(echo "scale=2; $(free --mebi | awk '/^Mem:/ {print $3 "/" $2}')*100" | bc | cut -d"." -f1)
 
 [ $percent -gt 50 ] && echo $percent%
+
+exit 0

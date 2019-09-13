@@ -2,6 +2,9 @@
 #include /etc/sway/security.d/*
 include ~/.config/sway/config.d/*
 
+# inhibit_idle
+
+
 exec mako
 input * xkb_numlock enabled
 

@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        // ...
+        "**/sway/*": "i3",
+        "**/sway/*/*": "i3",
+        "**/i3/*": "i3",
+        "**/i3/*/*": "i3",
+        // ...
+    },
+    "workbench.colorTheme": "Horizon",
+    "editor.minimap.enabled": false,
+    "git.confirmSync": false,
+    
+}
