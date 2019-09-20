@@ -15,6 +15,7 @@ export INPUTRC="$HOME/.config/inputrc"
 
 if [[ -z $DISPLAY ]]; then
 	if [ -f /usr/bin/i3 ] && [ "$(tty)" = "/dev/tty1" ]; then
+		[ ! -d ~/.local/xorg] && mkdir ~/.local/xorg
 		! pgrep -x Xorg >/dev/null && exec startx > ~/.local/xorg/$(date +%s).log 2>&1
 
 	elif [ -f /usr/bin/sway ]; then

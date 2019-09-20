@@ -20,4 +20,4 @@ else
 fi
 
 #printf "%s %s%%\\n" "$icon" "$vol"
-printf "$icon"
+printf "$icon\n"
