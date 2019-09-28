@@ -2,7 +2,6 @@
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-exec checkup
 
 # Programs
 set $term       	$TERMINAL

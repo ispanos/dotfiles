@@ -1,24 +1,22 @@
 command=~/.local/bin/statusbar/$BLOCK_NAME
 separator=false
-separator_block_width=6
+separator_block_width=7
 markup=pango
 
-[mediaplayer]
-command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n") && pkill -RTMIN+10 i3blocks
-#command=/usr/lib/i3blocks/mediaplayer
-instance=spotify
-label=🎵
-interval=4
-signal=8
+# [mediaplayer]
+# command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")🎵 && pkill -RTMIN+10 i3blocks
+# instance=spotify
+# interval=4
+# signal=8
 
-#[nothing]
-#command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
-#interval=once
+# [nothing]
+# command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
+# interval=once
 
 [ip]
 interval=once
 label=
-#label=
+# label=
 
 [pacpackages]
 label=
@@ -33,9 +31,9 @@ label=
 interval=10
 label=
 
-#[disk]
-#interval=60
-#command=disk /
+# [disk]
+# interval=60
+# command=disk /
 
 [clock]
 label=

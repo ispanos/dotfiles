@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-printf "Beginning upgrade.\\n"
-sudo pacman -Syu && yay -Syu
-checkupdates > /tmp/available_updates
-pkill -SIGRTMIN+9 i3blocks
-printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
-read -r

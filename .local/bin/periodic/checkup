@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-ping -q -w 1 -c 1 $(ip r | grep -m 1 default | cut -d ' ' -f 3) >/dev/null || exit
-notify-send -t 6000 "Checking for pacakge updates..."
-{ 	checkupdates > /tmp/available_updates || 
-	notify-send -t 6000 "Error Checking for updates."; } &&
-pkill -SIGRTMIN+9 i3blocks

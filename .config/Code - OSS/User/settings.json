@@ -1,4 +1,5 @@
 {
+    "editor.fontFamily": "'Monospace', 'FontAwesome'",
     "files.associations": {
         // ...
         "**/sway/*": "i3",
@@ -7,8 +8,9 @@
         "**/i3/*/*": "i3",
         // ...
     },
-    "workbench.colorTheme": "Horizon",
+    "workbench.colorTheme": "Horizon Bold",
     "editor.minimap.enabled": false,
     "git.confirmSync": false,
+    "terminal.integrated.rendererType": "dom",
     
 }

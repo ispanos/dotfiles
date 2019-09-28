@@ -5,4 +5,4 @@ mpv --no-osc \
 	--input-conf=/dev/null \
 	--geometry=-0-0  \
 	--autofit=30%  \
-	--title="mpvfloat" av://v4l2:/dev/video0 
+	--title="mpvfloat" av://v4l2:/dev/video0

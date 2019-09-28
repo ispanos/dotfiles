@@ -6,16 +6,16 @@ merge() {
 		#                           #-------Warning-------#                           #
 		## In i3wm this is a file created by ~/.local/bin/i3confmerge
 		## sway uses include /etc/sway/config.d/* to do the same thing.
-		## Any changes made on this file will be lost when i3 reloads. 
-		
+		## Any changes made on this file will be lost when i3 reloads.
+
 		# This config file uses environmental variables such as $BROWSER and $TERMINAL,
 		# you can set them bellow as variables: "$term" "$browsr" "$myeditor"
 	EOF
-	
+
 	cat ~/.config/i3/X >> ~/.config/i3/config
-	
+
 	printf "\\n\\n" >> ~/.config/i3/config
-	#[ $(hostname) = "killua" ] && cat ~/.config/i3/killua_X_monitors >> ~/.config/i3/config
+	[ $(hostname) = "killua" ] && cat ~/.config/i3/killua_X_monitors >> ~/.config/i3/config
 
 	for i in ~/.config/i3/config.d/* ; do
 		printf "\\n\\n" >> ~/.config/i3/config

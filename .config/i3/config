@@ -2,7 +2,7 @@
 #                           #-------Warning-------#                           #
 ## In i3wm this is a file created by ~/.local/bin/i3confmerge
 ## sway uses include /etc/sway/config.d/* to do the same thing.
-## Any changes made on this file will be lost when i3 reloads. 
+## Any changes made on this file will be lost when i3 reloads.
 
 # This config file uses environmental variables such as firefox and gnome-terminal,
 # you can set them bellow as variables: "" "" ""
@@ -26,13 +26,37 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
+# With Nvidia driver HDMI-0
+# With Nouveau driver HDMI-1
+set $SG HDMI-0
+set $LG DP-1
 
+exec xrandr --output $LG --rotate normal --primary \
+				--output $SG --rotate normal --right-of $LG
+
+workspace $ws1  output $LG
+workspace $ws2  output $SG
+workspace $ws10 output $SG
+
+set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
+mode "$mode_display" {
+	bindsym m exec xrandr 	--output $LG --rotate normal --primary \
+							--output $SG --rotate normal --same-as  $LG, mode "default"
+	
+	bindsym d exec xrandr 	--output $LG --rotate normal --primary \
+							--output $SG --rotate normal --right-of $LG, mode "default"
+	
+	bindsym L exec xrandr 	--output $LG --rotate normal --primary \
+							--output $SG --rotate left 	 --right-of $LG, mode "default"
+	
+	bindsym Return  mode "default"
+	bindsym Escape  mode "default"
+}
 
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-exec checkup
 
 # Programs
 set $term       	$TERMINAL
