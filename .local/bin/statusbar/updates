@@ -2,6 +2,8 @@
 
 # i3blocks module for pacman upgrades.
 # Displays number of upgradeable packages.
+# Depends on `pacman-contrib` for archlinux
+
 ping -q -w 1 -c 1 $(ip r | grep -m 1 default | cut -d ' ' -f 3) >/dev/null || exit
 
 notify-send -t 2000 "Checking for pacakge updates..."
@@ -10,7 +12,7 @@ if ! checkupdates > /tmp/available_updates; then
 fi
 
 arch_upgrade() {
-		sudo pacman -Syu && yay -Syu
+		yay -Syu --devel || pacman -Syu
 		pkill -SIGRTMIN+9 i3blocks
 		read -r
 		exit
@@ -22,7 +24,6 @@ if [[ $NUM -ge 1 ]]; then
 fi
 
 case $BLOCK_BUTTON in
-	# 1) $TERMINAL -e popupgrade ;;
 	1)
 		export -f arch_upgrade
 		gnome-terminal -x bash -c 'arch_upgrade; bash'

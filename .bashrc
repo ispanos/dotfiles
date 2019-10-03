@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 [[ $- != *i* ]] && return
-[ -r "$HOME/.config/bash/aliasrc" ] && source "$HOME/.config/bash/aliasrc"
+[ -r "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 [ -r /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 shopt -s checkwinsize
 stty -ixon
 complete -cf sudo
 shopt -s autocd
-export PS1="\[$(tput setaf 4)\]\u\[$(tput setaf 1)\]@\[$(tput bold)\]\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 7)\] \\$ \[$(tput sgr0)\]"
-
+# `[$USER`
+export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\["
+# `@hostname`
+export PS1="$PS1$(tput setaf 2)\]@\[$(tput setaf 4)\]\h "
+# ` dir ]$`
+export PS1="$PS1\[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
 # History Managment.
 export HISTCONTROL=ignoredups:erasedups  
 export HISTSIZE=9999
