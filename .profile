@@ -6,6 +6,7 @@ export EDITOR="nvim"
 export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
 export READER="zathura"
+export SUDO_ASKPASS="$HOME/.local/bin/tools/dmenupass"
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Declutter ~
@@ -19,12 +20,13 @@ export ZDOTDIR="$HOME/.config/zsh"
 # [ -f ~/.bashrc ] && source ~/.bashrc
 echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
-if [[ -z $DISPLAY ]]; then
-	if [ -f /usr/bin/i3 ] && [ "$(tty)" = "/dev/tty1" ]; then
-		[ ! -d ~/.local/xorg ] && mkdir ~/.local/xorg
-		! pgrep -x Xorg >/dev/null && exec startx > ~/.local/xorg/$(date +%s).log 2>&1
+if [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ]; then
 
-	elif [ -f /usr/bin/sway ] && [ "$(tty)" = "/dev/tty1" ] && ! pgrep -x sway >/dev/null; then
+	if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
+		[ ! -d ~/.local/xorg ] && mkdir ~/.local/xorg
+		exec startx > ~/.local/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
+
+	elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 		# Variables needed by only by sway.
 		export XKB_DEFAULT_LAYOUT=us,gr
 		export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle

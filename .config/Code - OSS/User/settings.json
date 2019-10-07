@@ -8,9 +8,10 @@
         "**/i3/*/*": "i3",
         // ...
     },
-    "workbench.colorTheme": "Horizon Bold",
     "editor.minimap.enabled": false,
     "git.confirmSync": false,
     "terminal.integrated.rendererType": "dom",
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Material Theme Ocean High Contrast",
     
 }
