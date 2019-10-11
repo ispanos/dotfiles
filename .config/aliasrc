@@ -24,6 +24,7 @@ alias free="free --mebi"\
 	sb="subl3"\
 	starwars="telnet towel.blinkenlights.nl"\
 	yt="youtube-dl --add-metadata"\
+	inxi="inxi -FxxxzD"
 
 # ls="ls --literal --human-readable --color=auto --group-directories-first "\
 

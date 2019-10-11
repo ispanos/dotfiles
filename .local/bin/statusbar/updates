@@ -8,7 +8,7 @@ ping -q -w 1 -c 1 $(ip r | grep -m 1 default | cut -d ' ' -f 3) >/dev/null || ex
 
 notify-send -t 2000 "Checking for pacakge updates..."
 if ! checkupdates > /tmp/available_updates; then
-	notify-send -t 2000 "Error Checking for updates."
+	notify-send -t 2000 "No updates available."
 fi
 
 arch_upgrade() {
@@ -16,9 +16,13 @@ arch_upgrade() {
 		pkill -SIGRTMIN+9 i3blocks
 		read -r
 		exit
-}
+	}
 
 NUM=$( cat /tmp/available_updates | wc -l )
+
+grep -q linux /tmp/available_updates && 
+NUM="$(tput setaf 1)$NUM"
+
 if [[ $NUM -ge 1 ]]; then
 	echo "$NUM"
 fi
@@ -35,10 +39,10 @@ case $BLOCK_BUTTON in
 		pgrep -x dunst >/dev/null && 
 		notification=$(
 		cat <<-EOF
-		Upgrade module:
-		 : Shows number of upgradable packages
-		- Left click to upgrade packages
-		- Middle click to show upgradable packages
+			Upgrade module:
+			 : Shows number of upgradable packages
+			- Left click to upgrade packages
+			- Middle click to show upgradable packages
 		EOF
 		)
 		notify-send -t 5000 "$notification"
