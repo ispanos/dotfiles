@@ -21,9 +21,10 @@ arch_upgrade() {
 NUM=$( cat /tmp/available_updates | wc -l )
 
 grep -q linux /tmp/available_updates && 
-NUM="$(tput setaf 1)$NUM"
+
 
 if [[ $NUM -ge 1 ]]; then
+	#NUM="$(tput setaf 1)$NUM"
 	echo "$NUM"
 fi
 
