@@ -60,5 +60,5 @@ alias \
     vim="nvim" vimdiff="nvim -d" 
 
 # For Raspberry Pi 
-[[ `/opt/vc/bin/vcgencmd` ]] && alias \
+[[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"

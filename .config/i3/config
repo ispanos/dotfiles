@@ -26,12 +26,19 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
-# With Nvidia driver HDMI-0
-# With Nouveau driver HDMI-1
-set $SG HDMI-0
+# # With Nouveau driver HDMI-1
+set $SG HDMI-1
 set $LG DP-1
 
-exec xrandr --output $LG --rotate normal --primary \
+# With Nvidia driver HDMI-0
+# set $SG HDMI-0
+# set $LG DP-1
+
+# Amd 
+# set $SG HDMI-2
+# set $LG HDMI-1
+
+exec_always xrandr --output $LG --rotate normal --primary \
 				--output $SG --rotate normal --right-of $LG
 
 workspace $ws1  output $LG
