@@ -9,8 +9,11 @@ set $right l
 floating_modifier $mod
 
 # Scratchpad
-bindsym $mod+Tab scratchpad show
-bindsym $mod+Shift+grave move scratchpad
+# bindsym $mod+Tab scratchpad show
+# bindsym $mod+Shift+grave move scratchpad
+
+bindsym $mod+Tab exec i3_alt_tab
+bindsym $mod+Shift+Tab move scratchpad
 bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command

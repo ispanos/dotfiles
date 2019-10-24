@@ -26,6 +26,7 @@ set $lock 		i3lock -e -f -c 000000 -i ~/.config/wall.png -t
 set $locksoff	"$lock; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 
+
 # # With Nouveau driver HDMI-1
 set $SG HDMI-1
 set $LG DP-1
@@ -33,10 +34,6 @@ set $LG DP-1
 # With Nvidia driver HDMI-0
 # set $SG HDMI-0
 # set $LG DP-1
-
-# Amd 
-# set $SG HDMI-2
-# set $LG HDMI-1
 
 exec_always xrandr --output $LG --rotate normal --primary \
 				--output $SG --rotate normal --right-of $LG
@@ -105,8 +102,8 @@ for_window [title="dropdownGT"] floating enable
 for_window [title="dropdownGT"] resize set 1080 420
 for_window [title="dropdownGT"] move position center
 for_window [title="dropdownGT"] move position up
-for_window [title="dropdownGT"] move scratchpad
-for_window [title="dropdownGT"] sticky enable
+#for_window [title="dropdownGT"] move scratchpad
+#for_window [title="dropdownGT"] sticky enable
 for_window [title="dropdownGT"] border none
 
 for_window [class="Pavucontrol"] floating enable
@@ -204,8 +201,11 @@ set $right l
 floating_modifier $mod
 
 # Scratchpad
-bindsym $mod+Tab scratchpad show
-bindsym $mod+Shift+grave move scratchpad
+# bindsym $mod+Tab scratchpad show
+# bindsym $mod+Shift+grave move scratchpad
+
+bindsym $mod+Tab exec i3_alt_tab
+bindsym $mod+Shift+Tab move scratchpad
 bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command
