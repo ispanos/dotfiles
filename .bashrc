@@ -7,6 +7,10 @@ stty -ixon
 complete -cf sudo
 shopt -s autocd
 
+# The pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
 # PS1
 # `[$USER`
 export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\["
@@ -42,7 +46,7 @@ alias \
 	gs="git status"\
 	hcat="highlight --out-format=ansi"\
 	hcatt="highlight --src-lang"\
-    ls="ls --literal --human-readable --color=auto --group-directories-first "\
+	ls="ls --literal --human-readable --color=auto --group-directories-first "\
 	mkd="mkdir -pv"\
 	pc="pacman -Qq | wc -l"\
 	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"\
