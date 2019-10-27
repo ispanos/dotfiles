@@ -46,6 +46,7 @@ alias \
 	gs="git status"\
 	hcat="highlight --out-format=ansi"\
 	hcatt="highlight --src-lang"\
+	ll='ls --color=auto -alF'\
 	ls="ls --literal --human-readable --color=auto --group-directories-first "\
 	mkd="mkdir -pv"\
 	pc="pacman -Qq | wc -l"\
