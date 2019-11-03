@@ -1,18 +1,53 @@
 #!/usr/bin/env bash
 
-pacman -Qqen > /tmp/temp_native_new_packages
-pacman -Qqem > /tmp/temp_foreign_new_packages
-pacman -Qq > /tmp/temp_all_new_packages
+lsb_dist="$(. /etc/os-release && echo "$ID")"
 
-printf "Number of new packages: "
-expr $(pacman -Qq | wc -l) - $(wc -l < .local/Fresh_pack_list)
+case $lsb_dist in
+arch)
+    pacman -Qqen > /tmp/temp_native_new_packages
+    pacman -Qqem > /tmp/temp_foreign_new_packages
+    pacman -Qq > /tmp/temp_all_new_packages
 
-echo $(tput setaf 2)"Native:"$(tput sgr0)
-diff $HOME/.local/Fresh_pack_list /tmp/temp_native_new_packages | grep ">" | tr ">" "-"
+    printf "Number of new packages: "
+    expr $(pacman -Qq | wc -l) - $(wc -l < .local/Fresh_pack_list)
 
-echo $(tput setaf 2)"AUR:"$(tput sgr0)
-diff $HOME/.local/Fresh_pack_list /tmp/temp_foreign_new_packages | grep ">" | tr ">" "-"
+    echo $(tput setaf 2)"Native:"$(tput sgr0)
+    diff $HOME/.local/Fresh_pack_list /tmp/temp_native_new_packages | grep ">" | tr ">" "-"
 
-echo $(tput setaf 1)"Removed:"$(tput sgr0)
-diff $HOME/.local/Fresh_pack_list /tmp/temp_all_new_packages | grep "<" | tr "<" "-"
+    echo $(tput setaf 2)"AUR:"$(tput sgr0)
+    diff $HOME/.local/Fresh_pack_list /tmp/temp_foreign_new_packages | grep ">" | tr ">" "-"
+
+    echo $(tput setaf 1)"Removed:"$(tput sgr0)
+    diff $HOME/.local/Fresh_pack_list /tmp/temp_all_new_packages | grep "<" | tr "<" "-"
+;;
+ubuntu)
+    declare -i Ntotal
+    declare -i Ftotal
+    apt list --installed 2> /dev/null | awk 'NR>1' | tee \
+                                >( wc -l > /tmp/Ntotal ) \
+                                >( grep -v "automatic" |  awk -F/ '{print $1}' > /tmp/temp_native_Fre_packages ) \
+                                >/dev/null
+
+    cat ~/.local/Fresh_pack_list | tee \
+                                >( wc -l > /tmp/Ftotal ) \
+                                >( grep -v "automatic" |  awk -F/ '{print $1}' > /tmp/temp_native_new_packages  ) \
+                                >/dev/null
+    printf "Number of new packages: "
+    expr $(cat /tmp/Ntotal ) - $( cat /tmp/Ftotal )
+
+    echo $(tput setaf 2)"New packages:"$(tput sgr0)
+    diff /tmp/temp_native_new_packages /tmp/temp_native_Fre_packages | grep ">" | tr ">" "-"
+;;
+*)
+    echo $(tput setaf 1)"Distro is not supported yet."$(tput sgr0)
+    return
+;;
+esac
+
+
+
+
+
+
+
 
