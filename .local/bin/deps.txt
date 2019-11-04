@@ -1,0 +1,46 @@
+camtoggle:
+    - mpv
+    
+extr:
+    - unlzma
+    - bunzip2
+    - unrar
+    - gunzip
+    - tar
+    - unzip
+    - uncompress
+    - 7z
+    - unxz
+    - cabextract
+
+wm-scripts:
+    dmenupass:
+        - dmenu
+
+    i3_alt_tab:
+        - i3
+        - jq
+
+    i3confmerge:
+        - i3
+
+    wm_init_profile
+        - i3 || sway
+
+    statusbar
+        - dunst
+
+        clock
+            - calcurse
+
+        cpu
+            - lm-sensors
+        memory
+            - bc
+        udpates - arch
+            - pacman-contrib
+        volume
+            - pavucontrol
+            - pulseaudio
+            - qpaeq
+            - pulsemixer

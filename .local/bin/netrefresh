@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# set $netrefresh sudo -A systemctl restart systemd-networkd.service
-sudo systemctl restart systemd-resolved && sudo systemctl restart systemd-networkd

@@ -19,7 +19,7 @@ if [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ]; then
 		
 		# Variables needed by only by sway.
 		export XKB_DEFAULT_LAYOUT=us,gr
-		export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+		#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 		#export QT_QPA_PLATFORM=wayland
 		export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 		#export MOZ_ENABLE_WAYLAND=1
