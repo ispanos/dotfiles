@@ -2,29 +2,27 @@
 
 # i3 / sway start script. Shoud be sourced in .profile
 
-if [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ]; then
-	export SUDO_ASKPASS="$HOME/.local/bin/tools/dmenupass"
+export SUDO_ASKPASS="$HOME/.local/bin/tools/dmenupass"
 
-	if [ -d "$HOME/.local/bin/wm-scripts" ] ; then
-		PATH="$HOME/.local/bin/wm-scripts/:$PATH"
-	fi
+if [ -d "$HOME/.local/bin/wm-scripts" ] ; then
+	PATH="$HOME/.local/bin/wm-scripts/:$PATH"
+fi
 
 
-	if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
+if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 
-		[ ! -d ~/.local/xorg ] && mkdir ~/.local/xorg
-		exec startx > ~/.local/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
+	[ ! -d ~/.local/xorg ] && mkdir ~/.local/xorg
+	exec startx > ~/.local/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
 
-	elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-		
-		# Variables needed by only by sway.
-		export XKB_DEFAULT_LAYOUT=us,gr
-		#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
-		#export QT_QPA_PLATFORM=wayland
-		export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-		#export MOZ_ENABLE_WAYLAND=1
+elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
+	
+	# Variables needed by only by sway.
+	export XKB_DEFAULT_LAYOUT=us,gr
+	#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+	#export QT_QPA_PLATFORM=wayland
+	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+	#export MOZ_ENABLE_WAYLAND=1
 
-        [ ! -d ~/.local/sway ] && mkdir ~/.local/sway
-		sway  > ~/.local/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
-	fi
+	[ ! -d ~/.local/sway ] && mkdir ~/.local/sway
+	sway  > ~/.local/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
 fi

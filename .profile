@@ -16,11 +16,12 @@ export GNUPGHOME="$HOME/.config/gnupg"
 export INPUTRC="$HOME/.config/inputrc"
 [ ! -d "$HOME/.config/gtk-2.0" ] && mkdir $HOME/.config/gtk-2.0
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
-[ ! -d "$HOME/.config/zsh" ] && mkdir 
+[ ! -d "$HOME/.config/zsh" ] && mkdir "$HOME/.config/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
 
 # [ -f ~/.bashrc ] && source ~/.bashrc
 echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
 # Uncomment for i3/sway if no Display manager is used.
-# source "$HOME.local/bin/wm-scripts/wm_init_profile
+# [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] &&
+#source "$HOME/.local/bin/wm-scripts/wm_init_profile"

@@ -3,7 +3,7 @@
 lsb_dist="$(. /etc/os-release && echo "$ID")"
 
 case $lsb_dist in
-arch)
+arch | manjaro)
     pacman -Qqen > /tmp/temp_native_new_packages
     pacman -Qqem > /tmp/temp_foreign_new_packages
     pacman -Qq > /tmp/temp_all_new_packages
