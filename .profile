@@ -23,5 +23,5 @@ export ZDOTDIR="$HOME/.config/zsh"
 echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
 # Uncomment for i3/sway if no Display manager is used.
-# [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] &&
-#source "$HOME/.local/bin/wm-scripts/wm_init_profile"
+[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] &&
+source "$HOME/.local/bin/wm-scripts/wm_init_profile"

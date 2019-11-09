@@ -38,7 +38,7 @@ bar
 {
     position top
     font pango:SourceCodePro-ExtraLight 8
-    tray_output none
+    #tray_output none
     status_command i3blocks
 
   

@@ -103,7 +103,7 @@ for_window [title="dropdownGT"] resize set 1080 420
 for_window [title="dropdownGT"] move position center
 for_window [title="dropdownGT"] move position up
 #for_window [title="dropdownGT"] move scratchpad
-#for_window [title="dropdownGT"] sticky enable
+for_window [title="dropdownGT"] sticky enable
 for_window [title="dropdownGT"] border none
 
 for_window [class="Pavucontrol"] floating enable
@@ -164,7 +164,7 @@ bar
 {
     position top
     font pango:SourceCodePro-ExtraLight 8
-    tray_output none
+    #tray_output none
     status_command i3blocks
 
   
