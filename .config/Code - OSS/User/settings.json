@@ -13,5 +13,6 @@
     "terminal.integrated.rendererType": "dom",
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "workbench.iconTheme": "material-icon-theme",
     
 }

@@ -1,10 +1,10 @@
 # # With Nouveau driver HDMI-1
-set $SG HDMI-1
-set $LG DP-1
+#set $SG HDMI-1
+#set $LG DP-1
 
 # With Nvidia driver HDMI-0
-# set $SG HDMI-0
-# set $LG DP-1
+set $SG HDMI-0
+set $LG DP-1
 
 exec_always xrandr --output $LG --rotate normal --primary \
 				--output $SG --rotate normal --right-of $LG
