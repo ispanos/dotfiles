@@ -24,8 +24,6 @@ export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=9999
 export HISTFILESIZE=9999
 # PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND" 
-[  ! -d "$HOME/.cache/bash" ] && mkdir "$HOME/.cache/bash"
-export HISTFILE="$HOME/.cache/bash/history"
 [ -s "$HISTFILE" ] || echo "#!/usr/bin/env bash" > $HISTFILE
 shopt -s histappend
 

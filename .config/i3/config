@@ -311,7 +311,7 @@ bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
 bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
 bindsym XF86AudioLowerVolume            exec --no-startup-id $voldown
 bindsym XF86AudioMute                   exec --no-startup-id $volmute
-
+bindsym XF86PowerOff                    mode "$Pause-break"
 #                                      #---Extra XF86 Keys---#                                      #
 #                      These are the extra media keys that some keyboards have.                     #
 
