@@ -3,6 +3,9 @@
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
 # Programs
 set $term       	$TERMINAL
 set $browsr     	$BROWSER

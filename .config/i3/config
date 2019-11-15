@@ -62,6 +62,9 @@ mode "$mode_display" {
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
 # Programs
 set $term       	$TERMINAL
 set $browsr     	$BROWSER
@@ -311,7 +314,7 @@ bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
 bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
 bindsym XF86AudioLowerVolume            exec --no-startup-id $voldown
 bindsym XF86AudioMute                   exec --no-startup-id $volmute
-bindsym XF86PowerOff                    mode "$Pause-break"
+bindsym XF86PowerOff                    exec --no-startup-id $lock && systemctl suspend
 #                                      #---Extra XF86 Keys---#                                      #
 #                      These are the extra media keys that some keyboards have.                     #
 
