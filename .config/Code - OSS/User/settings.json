@@ -13,8 +13,7 @@
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "workbench.iconTheme": "material-icon-theme",
-    "editor.fontFamily": "'Droid Sans Mono',' 'Inconsolata monospace', 'Droid Sans Fallback','FontAwesome'\",",
-    "editor.fontSize": 13.5,
     "terminal.integrated.fontFamily": "monospace",
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','FontAwesome'",
     
 }
