@@ -11,9 +11,10 @@
     "git.confirmSync": false,
     "terminal.integrated.rendererType": "dom",
     "window.zoomLevel": 0,
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.fontFamily": "monospace",
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','FontAwesome'",
+    "workbench.colorTheme": "Material Theme Ocean",
+    "bashIde.explainshellEndpoint": "http://localhost:5000",
     
 }
