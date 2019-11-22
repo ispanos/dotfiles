@@ -2,12 +2,7 @@
 
 # i3 / sway start script. Shoud be sourced in .profile
 
-export SUDO_ASKPASS="$HOME/.local/bin/tools/dmenupass"
-
-if [ -d "$HOME/.local/bin/wm-scripts" ] ; then
-	PATH="$HOME/.local/bin/wm-scripts/:$PATH"
-fi
-
+export SUDO_ASKPASS="$HOME/.local/bin/wm-scripts/dmenupass"
 
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 

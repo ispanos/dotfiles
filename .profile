@@ -5,6 +5,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 export EDITOR="nvim"
 export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
@@ -23,5 +27,9 @@ export ZDOTDIR="$HOME/.config/zsh"
 echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
 # Uncomment for i3/sway if no Display manager is used.
+if [ -d "$HOME/.local/bin/wm-scripts" ] ; then
+	PATH="$HOME/.local/bin/wm-scripts/:$PATH"
+fi
+
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] &&
 source "$HOME/.local/bin/wm-scripts/wm_init_profile"

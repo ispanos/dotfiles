@@ -12,6 +12,7 @@ exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_tog
 exec "dunst &"
 exec "source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh &"
 exec "numlockx &"
+
 set $wmrestart i3confmerge
 set $wmlauncher i3-dmenu-desktop  \
 				\\"--dmenu=dmenu -i \
