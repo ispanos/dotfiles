@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/.cargo/bin" ] ; then
+if [ -d "$HOME/.cargo/bin" ]; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
@@ -24,12 +24,13 @@ export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 export ZDOTDIR="$HOME/.config/zsh"
 
 # [ -f ~/.bashrc ] && source ~/.bashrc
-echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
+echo "$0" | grep -q "bash$" && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
 # Uncomment for i3/sway if no Display manager is used.
-if [ -d "$HOME/.local/bin/wm-scripts" ] ; then
+if [ -d "$HOME/.local/bin/wm-scripts" ]; then
 	PATH="$HOME/.local/bin/wm-scripts/:$PATH"
 fi
 
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] &&
 source "$HOME/.local/bin/wm-scripts/wm_init_profile"
+

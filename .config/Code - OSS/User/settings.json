@@ -16,5 +16,10 @@
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','FontAwesome'",
     "workbench.colorTheme": "Material Theme Ocean",
     "bashIde.explainshellEndpoint": "http://localhost:5000",
+    "rust.mode": "legacy",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "rust.rustup": {
+        "toolchain": "stable-x86_64-unknown-linux-gnu"
+    },
     
 }
