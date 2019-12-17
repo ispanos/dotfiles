@@ -7,7 +7,7 @@ export SUDO_ASKPASS="$HOME/.local/bin/wm-scripts/dmenupass"
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 
 	[ ! -d ~/.local/xorg ] && mkdir ~/.local/xorg
-	exec startx > ~/.local/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
+	exec startx /usr/bin/i3 > ~/.local/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log 2>&1
 
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	
