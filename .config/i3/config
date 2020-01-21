@@ -103,15 +103,6 @@ for_window  [title="pulsemixerGT"]          floating enable move position center
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="Skype"]                 floating enable
 
-# $alt+grave to start new instance --- $mod+Tab show
-exec sleep 2 && $term --title=dropdownGT
-for_window [title="dropdownGT"] floating enable
-for_window [title="dropdownGT"] resize set 1080 420
-for_window [title="dropdownGT"] move position center
-for_window [title="dropdownGT"] move position up
-#for_window [title="dropdownGT"] move scratchpad
-#for_window [title="dropdownGT"] sticky enable
-for_window [title="dropdownGT"] border none
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Pavucontrol"] resize set 1080 420
@@ -148,13 +139,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "x"
 
-# bluish colors
-## class                     border  bground text    indicator 	child_border
-#client.focused              #002b36 #586e75 #fdf6e3 #268bd2 	#002b36
-#client.focused_inactive     #002b36 #193549 #70C7D2 #193549 	#002b36
-#client.unfocused            #002b36 #193549 #70C7D2 #193549 	#002b36
-#client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
-
 #--------------------------------------------------------------------------
 # Window borders and colors
 #--------------------------------------------------------------------------
@@ -169,7 +153,7 @@ client.background        #202332
 
 bar 
 {
-    position top
+    #position top
     font pango:SourceCodePro-ExtraLight 8
     tray_output primary
     status_command i3blocks
@@ -185,16 +169,6 @@ bar
     inactive_workspace  #bababa  #383c4a  #bababa
     urgent_workspace    #ffffff  #eb709b  #ffffff
    } 
-
-#    colors { # bluish
-#        background #193549
-#        statusline #70C7D2
-#        separator  #586e75
-#        focused_workspace   #2A597A #2A597A #70C7D2
-#        active_workspace    #193549 #193549 #70C7D2
-#        inactive_workspace  #193549 #193549 #70C7D2
-#        urgent_workspace    #dc322f #dc322f #fdf6e3
-#    }
 }
 
 set $mod Mod4
@@ -207,14 +181,8 @@ set $right l
 
 floating_modifier $mod
 
-# Scratchpad
-# bindsym $mod+Tab scratchpad show
-# bindsym $mod+Shift+grave move scratchpad
-# bindsym $mod+Shift+Tab move scratchpad
-
 # alt-tab for floating windows.
 bindsym $mod+Tab exec i3_alt_tab
-bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher

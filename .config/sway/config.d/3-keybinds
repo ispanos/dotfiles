@@ -8,14 +8,8 @@ set $right l
 
 floating_modifier $mod
 
-# Scratchpad
-# bindsym $mod+Tab scratchpad show
-# bindsym $mod+Shift+grave move scratchpad
-# bindsym $mod+Shift+Tab move scratchpad
-
 # alt-tab for floating windows.
 bindsym $mod+Tab exec i3_alt_tab
-bindsym $alt+grave exec  $term --title=dropdownGT
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher

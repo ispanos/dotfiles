@@ -15,13 +15,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "x"
 
-# bluish colors
-## class                     border  bground text    indicator 	child_border
-#client.focused              #002b36 #586e75 #fdf6e3 #268bd2 	#002b36
-#client.focused_inactive     #002b36 #193549 #70C7D2 #193549 	#002b36
-#client.unfocused            #002b36 #193549 #70C7D2 #193549 	#002b36
-#client.urgent               #002b36 #dc322f #fdf6e3 #002b36 	#002b36
-
 #--------------------------------------------------------------------------
 # Window borders and colors
 #--------------------------------------------------------------------------
@@ -36,7 +29,6 @@ client.background        #202332
 
 bar 
 {
-    position top
     font pango:SourceCodePro-ExtraLight 8
     tray_output primary
     status_command i3blocks
@@ -52,14 +44,4 @@ bar
     inactive_workspace  #bababa  #383c4a  #bababa
     urgent_workspace    #ffffff  #eb709b  #ffffff
    } 
-
-#    colors { # bluish
-#        background #193549
-#        statusline #70C7D2
-#        separator  #586e75
-#        focused_workspace   #2A597A #2A597A #70C7D2
-#        active_workspace    #193549 #193549 #70C7D2
-#        inactive_workspace  #193549 #193549 #70C7D2
-#        urgent_workspace    #dc322f #dc322f #fdf6e3
-#    }
 }
