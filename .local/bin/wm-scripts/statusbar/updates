@@ -2,29 +2,31 @@
 
 # i3blocks module for pacman upgrades.
 # Displays number of upgradeable packages.
+# Adds an exclamation mark if package linux is upgradable.
 # Depends on `pacman-contrib` for archlinux
 
-ping -q -w 1 -c 1 $(ip r | grep -m 1 default | cut -d ' ' -f 3) >/dev/null || exit
+ping -q -w 1 -c 1 \
+	"$(ip r | grep -m 1 default | cut -d ' ' -f 3)" >/dev/null ||
+	exit
 
 notify-send -t 2000 "Checking for pacakge updates..."
-if ! checkupdates > /tmp/available_updates; then
+checkupdates > /tmp/available_updates
+NUM=$(wc -l < /tmp/available_updates)
+
+if [[ $NUM -ge 1 ]]; then
+	echo "$NUM$(grep -q linux /tmp/available_updates && echo "!")"
+else
 	notify-send -t 2000 "No updates available."
 fi
 
 arch_upgrade() {
-		yay -Syu --devel || pacman -Syu
-		pkill -SIGRTMIN+9 i3blocks
-		read -r
-		exit
-	}
+	yay -Syu --devel || pacman -Syu
+	pkill -SIGRTMIN+9 i3blocks
+	read -r
+	exit
+}
 
-NUM=$( cat /tmp/available_updates | wc -l )
-
-if [[ $NUM -ge 1 ]]; then
-	# grep -q linux /tmp/available_updates && 
-	# NUM="$(tput setaf 1)$NUM"
-	echo "$NUM"
-fi
+#checkupdates --download >/dev/null
 
 case $BLOCK_BUTTON in
 	1)
@@ -37,12 +39,12 @@ case $BLOCK_BUTTON in
 	3) 
 		pgrep -x dunst >/dev/null && 
 		notification=$(
-		cat <<-EOF
-			Upgrade module:
-			 : Shows number of upgradable packages
-			- Left click to upgrade packages
-			- Middle click to show upgradable packages
-		EOF
+			cat <<-EOF
+				Upgrade module:
+				 : Shows number of upgradable packages
+				- Left click to upgrade packages
+				- Middle click to show upgradable packages
+			EOF
 		)
 		notify-send -t 5000 "$notification"
 	;;

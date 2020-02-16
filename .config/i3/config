@@ -7,7 +7,7 @@
 # This config file uses environmental variables such as firefox and gnome-terminal,
 # you can set them bellow as variables: "" "" ""
 exec_always feh --no-fehbg --bg-max ~/.config/wall.png
-exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
+exec_always "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 
 exec "dunst &"
 exec "source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh &"
@@ -63,9 +63,9 @@ mode "$mode_display" {
 
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
+exec blueman-applet
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-
 # Allows i3 to bind the powerbutton properly.
 exec systemd-inhibit --what=handle-power-key sleep infinity
 
@@ -153,7 +153,6 @@ client.background        #202332
 
 bar 
 {
-    #position top
     font pango:SourceCodePro-ExtraLight 8
     tray_output primary
     status_command i3blocks
