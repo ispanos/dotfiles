@@ -34,9 +34,9 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+n              border normal
 
 # Programs
-	bindsym $mod+Return         exec --no-startup-id $term
-	bindsym $mod+z              exec --no-startup-id $browsr
-	bindsym $mod+x              exec --no-startup-id $myeditor
+	bindsym $mod+Return         exec --no-startup-id $TERMINAL
+	bindsym $mod+z              exec --no-startup-id $BROWSER
+	bindsym $mod+x              exec --no-startup-id $EDITOR
 	bindsym $mod+c              exec --no-startup-id $fm
 	bindsym $mod+g              exec --no-startup-id $calc
 
@@ -51,7 +51,6 @@ bindsym $mod+Tab exec i3_alt_tab
 # MODES
 	bindsym $mod+Pause          mode "$Pause-break"
 	bindsym $mod+F12            mode "$mode_display"
- 	bindsym $mod+Shift+g        mode "$mode_gaps"
 
 # Change Focus
 	bindsym $mod+$left          focus left

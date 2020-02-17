@@ -4,9 +4,9 @@ default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
 
-set $ws1 "1"
+set $ws1 ">_"
 set $ws2 "2"
-set $ws3 ">_"
+set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
@@ -15,33 +15,33 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "x"
 
-#--------------------------------------------------------------------------
-# Window borders and colors
-#--------------------------------------------------------------------------
-#                        border     bg         fg         indicator  child_border
-client.focused           #3465a4    #3465a4    #e0e0e0    #00ff00    #202332
-client.focused_inactive  #383c4a    #383c4a    #e0e0e0    #00ff00    #202332
-client.unfocused         #383c4a    #383c4a    #808080    #00ff00    #202332
-client.urgent            #383c4a    #900000    #ffffff    #00ff00    #202332
-client.placeholder       #383c4a    #0c0c0c    #ffffff    #00ff00    #202332
-client.background        #202332
-
-
-bar 
-{
+bar {
     font pango:SourceCodePro-ExtraLight 8
     tray_output primary
     status_command i3blocks
-
-  
-  colors { # gray
-    statusline #f0f0f0
-    separator  #3465a4
-    background #202332  
-#                       border   bg       fg
-    focused_workspace   #ffffff  #3465a4  #ffffff
-    active_workspace    #3465a4  #383c4a  #3465a4
-    inactive_workspace  #bababa  #383c4a  #bababa
-    urgent_workspace    #ffffff  #eb709b  #ffffff
-   } 
 }
+
+# Application specific rules ($xprop find the name)
+for_window  [class="Galculator"]            floating enable
+for_window  [class="Gcolor3"]               floating enable
+for_window  [title="pulsemixerGT"]          floating enable move position center
+for_window  [class="PulseAudio Equalizer"]  floating enable move position center
+for_window  [class="Skype"]                 floating enable
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] resize set 1080 420
+for_window [class="Pavucontrol"] move position center
+for_window [class="Pavucontrol"] sticky enable
+for_window [class="Pavucontrol"] border none
+
+for_window [class="qpaeq"] floating enable
+for_window [class="qpaeq"] resize set 1080 420
+for_window [class="qpaeq"] move position center
+for_window [class="qpaeq"] sticky enable
+for_window [class="qpaeq"] border none
+
+# Gap settings
+gaps inner 6
+gaps outer -2
+smart_gaps on
+smart_borders on

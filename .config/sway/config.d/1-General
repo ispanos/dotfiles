@@ -1,15 +1,4 @@
-#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec blueman-applet
-
-exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-# Allows i3 to bind the powerbutton properly.
-exec systemd-inhibit --what=handle-power-key sleep infinity
-
 # Programs
-set $term       	$TERMINAL
-set $browsr     	$BROWSER
-set $myeditor   	code
 set $fm         	pcmanfm
 set $calc       	galculator
 set $volup      	pactl set-sink-volume 0 +2% 	&& pkill -RTMIN+10 i3blocks
@@ -32,29 +21,10 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
-# Application specific rules ($xprop find the name)
-assign      [class="RocketLeague"]          $ws1
-for_window  [class="Galculator"]            floating enable
-for_window  [class="Gcolor3"]               floating enable
-for_window  [title="pulsemixerGT"]          floating enable move position center
-for_window  [class="PulseAudio Equalizer"]  floating enable move position center
-for_window  [class="Skype"]                 floating enable
+#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
+exec blueman-applet
 
-
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Pavucontrol"] resize set 1080 420
-for_window [class="Pavucontrol"] move position center
-for_window [class="Pavucontrol"] sticky enable
-for_window [class="Pavucontrol"] border none
-
-for_window [class="qpaeq"] floating enable
-for_window [class="qpaeq"] resize set 1080 420
-for_window [class="qpaeq"] move position center
-for_window [class="qpaeq"] sticky enable
-for_window [class="qpaeq"] border none
-
-# # Gap settings
-# gaps inner 6
-# gaps outer -2
-# smart_gaps on
-# smart_borders on
+exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity

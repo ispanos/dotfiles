@@ -30,15 +30,12 @@ set $locksoff	"i3lock_script; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 set $lock 		i3lock_script
 
-# # With Nouveau driver HDMI-1
-#set $SG HDMI-1
-#set $LG DP-1
-
+# With Nouveau driver HDMI-1
 # With Nvidia driver HDMI-0
 set $SG HDMI-0
 set $LG DP-1
 
-exec_always xrandr --output $LG --rotate normal --primary \
+exec xrandr --output $LG --rotate normal --primary \
 				--output $SG --rotate normal --right-of $LG
 
 workspace $ws1  output $LG
@@ -61,18 +58,7 @@ mode "$mode_display" {
 	bindsym Escape  mode "default"
 }
 
-#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec blueman-applet
-
-exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
-# Allows i3 to bind the powerbutton properly.
-exec systemd-inhibit --what=handle-power-key sleep infinity
-
 # Programs
-set $term       	$TERMINAL
-set $browsr     	$BROWSER
-set $myeditor   	code
 set $fm         	pcmanfm
 set $calc       	galculator
 set $volup      	pactl set-sink-volume 0 +2% 	&& pkill -RTMIN+10 i3blocks
@@ -95,14 +81,44 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
+#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
+exec blueman-applet
+
+exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
+
+focus_on_window_activation focus
+font pango:SourceCodePro-ExtraLight 7
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders none
+
+set $ws1 ">_"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "x"
+
+bar {
+    font pango:SourceCodePro-ExtraLight 8
+    tray_output primary
+    status_command i3blocks
+}
+
 # Application specific rules ($xprop find the name)
-assign      [class="RocketLeague"]          $ws1
 for_window  [class="Galculator"]            floating enable
 for_window  [class="Gcolor3"]               floating enable
 for_window  [title="pulsemixerGT"]          floating enable move position center
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="Skype"]                 floating enable
-
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Pavucontrol"] resize set 1080 420
@@ -116,59 +132,11 @@ for_window [class="qpaeq"] move position center
 for_window [class="qpaeq"] sticky enable
 for_window [class="qpaeq"] border none
 
-# # Gap settings
-# gaps inner 6
-# gaps outer -2
-# smart_gaps on
-# smart_borders on
-
-focus_on_window_activation focus
-font pango:SourceCodePro-ExtraLight 7
-default_border pixel 1
-default_floating_border normal
-hide_edge_borders none
-
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 ">_"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "x"
-
-#--------------------------------------------------------------------------
-# Window borders and colors
-#--------------------------------------------------------------------------
-#                        border     bg         fg         indicator  child_border
-client.focused           #3465a4    #3465a4    #e0e0e0    #00ff00    #202332
-client.focused_inactive  #383c4a    #383c4a    #e0e0e0    #00ff00    #202332
-client.unfocused         #383c4a    #383c4a    #808080    #00ff00    #202332
-client.urgent            #383c4a    #900000    #ffffff    #00ff00    #202332
-client.placeholder       #383c4a    #0c0c0c    #ffffff    #00ff00    #202332
-client.background        #202332
-
-
-bar 
-{
-    font pango:SourceCodePro-ExtraLight 8
-    tray_output primary
-    status_command i3blocks
-
-  
-  colors { # gray
-    statusline #f0f0f0
-    separator  #3465a4
-    background #202332  
-#                       border   bg       fg
-    focused_workspace   #ffffff  #3465a4  #ffffff
-    active_workspace    #3465a4  #383c4a  #3465a4
-    inactive_workspace  #bababa  #383c4a  #bababa
-    urgent_workspace    #ffffff  #eb709b  #ffffff
-   } 
-}
+# Gap settings
+gaps inner 6
+gaps outer -2
+smart_gaps on
+smart_borders on
 
 set $mod Mod4
 set $alt Mod1
@@ -206,9 +174,9 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+n              border normal
 
 # Programs
-	bindsym $mod+Return         exec --no-startup-id $term
-	bindsym $mod+z              exec --no-startup-id $browsr
-	bindsym $mod+x              exec --no-startup-id $myeditor
+	bindsym $mod+Return         exec --no-startup-id $TERMINAL
+	bindsym $mod+z              exec --no-startup-id $BROWSER
+	bindsym $mod+x              exec --no-startup-id $EDITOR
 	bindsym $mod+c              exec --no-startup-id $fm
 	bindsym $mod+g              exec --no-startup-id $calc
 
@@ -223,7 +191,6 @@ bindsym $mod+Tab exec i3_alt_tab
 # MODES
 	bindsym $mod+Pause          mode "$Pause-break"
 	bindsym $mod+F12            mode "$mode_display"
- 	bindsym $mod+Shift+g        mode "$mode_gaps"
 
 # Change Focus
 	bindsym $mod+$left          focus left
