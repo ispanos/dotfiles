@@ -23,7 +23,7 @@ info "Starting backup"
 
 parent_dir=/media/Data/Backups/
 
-backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d")test"
+backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d")"
 
 
 mkdir -p "$backup_dir"
