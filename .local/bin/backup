@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# some helpers and error handling:
+info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
+
+ask_delete() {
+	exit_question=$(
+		cat <<-EOF
+		$(date) Backup interrupted
+		Would you like delete $backup_dir ? [y/N]:
+		EOF
+		)
+
+	read -rep "$exit_question" reply
+	if [[ $reply =~ ^[Yy]$ ]]; then
+		sudo rm -rf "$backup_dir"
+	fi
+}
+
+trap 'ask_delete; exit 2' INT TERM
+
+info "Starting backup"
+
+parent_dir=/media/Data/Backups/
+
+backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d")test"
+
+
+mkdir -p "$backup_dir"
+
+sudo rsync -aAXhPv \
+			--include={'.cache','.cache/yay/***'} \
+			--exclude={".*","Games","VirtualBox VMs",".cache/**"} \
+			"$HOME" "$backup_dir"
