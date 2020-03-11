@@ -23,7 +23,7 @@ for profile in $posible_profiles ; do
 		user_pref("browser.bookmarks.restore_default_bookmarks", false);
 		user_pref("browser.bookmarks.showMobileBookmarks", true);
 		user_pref("browser.contentblocking.category", "strict");
-	user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://www.youtube.com/\"},{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"}]");
+		user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://www.youtube.com/\"},{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"}]");
 		user_pref("browser.protections_panel.infoMessage.seen", true);
 		user_pref("browser.startup.homepage", "https://start.duckduckgo.com/");
 		user_pref("browser.tabs.drawInTitlebar", true);
