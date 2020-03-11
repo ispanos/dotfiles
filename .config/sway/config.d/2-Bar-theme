@@ -4,7 +4,7 @@ default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
 
-set $ws1 ">_"
+set $ws1 "1:>_"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
@@ -13,12 +13,13 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "x"
+set $ws10 "10:x"
 
 bar {
     font pango:SourceCodePro-ExtraLight 8
     tray_output primary
     status_command i3blocks
+    strip_workspace_numbers yes
 }
 
 # Application specific rules ($xprop find the name)
