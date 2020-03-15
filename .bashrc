@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 [[ $- != *i* ]] && return
 [ -r "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
-[ -r /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
+[ -r /usr/share/bash-completion/bash_completion ] &&
+	source /usr/share/bash-completion/bash_completion
 shopt -s checkwinsize
 stty -ixon
 complete -cf sudo
@@ -10,14 +11,34 @@ shopt -s autocd
 # The pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
+	
+git_prmt(){
+	source $HOME/.local/bin/helpers/git-prompt.sh
+	local CE="\e[0m"
+	local bld="\e[1m"
+	local Red="\e[31m"
+	local Yel="\e[33m"
+	local grn="\e[32m"
+	local bl="\e[36m"
+	local Mg="\e[35m"
 
-# PS1
-# `[$USER`
-export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\["
-# `@hostname`
-export PS1="$PS1$(tput setaf 2)\]@\[$(tput setaf 4)\]\h "
-# ` dir ]$`
-export PS1="$PS1\[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
+	PS1="${bld}${Red}[${Yel}\u${grn}@${bl}\h${Mg} \W\$(__git_ps1 \" (%s)\")${Red}]${CE}\$ "
+}
+
+normal_prmt(){
+	local CE="\e[0m"
+	local bld="\e[1m"
+	local Red="\e[31m"
+	local Yel="\e[33m"
+	local grn="\e[32m"
+	local bl="\e[36m"
+	local Mg="\e[35m"
+
+	PS1="${bld}${Red}[${Yel}\u${grn}@${bl}\h${Mg} \W\${Red}]${CE}\$ "
+}
+normal_prmt
+# Use git-prompt.sh for git if present.
+[[ `command -v git` ]] && git_prmt
 
 # History Managment.
 export HISTCONTROL=ignoredups:erasedups  
@@ -61,6 +82,8 @@ alias \
 # Use neovim for vim if present.
 [[ `command -v nvim` ]] && alias \
     vim="nvim" vimdiff="nvim -d" 
+
+
 
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
