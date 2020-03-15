@@ -21,7 +21,6 @@ if echo $0 | grep -q bash && [ -f ~/.bashrc ]; then
     source "$HOME/.bashrc"
 fi
 
-
 # init script for i3/ sway
 if [ -d "$HOME/.local/bin/wm-scripts" ]; then
 	PATH="$HOME/.local/bin/wm-scripts/:$PATH"
