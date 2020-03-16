@@ -18,6 +18,5 @@ set $screenshot maim -m 1                               ~/Pictures/Screenshots/$
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-set $locksoff	"i3lock_script; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 set $lock 		i3lock_script

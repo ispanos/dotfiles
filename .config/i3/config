@@ -26,14 +26,13 @@ set $screenshot maim -m 1                               ~/Pictures/Screenshots/$
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-set $locksoff	"i3lock_script; sleep 5 && xset dpms force off"
 set $wmexit 	i3-msg exit
 set $lock 		i3lock_script
 
 # With Nouveau driver HDMI-1
 # With Nvidia driver HDMI-0
-set $SG HDMI-0
-set $LG DP-1
+set $SG HDMI-1
+set $LG HDMI-2
 
 exec xrandr --output $LG --rotate normal --primary \
 				--output $SG --rotate normal --right-of $LG
@@ -68,14 +67,13 @@ set $mediaplay  	playerctl play-pause 			&& pkill -RTMIN+10 i3blocks
 set $medianext  	playerctl next 					&& pkill -RTMIN+10 i3blocks
 set $mediaprev  	playerctl previous 				&& pkill -RTMIN+10 i3blocks
 
-set $Pause-break  System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (End) shutdown
+set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
     bindsym e       exec $wmexit, 				mode "default"
     bindsym s       exec systemctl suspend, 	mode "default"
     bindsym r       exec systemctl reboot, 		mode "default"
     bindsym End     exec systemctl poweroff -i, mode "default"
     bindsym l       exec $lock, 				mode "default"
-    bindsym k       exec $locksoff, 			mode "default"
 
     bindsym Return  mode "default"
     bindsym Escape  mode "default"

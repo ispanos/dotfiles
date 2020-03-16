@@ -17,7 +17,7 @@ exec swayidle -w \
 
 set $wmexit 	"swaymsg exit && exit"
 set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $locksoff	swayidle -w  \
+set $lock2		swayidle -w  \
 				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \
 				timeout 2 'swaymsg "output * dpms off"' \
 				resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
@@ -42,7 +42,7 @@ set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S
 output * bg ~/.config/wall.png fill
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    gsettings set $gnome-schema gtk-theme 'Minwaita-Dark'
+    gsettings set $gnome-schema gtk-theme 'Adwaita'
     gsettings set $gnome-schema icon-theme 'Adwaita'
     gsettings set $gnome-schema cursor-theme 'Adwaita'
 }
