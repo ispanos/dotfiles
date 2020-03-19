@@ -22,5 +22,6 @@
         "toolchain": "stable-x86_64-unknown-linux-gnu"
     },
     "window.menuBarVisibility": "toggle",
+    "explorer.confirmDelete": false,
     
 }
