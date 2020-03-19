@@ -14,7 +14,7 @@
     "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.fontFamily": "monospace",
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','FontAwesome'",
-    "workbench.colorTheme": "Material Theme Ocean",
+    "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "bashIde.explainshellEndpoint": "http://localhost:5000",
     "rust.mode": "legacy",
     "diffEditor.ignoreTrimWhitespace": false,
