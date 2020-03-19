@@ -21,14 +21,18 @@ trap 'ask_delete; exit 2' INT TERM
 
 info "Starting backup"
 
-parent_dir=/media/Data/Backups/
+parent_dir=/media/data/Backups/
 
-backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d")"
-
+backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d_%s")"
 
 mkdir -p "$backup_dir"
 
-sudo rsync -aAXhPv \
-			--include={'.cache','.cache/yay/***'} \
-			--exclude={".*","Games","VirtualBox VMs",".cache/**"} \
+sudo rsync -aAXhv \
+			--exclude={".*","Games","VirtualBox VMs"} \
 			"$HOME" "$backup_dir"
+
+# With yay cache.
+# sudo rsync -aAXhPv \
+# 			--include={'.cache','.cache/yay/***'} \
+# 			--exclude={".*","Games","VirtualBox VMs",".cache/**"} \
+# 			"$HOME" "$backup_dir"
