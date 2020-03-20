@@ -8,6 +8,11 @@ export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 [ ! -d "$HOME/.config/zsh" ] && mkdir "$HOME/.config/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
 
+# New default WINEPREFIX.
+# You can change that for each program separately.
+export WINEPREFIX="$HOME/.local/share/wine"
+
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
