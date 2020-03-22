@@ -12,7 +12,7 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 
-	[ ! -d ~/.local/xorg ] && mkdir ~/.local/share/xorg
+	[ ! -d ~/.local/xorg ] && mkdir -p ~/.local/share/xorg
 	logfile=~/.local/share/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log
 	touch "$logfile"
 	exec startx /usr/bin/i3 > "$logfile" 2>&1
@@ -25,7 +25,7 @@ elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	#export QT_QPA_PLATFORM=wayland
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	#export MOZ_ENABLE_WAYLAND=1
-	[ ! -d ~/.local/xorg ] && mkdir ~/.local/share/sway
+	[ ! -d ~/.local/xorg ] && mkdir -p ~/.local/share/sway
 	logfile=~/.local/share/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log
 	sway  > "$logfile" 2>&1
 fi
