@@ -15,6 +15,7 @@ if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 	[ ! -d ~/.local/xorg ] && mkdir -p ~/.local/share/xorg
 	logfile=~/.local/share/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log
 	touch "$logfile"
+	i3confmerge
 	exec startx /usr/bin/i3 > "$logfile" 2>&1
 
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
