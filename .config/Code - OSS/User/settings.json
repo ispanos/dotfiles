@@ -13,7 +13,6 @@
     "window.zoomLevel": 0,
     "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.fontFamily": "monospace",
-    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','FontAwesome'",
     "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "bashIde.explainshellEndpoint": "http://localhost:5000",
     "rust.mode": "legacy",
@@ -23,5 +22,7 @@
     },
     "window.menuBarVisibility": "toggle",
     "explorer.confirmDelete": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 30000,
     
 }
