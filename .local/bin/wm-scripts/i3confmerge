@@ -8,19 +8,26 @@ merge() {
 		## sway uses include /etc/sway/config.d/* to do the same thing.
 		## Any changes made on this file will be lost when i3 reloads.
 
-		# This config file uses environmental variables such as $BROWSER and $TERMINAL,
-		# you can set them bellow as variables: "$term" "$browsr" "$myeditor"
+		# This config file uses environmental variables such as $BROWSER and $TERMINAL.
+
 	EOF
-
-	cat ~/.config/i3/X >> ~/.config/i3/config
-
-	printf "\\n\\n" >> ~/.config/i3/config
-	[ $(hostname) = "killua" ] && cat ~/.config/i3/killua_X_monitors >> ~/.config/i3/config
 
 	for i in ~/.config/i3/config.d/* ; do
 		printf "\\n\\n" >> ~/.config/i3/config
 		cat $i >> ~/.config/i3/config
+		printf "\\n\\n" >> ~/.config/i3/config
 	done
+
+	cat ~/.config/i3/X >> ~/.config/i3/config
+
+	PC_specific_files=$(/usr/bin/ls $HOME/.config/i3 | grep "$(hostname).*")
+
+	for file in $PC_specific_files; do
+		printf "\\n\\n" >> ~/.config/i3/config
+		cat ~/.config/i3/$file >> ~/.config/i3/config
+		printf "\\n\\n" >> ~/.config/i3/config
+	done
+
 }
 
 merge && [ -f /usr/bin/i3 ] && pgrep -x Xorg >/dev/null && i3-msg restart

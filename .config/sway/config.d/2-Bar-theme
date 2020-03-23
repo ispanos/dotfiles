@@ -1,5 +1,8 @@
+set $font font pango:RobotoMono-Regular 8
+# set $font font pango:SourceCodePro-ExtraLight 8
+
+$font
 focus_on_window_activation focus
-font pango:SourceCodePro-ExtraLight 7
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
@@ -16,7 +19,7 @@ set $ws9 "9"
 set $ws10 "10:x"
 
 bar {
-    font pango:SourceCodePro-ExtraLight 8
+    $font
     tray_output primary
     status_command i3blocks
     strip_workspace_numbers yes
