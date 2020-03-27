@@ -6,7 +6,9 @@ autoload -Uz compinit && compinit
 #zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-compinit
+
+[ -d "$HOME/.cache/zsh/" ] || mkdir -p "$HOME/.cache/zsh/"
+compinit -d "$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
 
 # Include hidden files in autocomplete:
 _comp_options+=(globdots)
@@ -23,7 +25,7 @@ setopt PROMPT_SUBST
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c\$(__git_ps1 \" (%s)\") %{$fg[red]%}]%{$reset_color%}$%b "
 
 # History
-export HISTFILE=$ZDOTDIR/zsh_history
+export HISTFILE=$ZDOTDIR/history
 [[ -f "$HISTFILE" ]] || touch $HISTFILE
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=9999
