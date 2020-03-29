@@ -30,13 +30,10 @@ alias \
 	ll="lsd --human-readable --color=auto -al"\
 	ls="lsd --human-readable --color=auto "
 
-# Use neovim for vim if present.
-[[ `command -v nvim` ]] && alias \
-    vim="nvim" vimdiff="nvim -d" 
-
-# For Raspberry Pi 
-[[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
-    temp="/opt/vc/bin/vcgencmd measure_temp"
+# Neovim || Flatpak Neovim
+alias \
+	nvim="nvim || flatpak run io.neovim.nvim" \
+	nvimd="nvim -d || flatpak run io.neovim.nvim -d"
 
 flatpak_theme() {
 	for package in $(ls "$HOME/.var/app/"); do
@@ -44,3 +41,7 @@ flatpak_theme() {
 		/usr/bin/ln -s "$HOME/.config/gtk-3.0" "$HOME/.var/app/$package/config/"
 	done
 }
+
+# For Raspberry Pi 
+[[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
+    temp="/opt/vc/bin/vcgencmd measure_temp"
