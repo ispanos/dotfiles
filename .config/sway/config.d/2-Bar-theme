@@ -27,13 +27,14 @@ bar {
 
 # Application specific rules ($xprop find the name)
 for_window  [class="Galculator"]            floating enable
+for_window  [class="Gnome-calculator"]      floating enable move position center
 for_window  [class="Gcolor3"]               floating enable
 for_window  [title="pulsemixerGT"]          floating enable move position center
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="Skype"]                 floating enable
 
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Pavucontrol"] resize set 1080 420
+for_window [class="Pavucontrol"] resize set 1080 600
 for_window [class="Pavucontrol"] move position center
 for_window [class="Pavucontrol"] sticky enable
 for_window [class="Pavucontrol"] border none
