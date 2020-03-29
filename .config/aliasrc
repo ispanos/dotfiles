@@ -37,3 +37,10 @@ alias \
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"
+
+flatpak_theme() {
+	for package in $(ls "$HOME/.var/app/"); do
+		[ -d "$HOME/.var/app/$package/config/gtk-3.0" ] ||
+		/usr/bin/ln -s "$HOME/.config/gtk-3.0" "$HOME/.var/app/$package/config/"
+	done
+}
