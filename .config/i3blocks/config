@@ -3,12 +3,11 @@ separator=false
 separator_block_width=7
 markup=pango
 
-# [mediaplayer]
-# command=echo $(/usr/bin/perl /usr/lib/i3blocks/mediaplayer | tr -d "\n")🎵 && pkill -RTMIN+10 i3blocks
-# instance=spotify
-# interval=4
-# signal=8
-
+[mediaplayer]
+instance=spotify
+interval=4
+signal=8
+label=🎵
 # [nothing]
 # command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
 # interval=once
