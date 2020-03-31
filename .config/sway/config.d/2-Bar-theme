@@ -50,3 +50,11 @@ gaps inner 6
 gaps outer -2
 smart_gaps on
 smart_borders on
+
+#exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+#exec_always gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark'
+#exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+#exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
+#exec_always gsettings set org.gnome.desktop.sound input-feedback-sounds false
+#exec_always gsettings set org.gnome.desktop.sound event-sounds false
+#exec_always gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false
