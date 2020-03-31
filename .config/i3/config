@@ -1,0 +1,330 @@
+# i3 config file (v4)
+#                           #-------Warning-------#                           #
+## In i3wm this is a file created by ~/.local/bin/i3confmerge
+## sway uses include /etc/sway/config.d/* to do the same thing.
+## Any changes made on this file will be lost when i3 reloads.
+
+# This config file uses environmental variables such as firefox and gnome-terminal.
+
+
+
+# Programs
+set $fm         	pcmanfm
+set $calc       	"galculator || flatpak run org.gnome.Calculator"
+set $volup      	pactl set-sink-volume 0 +2% 	&& pkill -RTMIN+10 i3blocks
+set $voldown    	pactl set-sink-volume 0 -4% 	&& pkill -RTMIN+10 i3blocks
+set $volmute    	pactl set-sink-mute   0 toggle 	&& pkill -RTMIN+10 i3blocks
+set $mediaplay  	playerctl play-pause 			&& pkill -RTMIN+10 i3blocks
+set $medianext  	playerctl next 					&& pkill -RTMIN+10 i3blocks
+set $mediaprev  	playerctl previous 				&& pkill -RTMIN+10 i3blocks
+
+set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
+mode "$Pause-break" {
+    bindsym e       exec $wmexit, 				mode "default"
+    bindsym s       exec systemctl suspend, 	mode "default"
+    bindsym r       exec systemctl reboot, 		mode "default"
+    bindsym End     exec systemctl poweroff -i, mode "default"
+    bindsym l       exec $lock, 				mode "default"
+
+    bindsym Return  mode "default"
+    bindsym Escape  mode "default"
+}
+
+#exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
+exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+exec "blueman-applet &"
+
+exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
+
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
+
+
+
+set $font font pango:RobotoMono-Regular 8
+# set $font font pango:SourceCodePro-ExtraLight 8
+
+$font
+focus_on_window_activation focus
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders none
+
+set $ws1 "1:>_"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10:x"
+
+bar {
+    $font
+    tray_output primary
+    status_command i3blocks
+    strip_workspace_numbers yes
+}
+
+# Application specific rules ($xprop find the name)
+for_window  [class="Galculator"]            floating enable
+for_window  [class="Gnome-calculator"]      floating enable move position center
+for_window  [class="Gcolor3"]               floating enable
+for_window  [title="pulsemixerGT"]          floating enable move position center
+for_window  [class="PulseAudio Equalizer"]  floating enable move position center
+for_window  [class="Skype"]                 floating enable
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] resize set 1080 600
+for_window [class="Pavucontrol"] move position center
+for_window [class="Pavucontrol"] sticky enable
+for_window [class="Pavucontrol"] border none
+
+for_window [class="qpaeq"] floating enable
+for_window [class="qpaeq"] resize set 1080 420
+for_window [class="qpaeq"] move position center
+for_window [class="qpaeq"] sticky enable
+for_window [class="qpaeq"] border none
+
+# Gap settings
+gaps inner 6
+gaps outer -2
+smart_gaps on
+smart_borders on
+
+exec_always { \
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark', \
+    gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark', \
+    gsettings set org.gnome.desktop.interface icon-theme 'Adwaita', \
+    gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita', \
+    gsettings set org.gnome.desktop.sound input-feedback-sounds false, \
+    gsettings set org.gnome.desktop.sound event-sounds false, \
+    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false, \
+}
+
+
+
+
+
+set $mod Mod4
+set $alt Mod1
+
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
+floating_modifier $mod
+
+# alt-tab for floating windows.
+bindsym $mod+Tab exec i3_alt_tab
+
+# Keybind						Command
+	bindsym $mod+d              exec $wmlauncher
+	bindsym $mod+Shift+q        kill
+	bindsym $mod+Shift+c        reload
+	bindsym $mod+Shift+r        exec $wmrestart
+	bindsym $mod+a              focus parent
+	bindsym $mod+Shift+space    floating toggle
+	bindsym $mod+space          focus mode_toggle 
+	bindsym $mod+s              layout stacking  
+	bindsym $mod+w              layout tabbed
+	bindsym $mod+e              layout toggle split
+
+# Split Orientation / Mode
+	bindsym $mod+b              split h
+	bindsym $mod+v              split v
+	bindsym $mod+f              fullscreen toggle
+
+# Change borders
+	bindsym $mod+u              border none
+	bindsym $mod+y              border pixel 1
+	bindsym $mod+n              border normal
+
+# Programs
+	bindsym $mod+Return         exec --no-startup-id $TERMINAL
+	bindsym $mod+z              exec --no-startup-id $BROWSER
+	bindsym $mod+x              exec --no-startup-id $EDITOR
+	bindsym $mod+c              exec --no-startup-id $fm
+	bindsym $mod+g              exec --no-startup-id $calc
+
+# Screen Shots
+	bindsym Print               exec $screenshot
+	bindsym Shift+Print         exec $snipwindow
+	bindsym ctrl+Print          exec $sniparea
+
+# Camera
+	bindsym $mod+F11			exec --no-startup-id camtoggle
+
+# MODES
+	bindsym $mod+Pause          mode "$Pause-break"
+	bindsym $mod+F12            mode "$mode_display"
+
+# Change Focus
+	bindsym $mod+$left          focus left
+	bindsym $mod+$down          focus down
+	bindsym $mod+$up            focus up
+	bindsym $mod+$right         focus right
+	bindsym $mod+Left           focus left
+	bindsym $mod+Down           focus down
+	bindsym $mod+Up             focus up
+	bindsym $mod+Right          focus right
+# Move
+	bindsym $mod+Shift+$left    move left
+	bindsym $mod+Shift+$down    move down
+	bindsym $mod+Shift+$up      move up
+	bindsym $mod+Shift+$right   move right
+	bindsym $mod+Shift+Left     move left
+	bindsym $mod+Shift+Down     move down
+	bindsym $mod+Shift+Up       move up
+	bindsym $mod+Shift+Right    move right
+# Switch to workspace
+	bindsym $mod+1              workspace $ws1
+	bindsym $mod+2              workspace $ws2
+	bindsym $mod+3              workspace $ws3
+	bindsym $mod+4              workspace $ws4
+	bindsym $mod+5              workspace $ws5
+	bindsym $mod+6              workspace $ws6
+	bindsym $mod+7              workspace $ws7
+	bindsym $mod+8              workspace $ws8
+	bindsym $mod+9              workspace $ws9
+	bindsym $mod+0              workspace $ws10
+# Move focused container to workspace
+	bindsym $mod+Shift+1        move container to workspace $ws1
+	bindsym $mod+Shift+2        move container to workspace $ws2
+	bindsym $mod+Shift+3        move container to workspace $ws3
+	bindsym $mod+Shift+4        move container to workspace $ws4
+	bindsym $mod+Shift+5        move container to workspace $ws5
+	bindsym $mod+Shift+6        move container to workspace $ws6
+	bindsym $mod+Shift+7        move container to workspace $ws7
+	bindsym $mod+Shift+8        move container to workspace $ws8
+	bindsym $mod+Shift+9        move container to workspace $ws9
+	bindsym $mod+Shift+0        move container to workspace $ws10
+
+# Resize
+	bindsym $mod+Mod1+$left     resize shrink width   3 px or 3 ppt
+	bindsym $mod+Mod1+$down     resize grow   height  3 px or 3 ppt
+	bindsym $mod+Mod1+$up       resize shrink height  3 px or 3 ppt
+	bindsym $mod+Mod1+$right    resize grow   width   3 px or 3 ppt
+	bindsym $mod+Mod1+Left      resize shrink width   3 px or 3 ppt
+	bindsym $mod+Mod1+Down      resize grow   height  3 px or 3 ppt
+	bindsym $mod+Mod1+Up        resize shrink height  3 px or 3 ppt
+	bindsym $mod+Mod1+Right     resize grow   width   3 px or 3 ppt
+
+# Media player controls
+bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
+bindsym XF86AudioNext                   exec --no-startup-id $medianext
+bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
+
+# Pulse Audio controls 
+bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
+bindsym XF86AudioLowerVolume            exec --no-startup-id $voldown
+bindsym XF86AudioMute                   exec --no-startup-id $volmute
+bindsym XF86PowerOff                    exec --no-startup-id $lock && systemctl suspend
+#                                      #---Extra XF86 Keys---#                                      #
+#                      These are the extra media keys that some keyboards have.                     #
+
+# bindsym XF86PowerOff                  mode "$System"
+# bindsym XF86WLAN                      exec --no-startup-id $netrefresh
+# bindsym XF86Launch1                   exec --no-startup-id xset dpms force off
+# bindsym XF86Copy                      exec
+# bindsym XF86Open                      exec
+# bindsym XF86Paste                     exec
+# bindsym XF86Cut                       exec
+# bindsym XF86MenuKB                    exec
+# bindsym XF86Calculator                exec
+# bindsym XF86Sleep                     This binding is typically mapped by systemd automatically.
+# bindsym XF86WakeUp                    exec
+# bindsym XF86Explorer                  exec
+# bindsym XF86Send                      exec
+# bindsym XF86Xfer                      exec
+# bindsym XF86WWW                       exec
+# bindsym XF86DOS                       exec
+# bindsym XF86ScreenSaver               exec
+# bindsym XF86RotateWindows             exec
+# bindsym XF86TaskPane                  exec
+# bindsym XF86Favorites                 exec
+# bindsym XF86MyComputer                exec
+# bindsym XF86Back
+# bindsym XF86Forward
+# bindsym XF86Eject                     exec
+# bindsym XF86AudioNext                 exec
+# bindsym XF86AudioPlay                 exec
+# bindsym XF86AudioPrev                 exec
+# bindsym XF86AudioStop                 exec
+# bindsym XF86AudioRecord               exec
+# bindsym XF86AudioRewind               exec
+# bindsym XF86AudioForward              exec
+# bindsym XF86Phone                     exec
+# bindsym XF86Tools                     exec
+# bindsym XF86HomePage                  exec
+# bindsym XF86Reload                    restart
+# bindsym XF86ScrollUp                  exec
+# bindsym XF86ScrollDown                exec
+# bindsym XF86New                       exec
+# bindsym XF86LaunchA                   exec
+# bindsym XF86LaunchB                   exec
+# bindsym XF86Launch2                   exec
+# bindsym XF86Launch3                   exec
+# bindsym XF86Launch4                   exec
+# bindsym XF86Launch5                   exec
+# bindsym XF86Launch6                   exec
+# bindsym XF86Launch7                   exec
+# bindsym XF86Launch8                   exec
+# bindsym XF86Launch9                   exec
+# bindsym XF86AudioMicMute              exec
+# bindsym XF86TouchpadToggle            exec
+# bindsym XF86TouchpadOn                exec --no-startup-id synclient TouchpadOff=0
+# bindsym XF86TouchpadOff               exec --no-startup-id synclient TouchpadOff=1
+# bindsym XF86Suspend                   exec
+# bindsym XF86Close                     kill
+# bindsym XF86WebCam                    exec
+# bindsym XF86Mail                      exec
+# bindsym XF86Messenger                 exec
+# bindsym XF86Search                    exec $BROWSER https://duckduckgo.com
+# bindsym XF86Go                        exec
+# bindsym XF86Finance                   exec
+# bindsym XF86Game                      exec
+# bindsym XF86Shop                      exec
+# bindsym XF86MonBrightnessDown         exec
+# bindsym XF86MonBrightnessUp           exec
+# bindsym XF86AudioMedia                exec
+# bindsym XF86Display                   exec
+# bindsym XF86KbdLightOnOff             exec
+# bindsym XF86KbdBrightnessDown         exec
+# bindsym XF86KbdBrightnessUp           exec
+# bindsym XF86Reply                     exec
+# bindsym XF86MailForward               exec
+# bindsym XF86Save                      exec
+# bindsym XF86Documents                 exec
+# bindsym XF86Battery                   exec
+# bindsym XF86Bluetooth                 exec
+
+exec_always feh --no-fehbg --bg-max ~/.config/wall.png
+exec "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle &"
+exec "xsettingsd &"
+exec "dunst &"
+exec "source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh &"
+exec "numlockx &"
+
+set $wmrestart i3confmerge
+set $wmlauncher i3-dmenu-desktop  \
+				\\"--dmenu=dmenu -i \
+				-nf '#70C7D2' \
+				-nb '#193549' \
+				-sb '#2A597A' \
+				-sf '#70C7D2' \
+				-p 'i3-dmenu-desktop:' \\"
+
+set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+
+set $wmexit 	i3-msg exit
+set $lock 		i3lock_script
+
+exec xrandr --output HDMI-0 --primary
+

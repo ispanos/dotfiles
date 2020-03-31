@@ -21,9 +21,10 @@ mode "$Pause-break" {
 }
 
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec blueman-applet
+exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+exec "blueman-applet &"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
+
 # Allows i3 to bind the powerbutton properly.
 exec systemd-inhibit --what=handle-power-key sleep infinity

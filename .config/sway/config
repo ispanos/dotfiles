@@ -40,8 +40,3 @@ set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S
 
 
 output * bg ~/.config/wall.png fill
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
-    gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
-    gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
-}
