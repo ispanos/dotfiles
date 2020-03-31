@@ -1,6 +1,6 @@
 exec_always feh --no-fehbg --bg-max ~/.config/wall.png
 exec_always "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
-#exec "xsettingsd &"
+exec "xsettingsd &"
 exec "dunst &"
 exec "source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh &"
 exec "numlockx &"
