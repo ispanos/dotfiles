@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
 
-# Declutter ~
-export GNUPGHOME="$HOME/.config/gnupg"
-export INPUTRC="$HOME/.config/inputrc"
-[ ! -d "$HOME/.config/gtk-2.0" ] && mkdir $HOME/.config/gtk-2.0
-export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
-[ ! -d "$HOME/.config/zsh" ] && mkdir "$HOME/.config/zsh"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This will break some DMs.
-export WINEPREFIX="$HOME/.local/share/wine" # Can be changed for every program.
+# Declutter ~ // https://wiki.archlinux.org/index.php/XDG_Base_Directory
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# NPM
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
+
+# GTK-2
+[ ! -d "${XDG_CONFIG_HOME}/gtk-2.0" ] && mkdir ${XDG_CONFIG_HOME}/gtk-2.0
+export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc-2.0"
+
 # ZSH
-export ZDOTDIR="$HOME/.config/zsh"
+[ ! -d "${XDG_CONFIG_HOME}/zsh" ] && mkdir "${XDG_CONFIG_HOME}/zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
+export WINEPREFIX="${XDG_DATA_HOME}/wine" # Can be changed for every program.
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
+
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
@@ -33,8 +44,8 @@ export PATH="$HOME/.local/bin/wm-scripts/:$PATH"
 
 # init function for i3wm
 i3start(){
-	[ ! -d ~/.local/xorg ] && mkdir -p ~/.local/share/xorg
-	logfile=~/.local/share/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log
+	[ ! -d "${XDG_DATA_HOME}/xorg" ] && mkdir -p ${XDG_DATA_HOME}/xorg
+	logfile="${XDG_DATA_HOME}/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
 	touch "$logfile"
 	i3confmerge
 	exec startx /usr/bin/i3 > "$logfile" 2>&1
@@ -48,8 +59,8 @@ swaystart() {
 	#export QT_QPA_PLATFORM=wayland
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	#export MOZ_ENABLE_WAYLAND=1
-	[ ! -d ~/.local/xorg ] && mkdir -p ~/.local/share/sway
-	logfile=~/.local/share/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log
+	[ ! -d "${XDG_DATA_HOME}/sway" ] && mkdir -p "${XDG_DATA_HOME}/sway"
+	logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
 	sway  > "$logfile" 2>&1
 }
 
