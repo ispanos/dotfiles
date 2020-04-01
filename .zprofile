@@ -16,8 +16,18 @@ export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc-2.0"
 [ ! -d "${XDG_CONFIG_HOME}/zsh" ] && mkdir "${XDG_CONFIG_HOME}/zsh"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
+# Rust - Cargo
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+if [ -d "${CARGO_HOME}/bin" ]; then
+    PATH="${CARGO_HOME}/bin:$PATH"
+fi
+
+# Wine
+[ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
+export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
-export WINEPREFIX="${XDG_DATA_HOME}/wine" # Can be changed for every program.
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
@@ -27,20 +37,14 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/.cargo/bin" ]; then
-    PATH="$HOME/.cargo/bin:$PATH"
-fi
 
-
-# i3wm/ Sway stuff
 export SUDO_ASKPASS=dmenupass
-#export EDITOR="nvim"
 export EDITOR="code"
 export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
-export READER="zathura"
 export QT_QPA_PLATFORMTHEME=qt5ct
 export PATH="$HOME/.local/bin/wm-scripts/:$PATH"
+
 
 # init function for i3wm
 i3start(){
@@ -53,20 +57,20 @@ i3start(){
 
 # init function for Sway
 swaystart() {
-	# Variables needed by only by sway.
 	export XKB_DEFAULT_LAYOUT=us,gr
+	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 	#export QT_QPA_PLATFORM=wayland
-	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	#export MOZ_ENABLE_WAYLAND=1
 	[ ! -d "${XDG_DATA_HOME}/sway" ] && mkdir -p "${XDG_DATA_HOME}/sway"
 	logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
 	sway  > "$logfile" 2>&1
 }
 
+[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-	[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] && i3start
+	i3start
 
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-	[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] && swaystart
+	swaystart
 fi
