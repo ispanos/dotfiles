@@ -1,0 +1,1 @@
+/home/yiannis/.config/sway/info.md
