@@ -28,7 +28,7 @@ fi
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
-export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+#export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 
