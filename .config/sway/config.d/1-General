@@ -23,6 +23,7 @@ mode "$Pause-break" {
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 exec "blueman-applet &"
+exec xdg-user-dirs-gtk-update
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 
