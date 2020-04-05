@@ -19,9 +19,7 @@ export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 # Rust - Cargo
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
-if [ -d "${CARGO_HOME}/bin" ]; then
-    PATH="${CARGO_HOME}/bin:$PATH"
-fi
+[ -d "${CARGO_HOME}/bin" ] && appendpath "${CARGO_HOME}/bin"
 
 # Wine
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
@@ -66,9 +64,9 @@ i3start(){
 swaystart() {
 	export XKB_DEFAULT_LAYOUT=us,gr
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-	#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
-	#export QT_QPA_PLATFORM=wayland
-	#export MOZ_ENABLE_WAYLAND=1
+	export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+	export QT_QPA_PLATFORM=wayland
+	export MOZ_ENABLE_WAYLAND=1
 	[ ! -d "${XDG_DATA_HOME}/sway" ] && mkdir -p "${XDG_DATA_HOME}/sway"
 	logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
 	sway  > "$logfile" 2>&1
