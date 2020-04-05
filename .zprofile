@@ -31,11 +31,18 @@ export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
 #export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
+# Append our default paths
+appendpath () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+# set PATH so it includes user's private bin
+appendpath "$HOME/.local/bin"
 
 
 export SUDO_ASKPASS=dmenupass
@@ -43,7 +50,7 @@ export EDITOR="code"
 export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
 export QT_QPA_PLATFORMTHEME=qt5ct
-export PATH="$HOME/.local/bin/wm-scripts/:$PATH"
+appendpath "$HOME/.local/bin/wm-scripts/"
 
 
 # init function for i3wm
@@ -66,6 +73,8 @@ swaystart() {
 	logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
 	sway  > "$logfile" 2>&1
 }
+
+unset appendpath
 
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
