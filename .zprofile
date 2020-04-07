@@ -25,9 +25,14 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
+# No /.Xauthority if GDM isn't used.
+pgrep -x gdm ||
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
-#export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
+d
+# This will break some apps that hard-code ~/.gnupg
+#export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 # Append our default paths
 appendpath () {
@@ -51,33 +56,22 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 appendpath "$HOME/.local/bin/wm-scripts/"
 
 
-# init function for i3wm
-i3start(){
-	[ ! -d "${XDG_DATA_HOME}/xorg" ] && mkdir -p ${XDG_DATA_HOME}/xorg
-	logfile="${XDG_DATA_HOME}/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
-	touch "$logfile"
-	i3confmerge
-	exec startx /usr/bin/i3 > "$logfile" 2>&1
-}
+unset appendpath
 
-# init function for Sway
-swaystart() {
+# Needed with no display manager.
+[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
+if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
+	# init i3wm
+	i3confmerge
+    pgrep -x gdm && return
+	exec startx /usr/bin/i3
+elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
+	# init Sway
 	export XKB_DEFAULT_LAYOUT=us,gr
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 	export QT_QPA_PLATFORM=wayland
 	export MOZ_ENABLE_WAYLAND=1
-	[ ! -d "${XDG_DATA_HOME}/sway" ] && mkdir -p "${XDG_DATA_HOME}/sway"
-	logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
-	sway  > "$logfile" 2>&1
-}
-
-unset appendpath
-
-[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
-if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-	i3start
-
-elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-	swaystart
+    pgrep -x gdm && return
+	sway
 fi

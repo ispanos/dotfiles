@@ -46,6 +46,9 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym Shift+Print         exec $snipwindow
 	bindsym ctrl+Print          exec $sniparea
 
+# Bleutooth Reset
+	bindsym $mod+F8 			exec $Blue_reset
+
 # Camera
 	bindsym $mod+F11			exec --no-startup-id camtoggle
 

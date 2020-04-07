@@ -7,6 +7,7 @@ set $volmute    	pactl set-sink-mute   0 toggle 	&& pkill -RTMIN+10 i3blocks
 set $mediaplay  	playerctl play-pause 			&& pkill -RTMIN+10 i3blocks
 set $medianext  	playerctl next 					&& pkill -RTMIN+10 i3blocks
 set $mediaprev  	playerctl previous 				&& pkill -RTMIN+10 i3blocks
+set $Blue_reset     "$SUDO_ASKPASS | sudo -S systemctl restart bluetooth"
 
 set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
@@ -21,9 +22,9 @@ mode "$Pause-break" {
 }
 
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
-exec "blueman-applet &"
-exec xdg-user-dirs-gtk-update
+exec "pgrep -x gdm || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+exec "blueman-applet"
+exec "pgrep -x gdm || xdg-user-dirs-gtk-update"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 
