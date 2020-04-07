@@ -38,3 +38,5 @@ alias \
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"
+
+alias code='[[ $(command -v /usr/bin/code) ]] && code || flatpak run com.visualstudio.code.oss'

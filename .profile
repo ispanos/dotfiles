@@ -49,7 +49,9 @@ appendpath "$HOME/.local/bin"
 
 
 export SUDO_ASKPASS=dmenupass
+[[ $(command -v /usr/bin/code) ]] &&
 export EDITOR="code"
+export EDITOR="flatpak run com.visualstudio.code.oss"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 export QT_QPA_PLATFORMTHEME=qt5ct

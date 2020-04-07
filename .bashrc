@@ -8,7 +8,7 @@
 
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
-shopt -s checkwinsize
+#shopt -s checkwinsize
 stty -ixon
 complete -cf sudo
 shopt -s autocd
@@ -47,10 +47,12 @@ normal_prmt
 [[ `command -v git` ]] && git_prmt
 
 # History Managment.
-export HISTFILE="$XDG_DATA_HOME"/bash/history
+mkdir -p "$XDG_DATA_HOME/bash/"
+export HISTFILE="$XDG_DATA_HOME/bash/history"
 export HISTCONTROL=ignoredups:erasedups  
 export HISTSIZE=9999
 export HISTFILESIZE=9999
 # PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND" 
+
 [ -s "$HISTFILE" ] || echo "#!/usr/bin/env bash" > $HISTFILE
 shopt -s histappend
