@@ -52,7 +52,8 @@ export SUDO_ASKPASS=dmenupass
 [[ $(command -v /usr/bin/code) ]] &&
 export EDITOR="code"
 export EDITOR="flatpak run com.visualstudio.code.oss"
-export TERMINAL="alacritty"
+#export TERMINAL="alacritty"
+export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
 export QT_QPA_PLATFORMTHEME=qt5ct
 appendpath "$HOME/.local/bin/wm-scripts/"
