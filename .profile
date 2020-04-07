@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Append our default paths
+appendpath () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
 # Declutter ~ // https://wiki.archlinux.org/index.php/XDG_Base_Directory
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -30,19 +40,9 @@ pgrep -x gdm ||
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
 
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
-d
+
 # This will break some apps that hard-code ~/.gnupg
 #export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
-
-# Append our default paths
-appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
-}
 
 # set PATH so it includes user's private bin
 appendpath "$HOME/.local/bin"
@@ -50,7 +50,7 @@ appendpath "$HOME/.local/bin"
 
 export SUDO_ASKPASS=dmenupass
 export EDITOR="code"
-export TERMINAL="gnome-terminal"
+export TERMINAL="alacritty"
 export BROWSER="firefox"
 export QT_QPA_PLATFORMTHEME=qt5ct
 appendpath "$HOME/.local/bin/wm-scripts/"

@@ -16,50 +16,36 @@ I want my i3 configs to work on multiple hardware configurations. Instead of kee
 
 Since I don't add the `~/.config/i3/config` file in my github repo, I always run `i3confmerge` in my `~/.zprofile` (or `~/.bash_profile`) before I `startx`.
 
-These parts in my [~/.zprofile](https://github.com/ispanos/dotfiles/blob/master/.zprofile) are relevant/ needed for my configs to run:
+These parts in my [~/.profile](https://github.com/ispanos/dotfiles/blob/master/.profile) are relevant/ needed for my configs to run:
+[~/.profile] could change to [~/.zprofile] or [~/.bash_profile]
 
 
-    # set PATH so it includes user's private bin if it exists
-    if [ -d "$HOME/.local/bin" ]; then
-        PATH="$HOME/.local/bin:$PATH"
-    fi
-    
-    # ...
-    
+    # set PATH so it includes user's private bin
+    appendpath "$HOME/.local/bin"
+
+    export SUDO_ASKPASS=dmenupass
     export EDITOR="code"
     export TERMINAL="gnome-terminal"
     export BROWSER="firefox"
     export QT_QPA_PLATFORMTHEME=qt5ct
-    export PATH="$HOME/.local/bin/wm-scripts/:$PATH"
-
-
-    # init function for i3wm
-    i3start(){
-        [ ! -d "${XDG_DATA_HOME}/xorg" ] && mkdir -p ${XDG_DATA_HOME}/xorg
-        logfile="${XDG_DATA_HOME}/xorg/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
-        touch "$logfile"
-        i3confmerge
-        exec startx /usr/bin/i3 > "$logfile" 2>&1 # See [2] at the bottom
-    }
-
-    # init function for Sway
-    swaystart() {
-        export XKB_DEFAULT_LAYOUT=us,gr
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        #export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
-        #export QT_QPA_PLATFORM=wayland
-        #export MOZ_ENABLE_WAYLAND=1
-        [ ! -d "${XDG_DATA_HOME}/sway" ] && mkdir -p "${XDG_DATA_HOME}/sway"
-        logfile="${XDG_DATA_HOME}/sway/$(date +%Y_%m_%d-%Hh%Mm%Ss).log"
-        sway  > "$logfile" 2>&1
-    }
-
+    appendpath "$HOME/.local/bin/wm-scripts/"
+    
+    # Needed with no display manager.
     [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
     if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-        i3start
-
+        # init i3wm
+        i3confmerge
+        pgrep -x gdm && return
+        exec startx /usr/bin/i3
     elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-        swaystart
+        # init Sway
+        export XKB_DEFAULT_LAYOUT=us,gr
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+        export QT_QPA_PLATFORM=wayland
+        export MOZ_ENABLE_WAYLAND=1
+        pgrep -x gdm && return
+        sway
     fi
 
 
