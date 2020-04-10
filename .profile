@@ -66,8 +66,7 @@ unset appendpath
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 	# init i3wm
 	i3confmerge
-    pgrep -x gdm && return
-	exec startx /usr/bin/i3
+    pgrep -x gdm || exec startx /usr/bin/i3
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	# init Sway
 	export XKB_DEFAULT_LAYOUT=us,gr
@@ -75,6 +74,5 @@ elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 	export QT_QPA_PLATFORM=wayland
 	export MOZ_ENABLE_WAYLAND=1
-    pgrep -x gdm && return
-	sway
+    pgrep -x gdm || sway
 fi
