@@ -26,9 +26,9 @@ alias \
 	inxi="inxi -FxxxzD"
 
 
-[[ `command -v lsd` ]] && alias \
-	ll="lsd --human-readable --color=auto -al"\
-	ls="lsd --human-readable --color=auto "
+[[ `command -v exa` ]] && alias \
+	ll="exa --icons -al"\
+	ls="exa --icons"
 
 # Neovim || Flatpak Neovim
 alias \
