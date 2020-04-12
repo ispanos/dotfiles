@@ -4,7 +4,7 @@
 [[ $- != *i* ]] && return
 [ -r "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
-#shopt -s checkwinsize
+shopt -s checkwinsize
 stty -ixon
 complete -cf sudo
 shopt -s autocd
@@ -16,6 +16,7 @@ shopt -s globstar
 # Use git-prompt.sh for git if present.
 source $HOME/.local/bin/helpers/git-prompt.sh
 PS1='$(tput setaf 5)[\u@\h \W $(__git_ps1 " (%s)")]$(tput setaf 1) $(tput sgr0)\$ '
+# PS1='[\u@\h \W $(__git_ps1 " (%s)")]\$ '
 
 # History Managment.
 [ -f "$XDG_DATA_HOME/bash/" ] || mkdir -p "$XDG_DATA_HOME/bash/"
