@@ -1,5 +1,53 @@
 #!/bin/sh
 
+# Placeholder
+
+# set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+# mode "$mode_system" {
+#     bindsym l exec --no-startup-id i3exit lock, mode "default"
+#     bindsym e exec --no-startup-id i3exit logout, mode "default"
+#     bindsym s exec --no-startup-id i3exit suspend, mode "default"
+#     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+#     bindsym r exec --no-startup-id i3exit reboot, mode "default"
+#     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+#     # back to normal: Enter or Escape
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+# bindsym $mod+Pause mode "$mode_system"
+
+# lock() {
+#     i3lock
+# }
+
+# case "$1" in
+#     lock)
+#         lock
+#         ;;
+#     logout)
+#         i3-msg exit
+#         ;;
+#     suspend)
+#         lock && systemctl suspend
+#         ;;
+#     hibernate)
+#         lock && systemctl hibernate
+#         ;;
+#     reboot)
+#         systemctl reboot
+#         ;;
+#     shutdown)
+#         systemctl poweroff
+#         ;;
+#     *)
+#         echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|shutdown}"
+#         exit 2
+# esac
+
+# exit 0
+
+
 B='#00000000'  # blank
 C='#ffffff22'  # clear ish
 D='#ffffffcc'  # default

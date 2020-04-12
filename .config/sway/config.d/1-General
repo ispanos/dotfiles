@@ -1,5 +1,5 @@
 # Programs
-set $fm         	pcmanfm
+set $fm         	pcmanfm || nautilus
 set $calc       	"galculator || flatpak run org.gnome.Calculator"
 set $volup      	pactl set-sink-volume 0 +2% 	&& pkill -RTMIN+10 i3blocks
 set $voldown    	pactl set-sink-volume 0 -4% 	&& pkill -RTMIN+10 i3blocks
@@ -22,9 +22,9 @@ mode "$Pause-break" {
 }
 
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec "pgrep -x gdm || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+exec "pgrep -x gdm || pgrep -x gdm3 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 exec "blueman-applet"
-exec "pgrep -x gdm || xdg-user-dirs-gtk-update"
+exec "pgrep -x gdm || pgrep -x gdm3 || xdg-user-dirs-gtk-update"
 
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 

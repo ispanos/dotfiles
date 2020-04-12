@@ -36,7 +36,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
 # No /.Xauthority if GDM isn't used.
-pgrep -x gdm ||
+pgrep -x gdm || pgrep -x gdm3 ||
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
 
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
@@ -66,7 +66,7 @@ unset appendpath
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 	# init i3wm
 	i3confmerge
-    pgrep -x gdm || exec startx /usr/bin/i3
+    pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	# init Sway
 	export XKB_DEFAULT_LAYOUT=us,gr
@@ -74,5 +74,5 @@ elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 	export QT_QPA_PLATFORM=wayland
 	export MOZ_ENABLE_WAYLAND=1
-    pgrep -x gdm || sway
+    pgrep -x gdm || pgrep -x gdm3 || sway
 fi

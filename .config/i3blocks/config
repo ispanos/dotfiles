@@ -8,9 +8,6 @@ instance=spotify
 interval=4
 signal=8
 label=🎵
-# [nothing]
-# command=echo "<span foreground='#002b36' background='#EEFF94'> ♪ ok </span>"
-# interval=once
 
 [ip]
 interval=10
@@ -41,7 +38,7 @@ interval=5
 # Needs xkb-switch
 [keymap]
 command=bash -c 'xkb-switch;xkb-switch -W'
-interval=persist
+interval=1
 
 [volume]
 interval=50
