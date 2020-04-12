@@ -16,7 +16,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # NPM
-export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 
 # GTK-2
 [ ! -d "${XDG_CONFIG_HOME}/gtk-2.0" ] && mkdir ${XDG_CONFIG_HOME}/gtk-2.0
@@ -27,8 +27,8 @@ export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc-2.0"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
 # Rust - Cargo
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 [ -d "${CARGO_HOME}/bin" ] && appendpath "${CARGO_HOME}/bin"
 
 # Wine
@@ -46,20 +46,16 @@ export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 # set PATH so it includes user's private bin
 appendpath "$HOME/.local/bin"
+appendpath "$HOME/.local/bin/wm-scripts/"
+unset appendpath
 
 
 export SUDO_ASKPASS=dmenupass
 [[ $(command -v /usr/bin/code) ]] &&
-export EDITOR="code"
+export EDITOR="code" ||
 export EDITOR="flatpak run com.visualstudio.code.oss"
-#export TERMINAL="alacritty"
-export TERMINAL="gnome-terminal"
+export TERMINAL="alacritty"
 export BROWSER="firefox"
-export QT_QPA_PLATFORMTHEME=qt5ct
-appendpath "$HOME/.local/bin/wm-scripts/"
-
-
-unset appendpath
 
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
