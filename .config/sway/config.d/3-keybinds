@@ -115,6 +115,10 @@ bindsym XF86AudioPrev                   exec --no-startup-id $mediaprev
 # Pulse Audio controls 
 bindsym XF86AudioRaiseVolume            exec --no-startup-id $volup
 bindsym XF86AudioLowerVolume            exec --no-startup-id $voldown
+
+bindsym ctrl+$mod+XF86AudioRaiseVolume  exec --no-startup-id xbrightness +
+bindsym ctrl+$mod+XF86AudioLowerVolume  exec --no-startup-id xbrightness -
+
 bindsym XF86AudioMute                   exec --no-startup-id $volmute
 bindsym XF86PowerOff                    exec --no-startup-id $lock && systemctl suspend
 #                                      #---Extra XF86 Keys---#                                      #
