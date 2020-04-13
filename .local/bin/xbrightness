@@ -22,4 +22,7 @@ case $1 in
 esac
 
 xrandr --output $display --brightness $val
-notify-send -h string:x-canonical-private-synchronous:anything -t 1000 " Screen Brightness: $( bc <<<"$val * 100"|sed 's/\..*//')%"
+
+notify-send -h string:x-canonical-private-synchronous:anything \
+            -t 1000 \
+            " Screen Brightness: $( bc <<<"$val * 100"|sed 's/\..*//')%"
