@@ -31,6 +31,8 @@ arch_upgrade() {
 case $BLOCK_BUTTON in
 	1)
 		export -f arch_upgrade
+		[[ `command -v alacritty` ]] &&
+		alacritty -e bash -c 'arch_upgrade; bash' ||
 		gnome-terminal -x bash -c 'arch_upgrade; bash'
 	;;
 	2) 
