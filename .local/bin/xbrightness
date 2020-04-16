@@ -19,9 +19,12 @@ case $1 in
         [[ $(echo "$val - ($min/100)" | bc | tr -d ".") -le 0 ]] &&
         val=0
         ;;
+    *) exit;;
 esac
 
-xrandr --output $display --brightness $val
+# for display in "$all"; do
+    xrandr --output $display --brightness $val
+# done
 
 notify-send -h string:x-canonical-private-synchronous:anything \
             -t 1000 \
