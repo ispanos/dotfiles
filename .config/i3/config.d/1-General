@@ -11,11 +11,11 @@ set $Blue_reset     "$SUDO_ASKPASS | sudo -S systemctl restart bluetooth"
 
 set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
-    bindsym e       exec $wmexit, 				mode "default"
-    bindsym s       exec systemctl suspend, 	mode "default"
-    bindsym r       exec systemctl reboot, 		mode "default"
-    bindsym End     exec systemctl poweroff -i, mode "default"
-    bindsym l       exec $lock, 				mode "default"
+    bindsym e       exec sessionctl logout, 	mode "default"
+    bindsym s       exec sessionctl suspend, 	mode "default"
+    bindsym r       exec sessionctl reboot, 	mode "default"
+    bindsym End     exec sessionctl shutdown,   mode "default"
+    bindsym l       exec sessionctl lock,   	mode "default"
 
     bindsym Return  mode "default"
     bindsym Escape  mode "default"

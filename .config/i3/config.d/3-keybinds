@@ -120,7 +120,7 @@ bindsym ctrl+$mod+XF86AudioRaiseVolume  exec --no-startup-id xbrightness +
 bindsym ctrl+$mod+XF86AudioLowerVolume  exec --no-startup-id xbrightness -
 
 bindsym XF86AudioMute                   exec --no-startup-id $volmute
-bindsym XF86PowerOff                    exec --no-startup-id $lock && systemctl suspend
+bindsym XF86PowerOff                    exec --no-startup-id sessionctl suspend
 #                                      #---Extra XF86 Keys---#                                      #
 #                      These are the extra media keys that some keyboards have.                     #
 

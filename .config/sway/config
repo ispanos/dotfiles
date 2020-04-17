@@ -15,7 +15,6 @@ exec swayidle -w \
           before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
           after-resume 'swaymsg "output * dpms on"'
 
-set $wmexit 	"swaymsg exit && exit"
 set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
 set $lock2		swayidle -w  \
 				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \

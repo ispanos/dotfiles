@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Placeholder
+
+i3_lock() {
+    B='#00000000'  # blank
+    C='#ffffff22'  # clear ish
+    D='#ffffffcc'  # default
+    T='#eeeeeeee'  # text
+    W='#880000bb'  # wrong
+    V='#bbbbbbbb'  # verifying
+
+    i3lock \
+        --insidevercolor=$C   \
+        --ringvercolor=$V     \
+        \
+        --insidewrongcolor=$C \
+        --ringwrongcolor=$W   \
+        \
+        --insidecolor=$B      \
+        --ringcolor=$D        \
+        --linecolor=$B        \
+        --separatorcolor=$D   \
+        \
+        --verifcolor=$T        \
+        --wrongcolor=$T        \
+        --timecolor=$T        \
+        --datecolor=$T        \
+        --layoutcolor=$T      \
+        --keyhlcolor=$W       \
+        --bshlcolor=$W        \
+        \
+        --screen 1            \
+        --blur 5              \
+        --clock               \
+        --indicator           \
+        --timestr="%H:%M:%S"  \
+        --datestr="%A, %m %Y" \
+        --keylayout 2        ||
+    i3lock -e -f -c 000000 -i ~/.config/wall.png -t
+}
+
+case "$1" in
+    lock)
+        pgrep -x i3 >/dev/null && i3_lock
+        ;;
+    logout)
+        pgrep -x i3 >/dev/null && i3-msg exit
+        pgrep -x sway >/dev/null && swaymsg exit && exit
+        ;;
+    suspend)
+        i3_lock && systemctl suspend
+        ;;
+    reboot)
+        systemctl reboot
+        ;;
+    shutdown)
+        systemctl poweroff
+        ;;
+    *)
+        echo "Usage: $0 {lock|logout|suspend|reboot|shutdown}"
+        exit 2
+esac
+
+exit 0
+
+
