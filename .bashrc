@@ -3,6 +3,8 @@
 #!/bin/bash
 [[ $- != *i* ]] && return
 [ -r "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+[ -r /usr/share/bash-completion/bash_completion ] &&
+        source /usr/share/bash-completion/bash_completion
 
 shopt -s checkwinsize
 stty -ixon
