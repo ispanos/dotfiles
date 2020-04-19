@@ -32,11 +32,11 @@ alias \
 
 # Neovim || Flatpak Neovim
 alias \
-	nvim="nvim || flatpak run io.neovim.nvim" \
-	nvimd="nvim -d || flatpak run io.neovim.nvim -d"
+	nvim="nvim || io.neovim.nvim" \
+	nvimd="nvim -d || io.neovim.nvim -d"
 
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"
 
-alias code='[[ $(command -v /usr/bin/code) ]] && code || flatpak run com.visualstudio.code.oss'
+alias code='[[ $(command -v /usr/bin/code) ]] && code || com.visualstudio.code.oss'
