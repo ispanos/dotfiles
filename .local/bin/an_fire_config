@@ -16,6 +16,7 @@ for profile in $posible_profiles ; do
 	fi
 
 	cat > "$profile_path/user.js" <<-EOF
+
 		user_pref("accessibility.typeaheadfind.flashBar", 0););
 		user_pref("app.normandy.first_run", false);
 		user_pref("app.normandy.migrationsApplied", 8);
@@ -25,7 +26,7 @@ for profile in $posible_profiles ; do
 		user_pref("browser.contentblocking.category", "strict");
 		user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://www.youtube.com/\"},{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"}]");
 		user_pref("browser.protections_panel.infoMessage.seen", true);
-		user_pref("browser.startup.homepage", "https://start.duckduckgo.com/");
+		user_pref("browser.startup.homepage", "file:///home/yiannis/Projects/Homepage/index.html");
 		user_pref("browser.tabs.drawInTitlebar", true);
 		user_pref("browser.tabs.warnOnClose", false);
 		user_pref("browser.tabs.warnOnOpen", false);
@@ -42,6 +43,7 @@ for profile in $posible_profiles ; do
 		user_pref("network.predictor.cleaned-up", true);
 		user_pref("network.predictor.enabled", false);
 		user_pref("network.prefetch-next", false);
+		user_pref("network.security.esni.enabled", true);
 		user_pref("network.trr.mode", 2);
 		user_pref("pref.downloads.disable_button.edit_actions", false);
 		user_pref("pref.privacy.disable_button.cookie_exceptions", false);

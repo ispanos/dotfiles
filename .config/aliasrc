@@ -5,9 +5,6 @@ alias \
 	cp="cp --interactive"\
 	df="df --human-readable"\
 	diff="diff --color=auto"\
-	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
-	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
-	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
 	egrep="egrep --colour=auto"\
 	fgrep="fgrep --colour=auto"\
 	ga="git add -A"\
@@ -19,12 +16,14 @@ alias \
 	ll='ls --color=auto -alF'\
 	ls="ls --literal --human-readable --color=auto --group-directories-first "\
 	mkd="mkdir -pv"\
-	pc="pacman -Qq | wc -l"\
-	printascii="man ascii | grep -m 1 -A 63 --color=never Oct"\
 	starwars="telnet towel.blinkenlights.nl"\
-	yt="youtube-dl --add-metadata"\
 	inxi="inxi -FxxxzD"
 
+# Dotfiles managment
+alias \
+	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
+	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
+	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
 
 [[ `command -v exa` ]] && alias \
 	ll="exa --icons -al"\
