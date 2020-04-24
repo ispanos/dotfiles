@@ -38,7 +38,7 @@ interval=5
 # Needs xkb-switch
 [keymap]
 command=bash -c 'xkb-switch;xkb-switch -W'
-interval=1
+interval=persist
 
 [volume]
 interval=50
