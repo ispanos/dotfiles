@@ -13,6 +13,7 @@ bindsym $mod+Tab exec i3_alt_tab
 
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
+	bindsym $mod+slash          exec $wmlauncher
 	bindsym $mod+Shift+q        kill
 	bindsym $mod+Shift+c        reload
 	bindsym $mod+Shift+r        exec $wmrestart
