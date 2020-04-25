@@ -26,6 +26,8 @@ exec "pgrep -x gdm || pgrep -x gdm3 || /usr/lib/polkit-gnome/polkit-gnome-authen
 exec "blueman-applet"
 exec "pgrep -x gdm || pgrep -x gdm3 || xdg-user-dirs-gtk-update"
 
+exec_always --no-startup-id autotiling.py
+
 exec bash -c "[ ! -d ~/Pictures/Screenshots ] && mkdir -p ~/Pictures/Screenshots"
 
 # Allows i3 to bind the powerbutton properly.
