@@ -36,7 +36,6 @@ for_window  [class="Skype"]                 floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Pavucontrol"] resize set 1080 600
 for_window [class="Pavucontrol"] move position center
-for_window [class="Pavucontrol"] sticky enable
 for_window [class="Pavucontrol"] border none
 
 for_window [class="qpaeq"] floating enable

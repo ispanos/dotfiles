@@ -1,6 +1,4 @@
 exec_always feh --no-fehbg --bg-max /usr/share/backgrounds/gnome/adwaita-night.jpg
-# exec_always feh --no-fehbg --bg-max ~/.config/wall.png
-
 exec_always "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 exec "xsettingsd &"
 exec "pgrep -x gdm || pgrep -x gdm3 || dunst &"
