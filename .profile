@@ -47,14 +47,12 @@ export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 # set PATH so it includes user's private bin
 appendpath "$HOME/.local/bin"
 appendpath "$HOME/.local/bin/wm-scripts/"
-appendpath "/var/lib/flatpak/exports/bin"
+# appendpath "/var/lib/flatpak/exports/bin"
 unset appendpath
 
 
 export SUDO_ASKPASS=dmenupass
-[[ $(command -v /usr/bin/code) ]] &&
-export EDITOR="code" ||
-export EDITOR="com.visualstudio.code.oss"
+export EDITOR="code"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 
