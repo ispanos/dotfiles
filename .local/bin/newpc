@@ -20,7 +20,7 @@ arch | manjaro)
     echo $(tput setaf 1)"Removed:"$(tput sgr0)
     diff $HOME/.local/Fresh_pack_list /tmp/temp_all_new_packages | grep "<" | tr "<" "-"
 ;;
-ubuntu)
+ubuntu|pop)
     declare -i Ntotal
     declare -i Ftotal
     apt list --installed 2> /dev/null | awk 'NR>1' | tee \
@@ -40,6 +40,6 @@ ubuntu)
 ;;
 *)
     echo $(tput setaf 1)"Distro is not supported yet."$(tput sgr0)
-    return
+    exit 1
 ;;
 esac
