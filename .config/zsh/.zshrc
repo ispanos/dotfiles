@@ -2,9 +2,11 @@ autoload -U colors && colors
 
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
+CASE_SENSITIVE="true"
 autoload -Uz compinit && compinit
 #zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu select
+#zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zmodload zsh/complist
 
 [ -d "$HOME/.cache/zsh/" ] || mkdir -p "$HOME/.cache/zsh/"
