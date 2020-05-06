@@ -25,7 +25,7 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
-	bindsym $mod+s              layout stacking  
+	bindsym $mod+s              layout stacking
 	bindsym $mod+w              layout tabbed
 	bindsym $mod+e              layout toggle split
 
