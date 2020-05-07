@@ -19,3 +19,9 @@ set $wmlauncher i3-dmenu-desktop  \
 set $screenshot maim -m 1                               ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow maim -m 1 -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	maim -m 1 -s                            ~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+
+exec_always { \
+    gsettings set org.gnome.desktop.sound input-feedback-sounds false, \
+    gsettings set org.gnome.desktop.sound event-sounds false, \
+    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false, \
+}
