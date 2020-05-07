@@ -37,5 +37,4 @@ set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-
-output * bg ~/.config/wall.png fill
+output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fit
