@@ -24,10 +24,11 @@ info "Starting backup"
 parent_dir=/media/data/Backups/
 
 backup_dir="$parent_dir$(hostname)_home_$(date "+%Y_%m_%d_%s")"
-
+backup_dir=".bckup"
 mkdir -p "$backup_dir"
 
 sudo rsync -aAXhv \
+			--include=".vscode" \
 			--exclude={".*","Games","VirtualBox VMs"} \
 			"$HOME" "$backup_dir"
 
