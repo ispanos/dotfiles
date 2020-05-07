@@ -31,7 +31,7 @@ set $wmlauncher j4-dmenu-desktop \
 							--sf '#70C7D2' \
 							--fn 'monospace-8' \
 							-p 'bemenu:'" \
-							--term='termite'
+							--term='alacritty'
 
 set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
