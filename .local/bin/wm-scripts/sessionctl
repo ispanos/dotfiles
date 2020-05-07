@@ -49,7 +49,7 @@ case "$1" in
         pgrep -x sway >/dev/null && swaymsg exit && exit
         ;;
     suspend)
-        i3_lock && systemctl suspend
+        pgrep -x i3 >/dev/null && i3_lock && systemctl suspend
         ;;
     reboot)
         systemctl reboot
