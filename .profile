@@ -60,7 +60,7 @@ export BROWSER="firefox"
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
 	# init i3wm
-	i3confmerge
+	i3confmerge # NEEDS FIX FOR GDM
     pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
 	# init Sway
