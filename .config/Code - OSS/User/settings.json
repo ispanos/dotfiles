@@ -9,9 +9,8 @@
     "git.confirmSync": false,
     "terminal.integrated.rendererType": "dom",
     "window.zoomLevel": 0,
-    "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.fontFamily": "monospace, fontawesome",
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "workbench.colorTheme": "Material Theme High Contrast",
     "bashIde.explainshellEndpoint": "http://localhost:5000",
     "rust.mode": "legacy",
     "diffEditor.ignoreTrimWhitespace": false,
@@ -22,5 +21,6 @@
     "explorer.confirmDelete": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 30000,
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
     
 }
