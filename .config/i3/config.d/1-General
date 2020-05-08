@@ -10,6 +10,10 @@ set $mediaprev  	playerctl previous 				&& pkill -RTMIN+10 i3blocks
 set $audiosettings  pavucontrol
 set $Blue_reset     "$SUDO_ASKPASS | sudo -S systemctl restart bluetooth"
 
+#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+#bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+#bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
 set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
     bindsym e       exec sessionctl logout, 	mode "default"
