@@ -37,12 +37,13 @@ set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
 
-output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fit
+#output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fit
+output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fill
 
 # Adwaita dark theme.
 exec_always {
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-    gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark'
+    #gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark'
     gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
     gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
     gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
