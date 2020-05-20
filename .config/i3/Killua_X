@@ -1,5 +1,3 @@
-# With Nouveau driver HDMI-1
-# With Nvidia driver HDMI-0
 set $SG HDMI-1
 set $LG HDMI-2
 

@@ -1,1 +1,0 @@
-exec xrandr --output HDMI-0 --primary
