@@ -23,9 +23,9 @@ mode "$Pause-break" {
 }
 
 #exec "eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
-exec "pgrep -x gdm || pgrep -x gdm3 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+exec "pgrep -x gdm3 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 exec "blueman-applet"
-exec "pgrep -x gdm || pgrep -x gdm3 || xdg-user-dirs-gtk-update"
+exec "pgrep -x gdm3 || xdg-user-dirs-gtk-update"
 
 exec_always --no-startup-id autotiling
 
