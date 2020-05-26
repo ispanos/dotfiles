@@ -3,27 +3,27 @@
 max=100 #%
 min=0   #%
 step=0.05
-display=HDMI-0
+#display=HDMI-1
 
 # List of all connected displays:
 all=$(xrandr -q | grep " connected" | awk '{print $1}')
 
-curBr=$(xrandr --verbose | grep Brightness: | awk '{print $2}')
+curBr=($(xrandr --verbose | grep Brightness: | awk '{print $2}'))
 
 case $1 in
-    +)  val=$( echo "$curBr + $step" | bc ) 
+    +)  val=$( echo "${curBr[0]} + $step" | bc ) 
         [[ $(echo "$val - ($max/100)" | bc | tr -d ".") -ge 0 ]] &&
         val=1
         ;;
-    -)  val=$( echo "$curBr - $step" | bc )
+    -)  val=$( echo "${curBr[0]} - $step" | bc )
         [[ $(echo "$val - ($min/100)" | bc | tr -d ".") -le 0 ]] &&
         val=0
         ;;
     *) exit;;
 esac
 
-for display in "$all"; do
-    xrandr --output $display --brightness $val &
+for display in $all; do
+    xrandr --output $display --brightness $val
 done
 
 notify-send -h string:x-canonical-private-synchronous:anything \
