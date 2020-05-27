@@ -10,7 +10,6 @@
     "terminal.integrated.rendererType": "dom",
     "window.zoomLevel": 0,
     "terminal.integrated.fontFamily": "monospace, fontawesome",
-    "workbench.colorTheme": "Material Theme High Contrast",
     "bashIde.explainshellEndpoint": "http://localhost:5000",
     "rust.mode": "legacy",
     "diffEditor.ignoreTrimWhitespace": false,
@@ -22,5 +21,6 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 30000,
     "workbench.iconTheme": "eq-material-theme-icons-palenight",
+    "workbench.colorTheme": "Material Theme Ocean High Contrast",
     
 }
