@@ -33,7 +33,7 @@ ubuntu|pop)
                                 >( grep -v "automatic" |  awk -F/ '{print $1}' > /tmp/temp_native_new_packages  ) \
                                 >/dev/null
     printf "Number of new packages: "
-    expr $(cat /tmp/Ntotal ) - $( cat /tmp/Ftotal )
+    expr $(cat /tmp/Ntotal ) - $(cat /tmp/Ftotal)
 
     echo $(tput setaf 2)"New packages:"$(tput sgr0)
     diff /tmp/temp_native_new_packages /tmp/temp_native_Fre_packages | grep ">" | tr ">" "-"
