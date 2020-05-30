@@ -32,7 +32,7 @@ label=
 # command=disk /
 
 [clock]
-label=
+label=
 interval=5
 
 # Needs xkb-switch
