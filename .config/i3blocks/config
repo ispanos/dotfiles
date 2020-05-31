@@ -14,10 +14,10 @@ interval=10
 label=
 # label=
 
-[updates]
-label=
-interval=once
-signal=9
+#[updates]
+#label=
+#interval=once
+#signal=9
 
 [memory]
 interval=10
@@ -43,3 +43,5 @@ interval=persist
 [volume]
 interval=50
 signal=10
+interval=1
+
