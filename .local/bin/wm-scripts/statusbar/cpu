@@ -9,7 +9,7 @@ esac
 
 temp=$(sensors | awk '/Core 0/ {print $3}' | tr -d "+" | cut -f 1 -d '.')
 [ -z "$temp" ] &&
-temp=$(sensors | awk '/temp2/ {print $2}' | tr -d "+" | cut -f 1 -d '.')
+temp=$(sensors | awk '/temp1/ {print $2}' | tr -d "+" | cut -f 1 -d '.')
 
 
 [ "$temp" ] && echo $temp°C
