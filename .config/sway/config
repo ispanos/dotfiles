@@ -33,10 +33,6 @@ set $wmlauncher j4-dmenu-desktop \
 							-p 'bemenu:'" \
 							--term='alacritty'
 
-set $screenshot grim				~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $snipwindow grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-set $sniparea 	grim -g "$(slurp)" 	~/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png
-
 #output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fit
 output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fill
 

@@ -47,9 +47,9 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+p				exec --no-startup-id $audiosettings
 
 # Screen Shots
-	bindsym Print               exec $screenshot
-	bindsym Shift+Print         exec $snipwindow
-	bindsym ctrl+Print          exec $sniparea
+	bindsym Print               exec screenshot
+	bindsym Shift+Print         exec screenshot window
+	bindsym ctrl+Print          exec screenshot area
 
 # Bleutooth Reset
 	bindsym $mod+F8 			exec $Blue_reset
