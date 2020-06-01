@@ -33,9 +33,6 @@ set $wmlauncher j4-dmenu-desktop \
 							-p 'bemenu:'" \
 							--term='alacritty'
 
-#output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fit
-output * bg /usr/share/backgrounds/gnome/adwaita-night.jpg fill
-
 # Adwaita dark theme.
 exec_always {
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'

@@ -1,5 +1,3 @@
-#exec_always feh --no-fehbg --bg-max /usr/share/backgrounds/gnome/adwaita-night.jpg
-exec_always feh --no-fehbg --bg-max /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
 exec_always "setxkbmap -model pc104 -layout us,gr -variant ,, -option grp:alt_shift_toggle"
 exec xsettingsd
 exec dunst

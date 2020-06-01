@@ -1,15 +1,9 @@
 #!/bin/sh
 
-# Placeholder
-
-i3_lock() {
-    i3lock-fancy ||
-    i3lock -e -f -c 000000 -i ~/.config/wall.png -t
-}
-
 case "$1" in
     lock)
-        pgrep -x i3 >/dev/null && i3_lock
+        pgrep -x i3 >/dev/null && 
+            i3lock -e -f -c 000000 -i ~/.config/lock.png -t
         ;;
     logout)
         pgrep -x i3 >/dev/null && i3-msg exit
@@ -30,5 +24,3 @@ case "$1" in
 esac
 
 exit 0
-
-

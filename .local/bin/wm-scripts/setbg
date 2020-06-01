@@ -1,0 +1,23 @@
+#!/bin/bash
+
+[ -f /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png ] &&
+pic=/usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
+
+[ -f /usr/share/backgrounds/gnome/adwaita-night.jpg ] &&
+pic=/usr/share/backgrounds/gnome/adwaita-night.jpg
+
+[ "$1" ] && pic="$1"
+
+
+
+if [[ $(pgrep -x i3) ]]; then
+    feh --no-fehbg --bg-max "$pic"
+
+elif [[ $(pgrep -x sway) ]]; then
+    swaymsg -t output * bg "$pic" fit #fill
+fi
+
+cp $pic ~/.config/wall.png
+
+# Lock screen
+convert ~/.config/wall.png -blur 0x4 ~/.config/lock.png
