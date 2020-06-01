@@ -2,6 +2,8 @@ autoload -U colors && colors
 
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
+[ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
+
 CASE_SENSITIVE="true"
 autoload -Uz compinit && compinit
 #zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Za-z}'
