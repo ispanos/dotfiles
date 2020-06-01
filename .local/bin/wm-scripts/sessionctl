@@ -1,9 +1,11 @@
 #!/bin/sh
 
+lockscreen="$HOME/.local/share/mybackground/lock.png"
+
 case "$1" in
     lock)
         pgrep -x i3 >/dev/null && 
-            i3lock -e -f -c 000000 -i ~/.config/lock.png -t
+            i3lock -e -f -c 000000 -i "$lockscreen" -t
         ;;
     logout)
         pgrep -x i3 >/dev/null && i3-msg exit

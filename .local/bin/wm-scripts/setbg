@@ -1,23 +1,40 @@
 #!/bin/bash
 
-[ -f /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png ] &&
-pic=/usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
+wallpaper="$HOME/.local/share/mybackground/wall.png"
 
-[ -f /usr/share/backgrounds/gnome/adwaita-night.jpg ] &&
-pic=/usr/share/backgrounds/gnome/adwaita-night.jpg
+[ "$1" ] && [ -f "$1" ] && cp "$1" "$wallpaper"
 
-[ "$1" ] && pic="$1"
+if [ ! -f "$wallpaper" ]; then
+	[ -d "$HOME/.local/share/mybackground" ] || mkdir -p "$HOME/.local/share/mybackground"
+
+	# Download lock icon if its not present
+	[ -f "$HOME/.local/share/mybackground/lockicon.png" ] ||
+	curl -Ls "https://raw.githubusercontent.com/meskarune/i3lock-fancy/master/icons/lockdark.png" >\
+	"$HOME/.local/share/mybackground/lockicon.png"
 
 
+	[ -f /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png ] &&
+	pic=/usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
 
-if [[ $(pgrep -x i3) ]]; then
-    feh --no-fehbg --bg-max "$pic"
-
-elif [[ $(pgrep -x sway) ]]; then
-    swaymsg -t output * bg "$pic" fit #fill
+	[ -f /usr/share/backgrounds/gnome/adwaita-night.jpg ] &&
+	pic=/usr/share/backgrounds/gnome/adwaita-night.jpg
 fi
 
-cp $pic ~/.config/wall.png
+if [[ $(pgrep -x i3) ]]; then
+	feh --no-fehbg --bg-max "$wallpaper"
+
+elif [[ $(pgrep -x sway) ]]; then
+	swaymsg -t output * bg "$wallpaper" fit #fill
+fi
 
 # Lock screen
-convert ~/.config/wall.png -blur 0x4 ~/.config/lock.png
+lockscreen="$HOME/.local/share/mybackground/lock.png"
+
+convert "$wallpaper" \
+		-resize 1920x1080 \
+		-blur 0x4 \
+		"$lockscreen"
+
+convert "$lockscreen" \
+		"$HOME/.local/share/mybackground/lockicon.png" \
+		-gravity center -composite -matte "$lockscreen"
