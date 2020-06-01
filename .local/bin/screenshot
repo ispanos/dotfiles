@@ -1,15 +1,17 @@
 #!/bin/bash
 
 [ ! -d "$HOME/Pictures/Screenshots" ] && mkdir -p "$HOME/Pictures/Screenshots"
+[ -z "$new_shot" ] &&
 new_shot="$HOME/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png"
 
 if [[ $(pgrep -x i3) ]]; then
     if [[ "$1" == window ]]; then
-        maim -m 1 -i $(xdotool getactivewindow) "$new_shot"
+        maim -i $(xdotool getactivewindow) "$new_shot"
     elif [[ "$1" == area ]]; then
         maim -m 1 -s "$new_shot"
     else
-        maim -m 1 "$new_shot"
+        #maim -m 1 "$new_shot"
+        maim "$new_shot"
     fi
 
 elif [[ $(pgrep -x sway) ]]; then
