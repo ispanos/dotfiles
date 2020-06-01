@@ -1,6 +1,6 @@
 set $font font pango:RobotoMono-Regular 10
-# set $font font pango:SourceCodePro-ExtraLight 8
-exec_always setbg
+
+exec_always --no-startup-id setbg
 
 $font
 focus_on_window_activation focus
@@ -34,14 +34,13 @@ for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="Skype"]                 floating enable
 
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Pavucontrol"] resize set 1080 600
+for_window [class="Pavucontrol"] resize set 1078 800
 for_window [class="Pavucontrol"] move position center
 for_window [class="Pavucontrol"] border none
 
 for_window [class="qpaeq"] floating enable
 for_window [class="qpaeq"] resize set 1080 420
 for_window [class="qpaeq"] move position center
-for_window [class="qpaeq"] sticky enable
 for_window [class="qpaeq"] border none
 
 # # Gap settings
