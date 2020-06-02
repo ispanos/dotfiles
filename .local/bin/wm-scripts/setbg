@@ -28,10 +28,6 @@ lockscreen="$HOME/.local/share/mybackground/lock.png"
 # https://www.iconfinder.com/search/?q=lock&price=free&license=2
 # Download lock icon if its not present
 [ -f "$HOME/.local/share/mybackground/lockicon.png" ] ||
-curl -Ls "https://raw.githubusercontent.com/JeanEdouardKevin/spring-rice/master/xlock/iconbig.png" >\
-"$HOME/.local/share/mybackground/lockicon.png"
-
-
 curl -Ls "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Lock-512.png" >\
 "$HOME/.local/share/mybackground/lockicon.png"
 
