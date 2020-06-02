@@ -7,12 +7,6 @@ wallpaper="$HOME/.local/share/mybackground/wall.png"
 if [ ! -f "$wallpaper" ]; then
 	[ -d "$HOME/.local/share/mybackground" ] || mkdir -p "$HOME/.local/share/mybackground"
 
-	# Download lock icon if its not present
-	[ -f "$HOME/.local/share/mybackground/lockicon.png" ] ||
-	curl -Ls "https://raw.githubusercontent.com/meskarune/i3lock-fancy/master/icons/lockdark.png" >\
-	"$HOME/.local/share/mybackground/lockicon.png"
-
-
 	[ -f /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png ] &&
 	pic=/usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
 
@@ -30,11 +24,27 @@ fi
 # Lock screen
 lockscreen="$HOME/.local/share/mybackground/lock.png"
 
+
+# https://www.iconfinder.com/search/?q=lock&price=free&license=2
+# Download lock icon if its not present
+[ -f "$HOME/.local/share/mybackground/lockicon.png" ] ||
+curl -Ls "https://raw.githubusercontent.com/JeanEdouardKevin/spring-rice/master/xlock/iconbig.png" >\
+"$HOME/.local/share/mybackground/lockicon.png"
+
+
+curl -Ls "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Lock-512.png" >\
+"$HOME/.local/share/mybackground/lockicon.png"
+
+lockicon="$HOME/.local/share/mybackground/lockicon.png"
+
+convert "$lockicon" \
+		-scale 37% "${lockicon}s"
+
 convert "$wallpaper" \
 		-resize 1920x1080 \
 		-blur 0x4 \
 		"$lockscreen"
 
 convert "$lockscreen" \
-		"$HOME/.local/share/mybackground/lockicon.png" \
+		"${lockicon}s" \
 		-gravity center -composite -matte "$lockscreen"
