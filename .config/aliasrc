@@ -7,16 +7,13 @@ alias \
 	diff="diff --color=auto"\
 	egrep="egrep --colour=auto"\
 	fgrep="fgrep --colour=auto"\
-	ga="git add -A"\
+	ga="git add"\
 	gc="git commit -m"\
 	grep="grep --colour=auto"\
 	gs="git status"\
 	hcat="highlight --out-format=ansi"\
-	hcatt="highlight --src-lang"\
 	ll='ls --color=auto -alF'\
 	ls="ls --literal --human-readable --color=auto --group-directories-first "\
-	mkd="mkdir -pv"\
-	starwars="telnet towel.blinkenlights.nl"\
 	inxi="inxi -FxxxzD"
 
 # Dotfiles managment
@@ -29,13 +26,6 @@ alias \
 	ll="exa --icons -al"\
 	ls="exa --icons"
 
-# Neovim || Flatpak Neovim
-alias \
-	nvim="nvim || io.neovim.nvim" \
-	nvimd="nvim -d || io.neovim.nvim -d"
-
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"
-
-alias code='[[ $(command -v /usr/bin/code) ]] && code || com.visualstudio.code.oss'
