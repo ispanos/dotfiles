@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "Not fixed" && exit
 # some helpers and error handling:
 info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
 
