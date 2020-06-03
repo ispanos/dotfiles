@@ -103,14 +103,14 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+Shift+0        move container to workspace $ws10
 
 # Resize
-	bindsym $mod+Mod1+$left     resize shrink width   3 px or 3 ppt
-	bindsym $mod+Mod1+$down     resize grow   height  3 px or 3 ppt
-	bindsym $mod+Mod1+$up       resize shrink height  3 px or 3 ppt
-	bindsym $mod+Mod1+$right    resize grow   width   3 px or 3 ppt
-	bindsym $mod+Mod1+Left      resize shrink width   3 px or 3 ppt
-	bindsym $mod+Mod1+Down      resize grow   height  3 px or 3 ppt
-	bindsym $mod+Mod1+Up        resize shrink height  3 px or 3 ppt
-	bindsym $mod+Mod1+Right     resize grow   width   3 px or 3 ppt
+	bindsym $mod+$alt+$left     resize shrink width   3 px or 3 ppt
+	bindsym $mod+$alt+$down     resize grow   height  3 px or 3 ppt
+	bindsym $mod+$alt+$up       resize shrink height  3 px or 3 ppt
+	bindsym $mod+$alt+$right    resize grow   width   3 px or 3 ppt
+	bindsym $mod+$alt+Left      resize shrink width   3 px or 3 ppt
+	bindsym $mod+$alt+Down      resize grow   height  3 px or 3 ppt
+	bindsym $mod+$alt+Up        resize shrink height  3 px or 3 ppt
+	bindsym $mod+$alt+Right     resize grow   width   3 px or 3 ppt
 
 # Media player controls
 bindsym XF86AudioPlay                   exec --no-startup-id $mediaplay
