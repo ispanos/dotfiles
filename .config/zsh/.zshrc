@@ -22,11 +22,14 @@ echo -ne '\e[5 q'
 # Use beam shape cursor for each new prompt.
 preexec() { echo -ne '\e[5 q' ;}
 
-#PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c %{$fg[red]%}]%{$reset_color%}$%b "
-
-source $HOME/.local/bin/helpers/git-prompt.sh
 setopt PROMPT_SUBST
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c\$(__git_ps1 \" (%s)\") %{$fg[red]%}]%{$reset_color%}$%b "
+if [ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]; then
+	source $HOME/.local/bin/helpers/git-prompt.sh
+	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c\$(__git_ps1 \" (%s)\") %{$fg[red]%}]%{$reset_color%}$%b "
+else
+	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c %{$fg[red]%}]%{$reset_color%}$%b "
+fi
+
 
 # History
 export HISTFILE=$ZDOTDIR/history
