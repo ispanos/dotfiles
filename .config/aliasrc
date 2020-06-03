@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 alias \
     free="free --mebi"\
@@ -17,7 +17,7 @@ alias \
 	inxi="inxi -FxxxzD"
 
 # Dotfiles managment
-alias \
+[[ -d "$HOME/.cfg" ]] && alias \
 	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
 	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
 	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
