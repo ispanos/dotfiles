@@ -100,15 +100,10 @@ shrink "$IFILE" "$OFILE" "$res" || exit $?
  
 check_smaller "$IFILE" "$OFILE"
 
-# How to Reduce PDF File Size in Linux when using bash shell
-
-# Download and install the script in your system. Set up executable permissions using the chmod command:
-# chmod +x ~/bin/shrinkpdf.sh
-
 # Run it as follows:
-# ~/bin/shrinkpdf.sh input.pdf output.pdf
-# ~/bin/shrinkpdf.sh input.pdf output.pdf 100
-# ~/bin/shrinkpdf.sh input.pdf output.pdf 120
+# pdfshrink input.pdf output.pdf
+# pdfshrink input.pdf output.pdf 100
+# pdfshrink input.pdf output.pdf 120
 
 # Use the ls to list file size:
 # ls -lh input.pdf
