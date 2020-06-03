@@ -17,6 +17,3 @@ if i3-msg -t get_tree | \
 else
         i3 "[workspace=$floating_workspace floating] move to workspace $current_workspace"; 
 fi
-
-## Original: 
-# bindsym $mod+Tab exec "current_workspace=\\"$(i3-msg -t get_tree | jq -r 'recurse(.nodes[]) | select(.type == \\"workspace\\" and ([recurse((.nodes, .floating_nodes)[])] | any(.focused))) | .name')\\"; floating_workspace=\\"F${current_workspace%:*}\\"; if i3-msg -t get_tree | jq -e \\"recurse(.nodes[]) | select(.type == \\\\"workspace\\\\" and .name == \\\\"$current_workspace\\\\") | .floating_nodes | length > 0\\"; then i3 \\"[workspace=$current_workspace floating] move to workspace $floating_workspace\\"; else i3 \\"[workspace=$floating_workspace floating] move to workspace $current_workspace\\"; fi"
