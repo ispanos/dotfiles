@@ -16,8 +16,6 @@ alias \
 
 # Dotfiles managment
 [[ -d "$HOME/.cfg" ]] && alias \
-	dotc="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME commit -m"\
-	dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME status"\
 	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
 
 [[ `command -v exa` ]] && alias \
