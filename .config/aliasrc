@@ -7,10 +7,8 @@ alias \
 	diff="diff --color=auto"\
 	egrep="egrep --colour=auto"\
 	fgrep="fgrep --colour=auto"\
-	ga="git add"\
-	gc="git commit -m"\
+	g="git"\
 	grep="grep --colour=auto"\
-	gs="git status"\
 	hcat="highlight --out-format=ansi"\
 	ll='ls --color=auto -alF'\
 	ls="ls --literal --human-readable --color=auto --group-directories-first "\
