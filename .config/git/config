@@ -15,3 +15,10 @@
     added = yellow
     changed = green
     untracked = red
+
+[alias]
+    a = add
+    p = push
+    s = status
+    cm = commit -m
+    amend = commit -a -amend
