@@ -24,9 +24,17 @@ for profile in $posible_profiles ; do
 		user_pref("browser.bookmarks.restore_default_bookmarks", false);
 		user_pref("browser.bookmarks.showMobileBookmarks", true);
 		user_pref("browser.contentblocking.category", "strict");
-		user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://www.youtube.com/\"},{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"}]");
+		user_pref("browser.newtabpage.pinned", "[
+			{\"url\":\"https://www.youtube.com/\"},
+			{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},
+			{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},
+			{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"},
+			{\"url\":\"https://twitter.com/\",\"label\":\"twitter\"},
+			{\"url\":\"https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1\",\"label\":\"New Email\"},
+			{\"url\":\"https://www.phoronix.com/scan.php?page=home\",\"label\":\"phoronix\"}
+			]");
 		user_pref("browser.protections_panel.infoMessage.seen", true);
-		user_pref("browser.startup.homepage", "file:///home/yiannis/Projects/Homepage/index.html");
+		user_pref("browser.startup.homepage", "about:home");
 		user_pref("browser.tabs.drawInTitlebar", true);
 		user_pref("browser.tabs.warnOnClose", false);
 		user_pref("browser.tabs.warnOnOpen", false);
