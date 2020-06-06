@@ -48,8 +48,8 @@ export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 [ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"
 
 # set PATH so it includes user's private bin
-appendpath "$HOME/.local/bin"
-appendpath "$HOME/.local/bin/wm-scripts/"
+[ -d "$HOME/.local/bin" ] && appendpath "$HOME/.local/bin"
+[ -d "$HOME/.local/bin/wm-scripts" ] && appendpath "$HOME/.local/bin/wm-scripts"
 # appendpath "/var/lib/flatpak/exports/bin"
 unset appendpath
 
