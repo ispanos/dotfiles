@@ -39,11 +39,4 @@ exec_always {
     #gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark'
     gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
     gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
-    gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
-}
-
-exec_always {
-    gsettings set org.gnome.desktop.sound input-feedback-sounds false
-    gsettings set org.gnome.desktop.sound event-sounds false
-    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false
 }

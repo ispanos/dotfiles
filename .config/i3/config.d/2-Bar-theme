@@ -1,7 +1,6 @@
-set $font font pango:RobotoMono-Regular 10
-
 exec_always --no-startup-id setbg
 
+set $font font pango:RobotoMono-Regular 10
 $font
 focus_on_window_activation focus
 default_border pixel 1
