@@ -45,7 +45,7 @@ export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 #export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 [ -f "$HOME/.steampid" ] && rm "$HOME/.steampid"
-[ -f "$HOME/.steampath" ] && rm "$HOME/.steampath"
+[ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"
 
 # set PATH so it includes user's private bin
 appendpath "$HOME/.local/bin"
