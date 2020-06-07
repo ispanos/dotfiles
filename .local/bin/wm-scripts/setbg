@@ -7,11 +7,11 @@ wallpaper="$HOME/.local/share/mybackground/wall.png"
 if [ ! -f "$wallpaper" ]; then
 	[ -d "$HOME/.local/share/mybackground" ] || mkdir -p "$HOME/.local/share/mybackground"
 
-	[ -f /usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png ] &&
-	pic=/usr/share/backgrounds/pop/nick-nazzaro-ice-cave.png
+	[ -f /usr/share/background/pop/nick-nazzaro-ice-cave.png ] &&
+	pic=/usr/share/background/pop/nick-nazzaro-ice-cave.png
 
-	[ -f /usr/share/backgrounds/gnome/adwaita-night.jpg ] &&
-	pic=/usr/share/backgrounds/gnome/adwaita-night.jpg
+	[ -f /usr/share/background/gnome/adwaita-night.jpg ] &&
+	pic=/usr/share/background/gnome/adwaita-night.jpg
 fi
 
 if [[ $(pgrep -x i3) ]]; then
