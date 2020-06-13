@@ -42,7 +42,7 @@ export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 # This will break some apps that hard-code ~/.gnupg
-#export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 [ -f "$HOME/.steampid" ] && rm "$HOME/.steampid"
 [ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"
