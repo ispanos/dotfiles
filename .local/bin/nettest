@@ -1,0 +1,32 @@
+#!/bin/bash
+_alarm() {
+    ( speaker-test --frequency $1 --test sine >/dev/null 2>&1)&
+    pid=$! >/dev/null 2>&1
+    sleep 0.${2}s
+    kill -9 $pid >/dev/null 2>&1
+}
+
+while true; do
+
+    if ping -c 1 google.com 2>/dev/null; then
+        for i in {1..10}; do
+            _alarm 400 550
+            sleep 0.5
+        done
+
+        break
+
+    else
+        clear
+
+        printf "No internet connection yet "
+        if ping -c 1 192.168.1.1 >/dev/null 2>&1 ; then
+           echo "- Router is on."
+        else
+            echo "No local IP"
+        fi
+    fi
+    sleep 1
+done
+
+exit
