@@ -18,6 +18,7 @@ mode "$Pause-break" {
     bindsym r       exec sessionctl reboot, 	mode "default"
     bindsym End     exec sessionctl shutdown,   mode "default"
     bindsym l       exec sessionctl lock,   	mode "default"
+    bindsym d       exec sessionctl dark,   	mode "default"
 
     bindsym Return  mode "default"
     bindsym Escape  mode "default"

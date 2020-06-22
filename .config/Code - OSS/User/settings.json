@@ -1,9 +1,9 @@
 {
     "files.associations": {
-        "**/sway/*": "i3",
-        "**/sway/*/*": "i3",
-        "**/i3/*": "i3",
-        "**/i3/*/*": "i3",
+        "**/config/sway/*": "i3",
+        "**/config/sway/*/*": "i3",
+        "**/config/i3/*": "i3",
+        "**/config/i3/*/*": "i3",
     },
     "editor.minimap.enabled": false,
     "git.confirmSync": false,

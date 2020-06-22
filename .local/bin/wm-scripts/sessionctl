@@ -3,6 +3,11 @@
 lockscreen="$HOME/.local/share/mybackground/lock.png"
 
 case "$1" in
+
+    dark)
+        xset dpms force off
+        ;;
+
     lock)
         pgrep -x i3 >/dev/null && 
             i3lock -e -f -c 000000 -i "$lockscreen" -t &&
