@@ -3,8 +3,8 @@
 case $BLOCK_BUTTON in
 	1) pavucontrol || org.pulseaudio.pavucontrol ;;
 	2) pactl set-sink-mute   @DEFAULT_SINK@ toggle 	&& pkill -RTMIN+10 i3blocks ;;
-	4) pactl set-sink-volume @DEFAULT_SINK@ +4% 	&& pkill -RTMIN+10 i3blocks ;;
-	5) pactl set-sink-volume @DEFAULT_SINK@ -6% 	&& pkill -RTMIN+10 i3blocks ;;
+	4) pactl set-sink-volume @DEFAULT_SINK@ +5% 	&& pkill -RTMIN+10 i3blocks ;;
+	5) pactl set-sink-volume @DEFAULT_SINK@ -5% 	&& pkill -RTMIN+10 i3blocks ;;
 	3) qpaeq ;;
 #	3) pulseaudio-equalizer-gtk ;;
 esac
