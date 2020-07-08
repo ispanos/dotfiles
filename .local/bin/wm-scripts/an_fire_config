@@ -17,7 +17,7 @@ for profile in $posible_profiles ; do
 
 	cat > "$profile_path/user.js" <<-EOF
 
-		user_pref("accessibility.typeaheadfind.flashBar", 0););
+		user_pref("accessibility.typeaheadfind.flashBar", 0);
 		user_pref("app.normandy.first_run", false);
 		user_pref("app.normandy.migrationsApplied", 8);
 		user_pref("app.shield.optoutstudies.enabled", false);
