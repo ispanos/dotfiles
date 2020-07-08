@@ -5,7 +5,7 @@ lockscreen="$HOME/.local/share/mybackground/lock.png"
 case "$1" in
 
     dark)
-        xset dpms force off
+        sleep 1 && xset dpms force off
         ;;
 
     lock)
