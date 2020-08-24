@@ -9,9 +9,11 @@ left_button(){
 }
 case $BLOCK_BUTTON in
 	1) left_button ;;
+    3) $TERMINAL -e nmtui ;;
 esac
 
-ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+'
+ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+' ||
+    echo ""
 
 # [ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && wifiicon="📡"
 # [ ! -n "${wifiicon+var}" ] && wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "📶", int($3 * 100 / 70) "%" }')

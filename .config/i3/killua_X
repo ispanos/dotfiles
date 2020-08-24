@@ -1,20 +1,14 @@
-# Arch names:
-#set $LG HDMI-1
-#set $SG HDMI-2
-
-# Pop!_Os names:
-set $LG HDMI-A-0
-set $SG HDMI-A-1
+set $LG HDMI-0
+set $SG DVI-1
 
 exec xrandr --output $LG --rotate normal --primary --auto \
-				--output $SG --rotate normal --right-of $LG --auto
+			--output $SG --rotate normal --right-of $LG --auto
 
 workspace $ws1  output $LG
 workspace $ws3  output $LG
 workspace $ws2  output $SG
 workspace $ws10 output $SG
 
-#set $mode_display Monitor layout (m) mirrored, (d) dual, (L) dual-horrizontal+vertical
 set $mode_display Monitor layout (m) -, (d) - -, (L) ┘
 
 mode "$mode_display" {
