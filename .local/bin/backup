@@ -1,0 +1,51 @@
+#!/bin/bash
+#echo "Not fixed" && exit
+# some helpers and error handling:
+info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
+
+ask_delete() {
+	exit_question=$(
+		cat <<-EOF
+		$(date) Backup interrupted
+		Would you like delete $backup_dir ? [y/N]:
+		EOF
+		)
+
+	read -rep "$exit_question" reply
+	if [[ $reply =~ ^[Yy]$ ]]; then
+		sudo rm -rf "$backup_dir"
+	fi
+}
+
+convertsecs() {
+	((h=${1}/3600))
+	((m=(${1}%3600)/60))
+	((s=${1}%60))
+	printf "Backup completed in %02d:%02d:%02d\n" $h $m $s
+}
+
+trap 'ask_delete; exit 2' INT TERM
+
+
+#backup_dir="/media/yiannis/data/$(hostname)_home_$(date "+%Y_%m_%d_%s")"
+backup_dir="/media/yiannis/data/$(hostname)/home"
+
+info "Starting backup in:
+$backup_dir"
+
+mkdir -p "$backup_dir"
+
+start_time="$(date -u +%s)"
+
+# With yay cache.
+# 			--include={'.cache','.cache/yay/***'} \
+
+sudo rsync -aAXhv --delete \
+			--include=".vscode" \
+			--exclude={".*","$HOME/Games","VirtualBox VMs","anaconda3","snap"} \
+			"$HOME" "$backup_dir"
+
+end_time="$(date -u +%s)"
+convertsecs $(($end_time-$start_time))
+
+unset start_time end_time backup_dir
