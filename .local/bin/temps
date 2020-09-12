@@ -1,0 +1,12 @@
+#!/bin/bash
+temps() {
+    echo "/dev/sda:     $(sudo hddtemp /dev/sda | cut -d":" -f 3)"
+    echo "/dev/sdb:     $(sudo hddtemp /dev/sdb | cut -d":" -f 3)"
+    echo "/dev/nvme0n1: $(sudo nvme smart-log /dev/nvme0n1 | grep '^temperature' | cut -d":" -f 2)"
+    echo "GPU:           $(sensors | grep "radeon-pci-0a00" -A 2 | grep temp | awk '{print $2}' | cut -d "+" -f 2 )"
+}
+
+trap 'unset temps' INT TERM
+
+export -f temps
+watch -t -x bash -c temps
