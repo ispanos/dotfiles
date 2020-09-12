@@ -9,6 +9,8 @@ if [[ $(pgrep -x i3) ]]; then
         maim -i $(xdotool getactivewindow) "$new_shot"
     elif [[ "$1" == area ]]; then
         maim -m 1 -s "$new_shot"
+    elif [[ "$1" == areaclipboard ]]; then
+        import png:- | xclip -selection c -t image/png
     else
         #maim -m 1 "$new_shot"
         maim "$new_shot"
