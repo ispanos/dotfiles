@@ -22,5 +22,13 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 30000,
     "workbench.iconTheme": "eq-material-theme-icons-palenight",
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "spellright.language": [
+        "el_GR",
+        "en_US"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
 }
