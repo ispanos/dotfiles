@@ -27,9 +27,6 @@ trap 'ask_delete; exit 2' INT TERM
 
 backup_dir="/media/yiannis/data/$(hostname)/home"
 
-# For a new backup - no overwrite
-#backup_dir="/media/yiannis/data/$(hostname)_home_$(date "+%Y_%m_%d_%s")"
-
 info "Starting backup in:
 $backup_dir"
 
@@ -46,7 +43,7 @@ start_time="$(date -u +%s)"
 # With yay cache.
 # 			--include={'.cache','.cache/yay/***'} \
 
-sudo rsync -aAXhv --delete \
+sudo rsync -aAXHhv --delete \
 			--include=".vscode" \
 			--exclude={".*","$HOME/Games","VirtualBox VMs","anaconda3","snap"} \
 			"$HOME" "$backup_dir"
