@@ -1,6 +1,5 @@
 #!/bin/bash
-#echo "Not fixed" && exit
-# some helpers and error handling:
+
 info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
 
 ask_delete() {
@@ -26,14 +25,21 @@ convertsecs() {
 
 trap 'ask_delete; exit 2' INT TERM
 
-
-#backup_dir="/media/yiannis/data/$(hostname)_home_$(date "+%Y_%m_%d_%s")"
 backup_dir="/media/yiannis/data/$(hostname)/home"
+
+# For a new backup - no overwrite
+#backup_dir="/media/yiannis/data/$(hostname)_home_$(date "+%Y_%m_%d_%s")"
 
 info "Starting backup in:
 $backup_dir"
 
 mkdir -p "$backup_dir"
+
+if df -P -- "$HOME" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
+	echo "$HOME and $backup_dir are on the same filesystem"
+	rmdir $backup_dir 2>/dev/null || echo "$backup_dir is not empty."
+	exit 1
+fi
 
 start_time="$(date -u +%s)"
 
