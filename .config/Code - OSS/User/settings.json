@@ -32,4 +32,5 @@
         "plaintext"
     ],
     "python.pythonPath": "/usr/bin/python3",
+    "webhint.enableTelemetry": "disabled",
 }
