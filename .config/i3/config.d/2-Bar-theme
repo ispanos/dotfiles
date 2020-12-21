@@ -1,6 +1,6 @@
 exec_always --no-startup-id setbg  /home/yiannis/Pictures/Wallpapers/pop_os_wallpaper_GALAXY_eevee.jpg
 
-set $font font pango:RobotoMono-Regular 10
+set $font font pango:RobotoMono-Regular 10, FontAwesome 10
 $font
 focus_on_window_activation focus
 default_border pixel 1

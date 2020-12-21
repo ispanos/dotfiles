@@ -9,11 +9,13 @@ case $BLOCK_BUTTON in
 #	3) pulseaudio-equalizer-gtk ;;
 esac
 
-[ "$(pulsemixer --get-mute)" = "1" ] && printf "-\\n" && exit
+[ "$(pulsemixer --get-mute)" = "1" ] && printf "x\\n" && pkill -RTMIN+10 i3blocks && exit
 
 vol=$(pulsemixer --get-volume | awk '{print $1}')
 
-if [ "$vol" -lt "50" ]; then
+if [ "$vol" -lt "5" ]; then
+	icon=""
+elif [ "$vol" -lt "50" ]; then
 	icon=""
 else
 	icon=""
