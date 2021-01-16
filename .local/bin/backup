@@ -25,7 +25,8 @@ convertsecs() {
 
 trap 'ask_delete; exit 2' INT TERM
 
-backup_dir="/media/yiannis/data/$(hostname)/home"
+backup_dir="/mnt/bd0/$(hostname)/home"
+
 
 info "Starting backup in:
 $backup_dir"
