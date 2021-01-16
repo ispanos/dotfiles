@@ -23,6 +23,7 @@ bar {
     tray_output primary
     status_command i3blocks
     strip_workspace_numbers yes
+    position top
 }
 
 # Application specific rules ($xprop find the name)

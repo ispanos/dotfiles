@@ -7,7 +7,7 @@ exec numlockx
 exec "dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY"
 
 set $wmrestart i3confmerge
-set $wmlauncher i3-dmenu-desktop  \
+set $wmlauncher GTK_IM_MODULE='' QT_IM_MODULE='' XMODIFIERS='' i3-dmenu-desktop  \
 				\\"--dmenu=dmenu -i \
 				-nf '#70C7D2' \
 				-nb '#193549' \

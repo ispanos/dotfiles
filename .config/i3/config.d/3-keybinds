@@ -14,14 +14,16 @@ bindsym $mod+Tab exec i3_alt_tab
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
 	bindsym $mod+slash          exec $wmlauncher
-	bindsym $mod+Shift+q        kill
+	# bindsym $mod+Shift+q        kill
+	bindsym $mod+q              kill
 	bindsym $mod+Shift+c        reload
 	bindsym $mod+Shift+r        exec $wmrestart
 
 # Split Orientation / Mode / Layout
 	bindsym $mod+b              split h
 	bindsym $mod+v              split v
-	bindsym $mod+f              fullscreen toggle
+	#bindsym $mod+f              fullscreen toggle
+	bindsym $mod+m              fullscreen toggle
 	bindsym $mod+a              focus parent
 	bindsym $mod+Shift+space    floating toggle
 	bindsym $mod+space          focus mode_toggle 
@@ -42,7 +44,8 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+z              exec --no-startup-id $BROWSER
 	bindsym $mod+Shift+z        exec --no-startup-id google-chrome
 	bindsym $mod+x              exec --no-startup-id $EDITOR
-	bindsym $mod+c              exec --no-startup-id $fm
+	#bindsym $mod+c              exec --no-startup-id $fm
+	bindsym $mod+f              exec --no-startup-id $fm
 	bindsym $mod+g              exec --no-startup-id $calc
 	bindsym $mod+p				exec --no-startup-id $audiosettings
 
