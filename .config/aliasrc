@@ -12,7 +12,8 @@ alias \
 	hcat="highlight --out-format=ansi"\
 	ll='ls --color=auto -alF'\
 	ls="ls --literal --human-readable --color=auto --group-directories-first "\
-	inxi="inxi -FxxxzD"
+	inxi="inxi -FxxxzD"\
+	stime="/usr/bin/time -f 'Spacetime: %MK %E'"
 
 # Dotfiles managment
 [[ -d "$HOME/.cfg" ]] && alias \
