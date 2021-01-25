@@ -2,6 +2,8 @@
 
 lockscreen="$HOME/.local/share/mybackground/lock.png"
 
+echo "$0 $@" | systemd-cat -t "SESSIONCTL"
+
 case "$1" in
 
     dark)
@@ -9,9 +11,10 @@ case "$1" in
         ;;
 
     lock)
-        pgrep -x i3 >/dev/null && 
-            i3lock -e -f -c 000000 -i "$lockscreen" -t &&
-            sleep 300 && pgrep i3lock && xset dpms force off
+        pgrep -x i3 >/dev/null && slock
+        #pgrep -x i3 >/dev/null &&
+            # i3lock -e -f -c 000000 -i "$lockscreen" -t &&
+            #sleep 300 && pgrep i3lock && xset dpms force off
         ;;
 
     logout)
@@ -20,7 +23,8 @@ case "$1" in
         ;;
 
     suspend)
-        pgrep -x i3 >/dev/null && i3lock -e -f -c 000000 -i "$lockscreen" -t &&
+        # pgrep -x i3 >/dev/null && i3lock -e -f -c 000000 -i "$lockscreen" -t &&
+        pgrep -x i3 >/dev/null && slock &&
         systemctl suspend
 
         pgrep -x sway >/dev/null && systemctl suspend
