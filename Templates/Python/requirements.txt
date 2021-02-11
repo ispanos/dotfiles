@@ -1,6 +1,0 @@
-# Main packages
-numpy
-
-# Linters
-flake8
-pylint
