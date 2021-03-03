@@ -44,10 +44,33 @@ start_time="$(date -u +%s)"
 # With yay cache.
 # 			--include={'.cache','.cache/yay/***'} \
 
-sudo rsync -aAXHhv --delete \
-			--include=".vscode" \
-			--exclude={".*","$HOME/Games","VirtualBox VMs","anaconda3","snap"} \
-			"$HOME" "$backup_dir"
+# "/$USER/VirtualBox VMs/",
+# "/$USER/anaconda3/",
+# "/$USER/snap/",
+# "/$USER/.ansible/",
+# "/$USER/.cache/",
+# "/$USER/.cfg/",
+# "/$USER/.comments/"
+# "/$USER/.config/",
+# "/$USER/.dbus/"
+# "/$USER/.gnome/",
+# "/$USER/.gretl/"
+# "/$USER/.local/bin/",
+# "/$USER/.local/lib/",
+# "/$USER/.mozilla/",
+# "/$USER/.mume/",
+# "/$USER/.pipewire-media-session/",
+# "/$USER/.pki/",
+# "/$USER/.pylint.d/",
+# "/$USER/.rustup/",
+# "/$USER/.screenlayout/",
+# "/$USER/.steam/",
+# "/$USER/.thumbnails/",
+# "/$USER/.var/"
+# --include=".vscode" 
+
+
+sudo rsync -aAXHhv --delete --exclude 'yiannis/.cache/*' "${HOME}" "$backup_dir"
 
 end_time="$(date -u +%s)"
 convertsecs $(($end_time-$start_time))
