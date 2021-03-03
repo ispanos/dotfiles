@@ -78,7 +78,7 @@ else
 fi
 
 
-export SUDO_ASKPASS=dmenupass
+export SUDO_ASKPASS="dmenupass"
 export EDITOR="code"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
