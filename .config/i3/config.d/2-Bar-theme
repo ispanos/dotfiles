@@ -30,6 +30,7 @@ bar {
 for_window  [class="Galculator"]            floating enable
 for_window  [class="Gnome-calculator"]      floating enable move position center
 for_window  [class="Gcolor3"]               floating enable
+for_window  [class="Matplotlib"]            floating enable
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window [class="PulseAudio Equalizer"]   sticky enable
 for_window  [class="Skype"]                 floating enable
