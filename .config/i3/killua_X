@@ -1,7 +1,5 @@
+set $SG DVI-D-0
 set $LG HDMI-A-0
-set $SG HDMI-A-1
-#set $LG HDMI-0
-#set $SG DisplayPort-1
 
 exec xrandr --output $LG --rotate normal --primary --auto \
 			--output $SG --rotate normal --right-of $LG --auto
@@ -22,10 +20,6 @@ mode "$mode_display" {
 			--output $LG --rotate normal --primary --auto \
 			--output $SG --rotate normal --right-of $LG --auto, mode "default"
 	
-	# bindsym L exec xrandr \
-	# 		--output $LG --rotate normal --primary --auto \
-	# 		--output $SG --rotate left 	 --right-of $LG --auto, mode "default"
-
 	bindsym L exec xrandr \
 			--output $LG --primary --mode 1920x1080 --pos 0x654 --rotate normal \
 			--output $SG --mode 1920x1080 --pos 1920x0 --rotate left
