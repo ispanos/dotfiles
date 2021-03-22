@@ -19,6 +19,9 @@ merge() {
 	done
 
 	cat ~/.config/i3/X >> ~/.config/i3/config
+	command -v hostname >/dev/null || hostname() {
+		hostnamectl status | awk -F': ' '/Static hostname/ {print $2}'
+		}
 
 	PC_specific_files=$(/usr/bin/ls $HOME/.config/i3 | grep "$(hostname).*")
 
