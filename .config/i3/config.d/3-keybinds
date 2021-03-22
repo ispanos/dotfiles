@@ -48,6 +48,7 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+f              exec --no-startup-id $fm
 	bindsym $mod+g              exec --no-startup-id $calc
 	bindsym $mod+p				exec --no-startup-id $audiosettings
+	bindsym $mod+o				exec --no-startup-id bluetoothtoggle
 
 # Screen Shots
 	bindsym Print               exec screenshot
