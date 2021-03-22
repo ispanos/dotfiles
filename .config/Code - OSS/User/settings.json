@@ -8,7 +8,6 @@
     "editor.minimap.enabled": false,
     "git.confirmSync": false,
     "terminal.integrated.rendererType": "dom",
-    "window.zoomLevel": 0,
     "terminal.integrated.fontFamily": "monospace, 'fontawesome'",
     "editor.fontFamily": "'Droid Sans Mono','monospace',monospace,'Droid Sans Fallback', 'fontawesome'",
 
@@ -33,5 +32,10 @@
     ],
     "python.pythonPath": "/usr/bin/python3",
     "webhint.enableTelemetry": "disabled",
-    "workbench.editorAssociations": [],
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
 }
