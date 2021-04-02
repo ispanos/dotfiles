@@ -26,3 +26,6 @@ alias \
 # For Raspberry Pi 
 [[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
     temp="/opt/vc/bin/vcgencmd measure_temp"
+
+# Start Virtual camera for OBS
+alias virt-cam="sudo modprobe v4l2loopback devices=1 card_label="OBS Cam" exclusive_caps=1"
