@@ -14,7 +14,7 @@ bindsym $mod+Tab exec i3_alt_tab
 # Keybind						Command
 	bindsym $mod+d              exec $wmlauncher
 	bindsym $mod+slash          exec $wmlauncher
-	# bindsym $mod+Shift+q        kill
+	bindsym --release $mod+Shift+q exec xkill
 	bindsym $mod+q              kill
 	bindsym $mod+Shift+c        reload
 	bindsym $mod+Shift+r        exec $wmrestart
@@ -54,7 +54,7 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym Print               exec screenshot
 	bindsym Shift+Print         exec screenshot window
 	bindsym ctrl+Print          exec screenshot area
-	bindsym ctrl+Shift+Print    exec screenshot areaclipboard
+	bindsym --release ctrl+Shift+Print    exec screenshot areaclipboard
 
 # Bleutooth Reset
 	bindsym $mod+F8 			exec $Blue_reset
