@@ -27,7 +27,6 @@ trap 'ask_delete; exit 2' INT TERM
 
 backup_dir="/mnt/bd0/$(hostname)/home"
 
-
 info "Starting backup in:
 $backup_dir"
 
@@ -44,33 +43,33 @@ start_time="$(date -u +%s)"
 # With yay cache.
 # 			--include={'.cache','.cache/yay/***'} \
 
-# "/$USER/VirtualBox VMs/",
-# "/$USER/anaconda3/",
-# "/$USER/snap/",
-# "/$USER/.ansible/",
-# "/$USER/.cache/",
-# "/$USER/.cfg/",
-# "/$USER/.comments/"
-# "/$USER/.config/",
-# "/$USER/.dbus/"
-# "/$USER/.gnome/",
-# "/$USER/.gretl/"
-# "/$USER/.local/bin/",
-# "/$USER/.local/lib/",
-# "/$USER/.mozilla/",
-# "/$USER/.mume/",
-# "/$USER/.pipewire-media-session/",
-# "/$USER/.pki/",
-# "/$USER/.pylint.d/",
-# "/$USER/.rustup/",
-# "/$USER/.screenlayout/",
-# "/$USER/.steam/",
-# "/$USER/.thumbnails/",
-# "/$USER/.var/"
+# "VirtualBox VMs/",
+# "anaconda3/",
+# "snap/",
+# ".ansible/",
+# ".cache/",
+# 
+# ".comments/"
+# ".config/",
+# 
+# 
+# ".gretl/"
+# ".local/bin/",
+# ".local/lib/",
+# ".mozilla/",
+# ".mume/",
+# ".pipewire-media-session/",
+# ".pki/",
+# 
+# ".rustup/",
+# ".screenlayout/",
+# ".steam/",
+# 
+# ".var/"
 # --include=".vscode" 
 
-
-sudo rsync -aAXHhv --delete --exclude 'yiannis/.cache/*' "${HOME}" "$backup_dir"
+# --exclude={".cache/*",".gnome/",".pylint.d/",".thumbnails/",".dbus/",".cfg/",} 
+sudo rsync -aAXHhP --delete --exclude="${HOME}.cache/*" "${HOME}/" "$backup_dir/$USER/"
 
 end_time="$(date -u +%s)"
 convertsecs $(($end_time-$start_time))
