@@ -24,11 +24,7 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
-# On Archlinux:
-# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# On Pop!_Os
-exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+exec polkit_startup
 
 # exec blueman-applet
 exec xdg-user-dirs-gtk-update
