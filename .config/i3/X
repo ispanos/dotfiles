@@ -15,11 +15,5 @@ set $wmlauncher GTK_IM_MODULE='' QT_IM_MODULE='' XMODIFIERS='' i3-dmenu-desktop 
 				-sf '#70C7D2' \
 				-p 'i3-dmenu-desktop:' \\"
 
-exec_always { \
-    gsettings set org.gnome.desktop.sound input-feedback-sounds false, \
-    gsettings set org.gnome.desktop.sound event-sounds false, \
-    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false, \
-}
-
 exec --no-startup-id xset dpms 500
 #exec --no-startup-id xautolock -time 10 -locker "slock"
