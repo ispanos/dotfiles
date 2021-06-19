@@ -1,8 +1,15 @@
 #!/usr/bin/env sh
-pkill -f /dev/video || \
+
+if [ -z "$1" ] ; then
+	camera="0"
+else
+	camera="$1"
+fi
+
+pkill -f /dev/video${camera} || \
 mpv --no-osc \
 	--no-input-default-bindings \
 	--input-conf=/dev/null \
 	--geometry=-0-0  \
 	--autofit=30%  \
-	--title="mpvfloat" av://v4l2:/dev/video0
+	--title="mpvfloat" av://v4l2:/dev/video${camera}
