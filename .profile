@@ -18,6 +18,13 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # NPM
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 
+# Ruby
+export GEM_HOME="$XDG_DATA_HOME"/gem
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
+
+# Vagrant
+export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
+
 # GTK-2
 [ ! -d "${XDG_CONFIG_HOME}/gtk-2.0" ] && mkdir ${XDG_CONFIG_HOME}/gtk-2.0
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc-2.0"
