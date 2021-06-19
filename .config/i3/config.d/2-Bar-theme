@@ -35,6 +35,8 @@ for_window  [class="R_x11"]                 floating enable
 for_window  [class="PulseAudio Equalizer"]  floating enable move position center
 for_window  [class="PulseAudio Equalizer"]  sticky enable
 for_window  [class="Skype"]                 floating enable
+for_window  [class="^Google-chrome$" instance="^crx_hkhggnncdpfibdhinjiegagmopldibha$"] floating enable move position bottom right
+
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Pavucontrol"] resize set 1078 800
