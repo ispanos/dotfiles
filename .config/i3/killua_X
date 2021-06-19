@@ -1,5 +1,5 @@
-set $SG DVI-D-0
-set $LG HDMI-A-0
+set $SG HDMI-A-0
+set $LG DVI-D-0
 
 exec xrandr --output $LG --rotate normal --primary --auto \
 			--output $SG --rotate normal --right-of $LG --auto
