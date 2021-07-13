@@ -65,6 +65,7 @@ bindsym $mod+Tab exec i3_alt_tab
 # Session
 	bindsym $mod+Escape			exec sessionctl lock
 	bindsym $mod+Pause          mode "$Pause-break"
+	bindsym $mod+F9		        mode "$Pause-break"
 
 # Change Focus
 	bindsym $mod+$left          focus left

@@ -32,12 +32,9 @@
     ],
     "python.pythonPath": "/usr/bin/python3",
     "webhint.enableTelemetry": "disabled",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter-notebook",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
     "workbench.colorTheme": "Slack Dark Theme",
     "jupyter.jupyterServerType": "local",
     "jupyter.askForKernelRestart": false,
@@ -46,4 +43,6 @@
 
         "/**"
     ],
+    "security.workspace.trust.untrustedFiles": "open",
+    "cSpell.language": ",el",
 }
