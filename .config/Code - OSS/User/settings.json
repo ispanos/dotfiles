@@ -45,4 +45,12 @@
     ],
     "security.workspace.trust.untrustedFiles": "open",
     "cSpell.language": ",el",
+    "cSpell.userWords": [
+        "subvolume"
+    ],
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "python.defaultInterpreterPath": "/usr/bin/python3",
 }
