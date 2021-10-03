@@ -1,1 +1,56 @@
-/home/yiannis/.config/Code - OSS/User/settings.json
+{
+    "files.associations": {
+        "**/config/sway/*": "i3",
+        "**/config/sway/*/*": "i3",
+        "**/config/i3/*": "i3",
+        "**/config/i3/*/*": "i3",
+    },
+    "editor.minimap.enabled": false,
+    "git.confirmSync": false,
+    "terminal.integrated.rendererType": "dom",
+    "terminal.integrated.fontFamily": "monospace, 'fontawesome'",
+    "editor.fontFamily": "'Droid Sans Mono','monospace',monospace,'Droid Sans Fallback', 'fontawesome'",
+
+    "rust.mode": "legacy",
+    "rust.rustup": {
+        "toolchain": "stable-x86_64-unknown-linux-gnu"
+    },
+
+    "window.menuBarVisibility": "toggle",
+    "explorer.confirmDelete": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 30000,
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
+    "spellright.language": [
+        "el_GR",
+        "en_US"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "python.pythonPath": "/usr/bin/python3",
+    "webhint.enableTelemetry": "disabled",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "workbench.colorTheme": "Slack Dark Theme",
+    "jupyter.jupyterServerType": "local",
+    "jupyter.askForKernelRestart": false,
+    "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4 }",
+    "C_Cpp.commentContinuationPatterns": [
+
+        "/**"
+    ],
+    "security.workspace.trust.untrustedFiles": "open",
+    "cSpell.language": ",el",
+    "cSpell.userWords": [
+        "subvolume"
+    ],
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+}
