@@ -35,7 +35,6 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
-    "workbench.colorTheme": "Slack Dark Theme",
     "jupyter.jupyterServerType": "local",
     "jupyter.askForKernelRestart": false,
     "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4 }",
@@ -53,4 +52,5 @@
         "jupyter-notebook": "left"
     },
     "python.defaultInterpreterPath": "/usr/bin/python3",
+    "workbench.colorTheme": "Slack Dark Theme",
 }
