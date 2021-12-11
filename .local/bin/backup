@@ -71,6 +71,12 @@ start_time="$(date -u +%s)"
 # --exclude={".cache/*",".gnome/",".pylint.d/",".thumbnails/",".dbus/",".cfg/",} 
 sudo rsync -aAXHhP --delete --exclude="${HOME}.cache/*" "${HOME}/" "$backup_dir/$USER/"
 
+
+## https://unix.stackexchange.com/questions/648118/rsync-xal-set-lremovexattr-my-path-file-zpxuj1-security-selinux-failed-p
+# --filter='-x security.selinux'
+
+
+
 end_time="$(date -u +%s)"
 convertsecs $(($end_time-$start_time))
 

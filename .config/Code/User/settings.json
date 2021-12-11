@@ -45,12 +45,21 @@
     "security.workspace.trust.untrustedFiles": "open",
     "cSpell.language": ",el",
     "cSpell.userWords": [
-        "subvolume"
+        "satisfied",
+        "subvolume",
+        "διαφορίσιµη",
+        "παραγμένο",
+        "προεπιλέξει"
     ],
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
     },
     "python.defaultInterpreterPath": "/usr/bin/python3",
-    "workbench.colorTheme": "Slack Dark Theme",
+    "workbench.colorTheme": "Oblivion",
+    "markdown-preview-enhanced.previewTheme": "vue.css",
+    "cSpell.enableFiletypes": [
+        "!markdown"
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
 }
