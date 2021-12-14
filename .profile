@@ -65,10 +65,10 @@ unset appendpath
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-export SUDO_ASKPASS="dmenupass"
+# export SUDO_ASKPASS="dmenupass"
 export EDITOR="code"
 export TERMINAL="alacritty"
-export BROWSER="firefox"
+# export BROWSER="firefox"
 
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
