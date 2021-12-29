@@ -56,8 +56,7 @@
         "jupyter-notebook": "left"
     },
     "python.defaultInterpreterPath": "/usr/bin/python3",
-    "workbench.colorTheme": "Oblivion",
-    "markdown-preview-enhanced.previewTheme": "vue.css",
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
     "cSpell.enableFiletypes": [
         "!markdown"
     ],
