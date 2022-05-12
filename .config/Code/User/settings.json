@@ -57,11 +57,10 @@
     "python.defaultInterpreterPath": "/usr/bin/python3",
     "python.formatting.autopep8Args": ["--max-line-length", "88", "--experimental"],
     "python.formatting.blackArgs": ["--line-length", "100"],
-    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    "markdown-preview-enhanced.previewTheme": "github-light.css",
     "cSpell.enableFiletypes": [
         "!markdown"
     ],
     "latex-workshop.view.pdf.viewer": "tab",
-    "window.zoomLevel": 1,
     "workbench.colorTheme": "Slack Dark Theme",
 }
