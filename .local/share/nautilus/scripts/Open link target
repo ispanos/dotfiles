@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#==============================================================================
+#
+#  Move the file to the location path for Nautilus scripts:
+#    ~/.local/share/nautilus/scripts
+#
+#
+#  Make it executable:
+#    touch ~/.local/share/nautilus/scripts/"Open link target"
+#    chmod +x ~/.local/share/nautilus/scripts/"Open link target"
+#
+#==============================================================================
+
+#==============================================================================
+#                                                                INIT VARIABLES
+
+# may depends of your system
+DIRNAME='/usr/bin/dirname'
+GREP='/bin/grep'
+NAUTILUS='/usr/bin/nautilus'
+PERL='/usr/bin/perl'
+READLINK='/bin/readlink'
+XDG_OPEN='/usr/bin/xdg-open'
+
+#==============================================================================
+#                                                                          MAIN
+
+# lets check if object is selected :
+[ "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" == "" ]
+
+# retrieve the first object selected :
+first_object=`echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" \
+  | $PERL -ne 'print;exit'`
+
+# lets check if local path :
+[ `echo "$first_object" | $GREP -c "^/"` -eq 0 ]
+
+# retrieve the target path :
+if [ -L "$first_object" ] ; then
+    # symbolic link
+    target=`$READLINK -f "$first_object"`
+else
+    # not a symbolic link :
+    target="$first_object"
+fi
+
+target_to_open_in_nautilus="$target"
+
+### GO : let's open
+
+$NAUTILUS --no-desktop --select "$target_to_open_in_nautilus"
+
+exit 0
+
+### EOF
