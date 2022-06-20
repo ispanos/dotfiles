@@ -1,5 +1,13 @@
 #!/bin/bash
 
+tar \
+	--directory="$HOME/.var/app/org.mozilla.Thunderbird/" \
+	-acf \
+	"thunderbird-$(hostname)-$(date +%F).tar.zst" \
+	.thunderbird
+
+exit
+
 info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
 
 ask_delete() {
