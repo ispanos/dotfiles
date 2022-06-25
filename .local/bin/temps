@@ -5,25 +5,31 @@
 temps() {
 
 	message(){
-		python -c 'print("-" * 30)'
+		[ ! "$2" == "--no-top" ] && python -c 'print("-" * 28)'
 		echo "${1}"
-		python -c 'print("-" * 30)'
 	}
-
-	message "DRIVE TEMPS"
+	python -c 'print("-" * 30)'
+	message "| DRIVE TEMPS" --no-top
 	for drive in $(/usr/bin/ls /dev/sd[a-z]); do
-		# sudo hddtemp "${drive}" | cut -d":" -f 2,3 | tr -d "^ " | awk -F: '{print $1":\t"$2}'
-		sudo hddtemp "${drive}" | awk -F: '{ gsub(/ /,""); print $2":\t"$3}'
+		printf "| "
+		name=$(sudo hddtemp "${drive}" | awk -F: '{gsub(/ /,""); print $2}')
+		sep=""
+		if [ ${#name} -le 20 ]; then
+			sep="\t"
+		fi
+		# sudo hddtemp "${drive}" | awk -v sep=$sep -F: '{gsub(/ /,""); printf "%s:%s%s\n",$2,$sep,$3}'
+		sudo hddtemp "${drive}" | awk -v sep=$sep -F: '{gsub(/ /,""); printf "%s:%s%s\n",$2,sep,$3}'
 	done
 
 	for drive in $(/usr/bin/ls /dev/nvme[0-1]n[0-1]); do
+		printf "| "
 		printf '%s:\t\t' "$drive"
-		# sudo nvme smart-log /dev/nvme0n1 | grep '^temperature' | cut -d":" -f 2 | cut -d"(" -f 1
 		sudo nvme smart-log /dev/nvme0n1 | grep '^temperature' | cut -d"(" -f 1 | awk -F: '{ gsub(/ /,""); print $2}'
 	done
 
-	message "GPU TEMPS"
-
+	printf "| "
+	message "| GPU TEMPS"
+	printf "| "
 	echo -e "$( \
 				sensors | \
 				grep 'amdgpu-pci-0a00' -A 5 | \
@@ -31,19 +37,21 @@ temps() {
 				awk '{gsub("+",""); gsub("°C",""); printf "RX 550 LP\t\t%d°C\n",$2}' \
 				)"
 
-	message "CPU FREQ"
+	printf "| "
+	message "| CPU FREQ"
 
 	fr=( $(cat /proc/cpuinfo | grep MHz | cut -d ":" -f 2) )
 
 	length=${#fr[@]}
 	for (( j=0; j<${length}; j+=2 ));
 	do
+		printf "| "
 		k=$((j+1))
-		# num=$(echo "echo ${fr[$j]} | awk '{print int($1)}'")
 		printf "%2d: %s \t" $((j+1)) $(echo "${fr[$j]}" | awk '{print int($1)/1000"Ghz"}')
 		printf "%2d: %s \n" $((j+2)) $(echo "${fr[$((j+1))]}" | awk '{printf "%2.2fGhz",int($1)/1000}')
 	done
 
+	python -c 'print("-" * 30)'
 }
 
 trap 'unset temps' INT TERM
