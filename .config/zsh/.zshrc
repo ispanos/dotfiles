@@ -1,5 +1,7 @@
 autoload -U colors && colors
 
+setopt autocd
+
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
