@@ -1,12 +1,12 @@
 #!/bin/bash
 
-tar \
-	--directory="$HOME/.var/app/org.mozilla.Thunderbird/" \
-	-acf \
-	"thunderbird-$(hostname)-$(date +%F).tar.zst" \
-	.thunderbird
+# tar \
+# 	--directory="$HOME/.var/app/org.mozilla.Thunderbird/" \
+# 	-acf \
+# 	"thunderbird-$(hostname)-$(date +%F).tar.zst" \
+# 	.thunderbird
 
-exit
+# exit
 
 info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
 
@@ -31,59 +31,79 @@ convertsecs() {
 	printf "Backup completed in %02d:%02d:%02d\n" $h $m $s
 }
 
-trap 'ask_delete; exit 2' INT TERM
+old(){
+	# trap 'ask_delete; exit 2' INT TERM
 
+	backup_dir="/mnt/bd0/$(hostname)/home"
+	info "Starting backup in: $backup_dir"
+
+	mkdir -p "$backup_dir"
+
+	if df -P -- "$HOME" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
+		echo "$HOME and $backup_dir are on the same filesystem"
+		rmdir $backup_dir 2>/dev/null || echo "$backup_dir is not empty."
+		exit 1
+	fi
+
+
+	# With yay cache.
+	# 			--include={'.cache','.cache/yay/***'} \
+
+	# "VirtualBox VMs/",
+	# "anaconda3/",
+	# "snap/",
+	# ".ansible/",
+	# ".cache/",
+	# 
+	# ".comments/"
+	# ".config/",
+	# 
+	# 
+	# ".gretl/"
+	# ".local/bin/",
+	# ".local/lib/",
+	# ".mozilla/",
+	# ".mume/",
+	# ".pipewire-media-session/",
+	# ".pki/",
+	# 
+	# ".rustup/",
+	# ".screenlayout/",
+	# ".steam/",
+	# 
+	# ".var/"
+	# --include=".vscode" 
+
+	# --exclude={".cache/*",".gnome/",".pylint.d/",".thumbnails/",".dbus/",".cfg/",} 
+	sudo rsync -aAXHhP --delete --exclude="${HOME}.cache/*" "${HOME}/" "$backup_dir/$USER/"
+
+
+	## https://unix.stackexchange.com/questions/648118/rsync-xal-set-lremovexattr-my-path-file-zpxuj1-security-selinux-failed-p
+	# --filter='-x security.selinux'
+}
+
+gon_backup() {
+	sudo rsync -aAXHhP --prune-empty-dirs \
+	"/home/$(whoami)/Dropbox/Documents" \
+	"/home/$(whoami)/Dropbox/Games" \
+	"/home/$(whoami)/Dropbox/Media Library/Music" \
+	"/home/$(whoami)/Dropbox/Pictures" \
+	"/home/$(whoami)/Dropbox/Programs" \
+	"/home/$(whoami)/Dropbox/Videos" \
+	/mnt/efd0/gon_backup
+
+	sudo btrfs subvolume snapshot /mnt/efd0/gon_backup "/mnt/efd0/gon_backup_$(date +%F-%T)"
+}
+
+start_time="$(date -u +%s)"
 backup_dir="/mnt/bd0/$(hostname)/home"
 
 info "Starting backup in:
 $backup_dir"
 
-mkdir -p "$backup_dir"
+printf "Nothing was/will be backed up\n\n"
 
-if df -P -- "$HOME" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
-	echo "$HOME and $backup_dir are on the same filesystem"
-	rmdir $backup_dir 2>/dev/null || echo "$backup_dir is not empty."
-	exit 1
-fi
-
-start_time="$(date -u +%s)"
-
-# With yay cache.
-# 			--include={'.cache','.cache/yay/***'} \
-
-# "VirtualBox VMs/",
-# "anaconda3/",
-# "snap/",
-# ".ansible/",
-# ".cache/",
-# 
-# ".comments/"
-# ".config/",
-# 
-# 
-# ".gretl/"
-# ".local/bin/",
-# ".local/lib/",
-# ".mozilla/",
-# ".mume/",
-# ".pipewire-media-session/",
-# ".pki/",
-# 
-# ".rustup/",
-# ".screenlayout/",
-# ".steam/",
-# 
-# ".var/"
-# --include=".vscode" 
-
-# --exclude={".cache/*",".gnome/",".pylint.d/",".thumbnails/",".dbus/",".cfg/",} 
-sudo rsync -aAXHhP --delete --exclude="${HOME}.cache/*" "${HOME}/" "$backup_dir/$USER/"
-
-
-## https://unix.stackexchange.com/questions/648118/rsync-xal-set-lremovexattr-my-path-file-zpxuj1-security-selinux-failed-p
-# --filter='-x security.selinux'
-
-
+sleep 1
 
 end_time="$(date -u +%s)"
 convertsecs $(($end_time-$start_time))
