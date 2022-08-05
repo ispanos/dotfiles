@@ -1,1 +1,43 @@
-/home/yiannis/Dropbox/Programs/btoggle
+#!/bin/bash
+
+# Toggles the connection with a given device.
+# Accepts only one device's mac address at a time.
+
+device="$1"
+
+if [ $# -eq 0 ]; then
+    device="headset"
+fi
+
+# Used to create aliases and make it easier to use it from the command line
+case $device in
+
+  earbuds)
+    # honor earbuds
+    MAC_ADDRESS="E0:9D:FA:C8:22:78"
+    ;;
+
+  headset)
+    # wh1000mx5
+    MAC_ADDRESS="88:C9:E8:30:3B:4F"
+    ;;
+
+  *)
+    MAC_ADDRESS="$device"
+    ;;
+esac
+
+[[ "$MAC_ADDRESS" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]] ||
+echo "Given MAC_ADDRESS: '${MAC_ADDRESS}' is invalid."
+
+coproc bluetoothctl
+echo -e 'info ${MAC_ADDRESS}\nexit' >&${COPROC[1]}
+output=$(cat <&${COPROC[0]})
+
+dev_status="$(grep ${MAC_ADDRESS} -A9 <<< $output)"
+
+if (grep "Connected: yes" <<< "$dev_status") ; then
+    bluetoothctl -- disconnect ${MAC_ADDRESS}
+else
+    bluetoothctl -- connect ${MAC_ADDRESS}
+fi
