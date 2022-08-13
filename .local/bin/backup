@@ -10,73 +10,110 @@
 
 info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
 
+# trap 'ask_delete; exit 2' INT TERM
 ask_delete() {
-	exit_question=$(
+    exit_question=$(
 		cat <<-EOF
 		$(date) Backup interrupted
 		Would you like delete $backup_dir ? [y/N]:
 		EOF
-		)
-
-	read -rep "$exit_question" reply
-	if [[ $reply =~ ^[Yy]$ ]]; then
-		sudo rm -rf "$backup_dir"
-	fi
+    )
+    
+    read -rep "$exit_question" reply
+    if [[ $reply =~ ^[Yy]$ ]]; then
+        sudo rm -rf "$backup_dir"
+    fi
 }
 
 convertsecs() {
-	((h=${1}/3600))
-	((m=(${1}%3600)/60))
-	((s=${1}%60))
-	printf "Backup completed in %02d:%02d:%02d\n" $h $m $s
+    ((h=${1}/3600))
+    ((m=(${1}%3600)/60))
+    ((s=${1}%60))
+    printf "Backup completed in %02d:%02d:%02d\n" $h $m $s
 }
 
-old(){
-	# trap 'ask_delete; exit 2' INT TERM
-
-	backup_dir="/mnt/bd0/$(hostname)/home"
-	info "Starting backup in: $backup_dir"
-
-	mkdir -p "$backup_dir"
-
-	if df -P -- "$HOME" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
-		echo "$HOME and $backup_dir are on the same filesystem"
-		rmdir $backup_dir 2>/dev/null || echo "$backup_dir is not empty."
-		exit 1
-	fi
+is_rootfs(){
+    backup_dir="$1"
+    info "Starting backup in: $backup_dir"
+    
+    mkdir -p "$backup_dir"
+    
+    if df -P -- "$HOME" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
+        echo "$HOME and $backup_dir are on the same filesystem"
+        rmdir $backup_dir 2>/dev/null || echo "$backup_dir is not empty."
+        exit 1
+    fi
 }
 
-gon_backup() {
-
-	sudo rsync -aAXHhP --prune-empty-dirs --delete \
-	"/home/$(whoami)/Dropbox/Documents" \
-	"/home/$(whoami)/Dropbox/Games" \
-	"/home/$(whoami)/Dropbox/Pictures" \
-	"/home/$(whoami)/Dropbox/Programs" \
-	"/home/$(whoami)/Dropbox/Videos" \
-	"/home/$(whoami)/.var/app/org.mozilla.Thunderbird/.thunderbird" \
-	"/home/$(whoami)/.mozilla" \
-	"/home/$(whoami)/.ssh" \
-	/mnt/efd0/gon_backup
-
-	# "/home/$(whoami)/Dropbox/Media Library/Music" \
-	# yiannis@192.168.1.10:"/home/$(whoami)/.var/app/org.mozilla.Thunderbird/.thunderbird"
-
-
-	sudo btrfs subvolume snapshot /mnt/efd0/gon_backup "/mnt/efd0/gon_backup_$(date +%F-%T)"
+nvme_gon_backup() {
+    sudo rsync -aAXHhP --prune-empty-dirs --delete \
+    "/home/$(whoami)/Dropbox/Documents" \
+    "/home/$(whoami)/Dropbox/Games" \
+    "/home/$(whoami)/Dropbox/Pictures" \
+    "/home/$(whoami)/Dropbox/Programs" \
+    "/home/$(whoami)/Dropbox/Videos" \
+    "/home/$(whoami)/.var/app/org.mozilla.Thunderbird/.thunderbird" \
+    "/home/$(whoami)/.mozilla" \
+    "/home/$(whoami)/.ssh" \
+    /mnt/efd0/gon_backup
+    
+    sudo btrfs subvolume snapshot /mnt/efd0/gon_backup "/mnt/efd0/gon_backup_$(date +%F-%T)"
 }
+
+bd1_gon_backup() {
+    
+    sudo rsync -aAXHhP --prune-empty-dirs --delete \
+    "/home/$(whoami)/Dropbox/Backup" \
+    "/home/$(whoami)/Dropbox/Documents" \
+    "/home/$(whoami)/Dropbox/Games" \
+    "/home/$(whoami)/Dropbox/Media Library/Music" \
+    "/home/$(whoami)/Dropbox/Pictures" \
+    "/home/$(whoami)/Dropbox/Programs" \
+    "/home/$(whoami)/Dropbox/Videos" \
+    "/home/$(whoami)/.var/app/org.mozilla.Thunderbird/.thunderbird" \
+    "/home/$(whoami)/.mozilla" \
+    "/home/$(whoami)/.ssh" \
+    /run/media/yiannis/bd1/gon_backup
+    
+    sudo btrfs subvolume snapshot /run/media/yiannis/bd1/gon_backup \
+    "/run/media/yiannis/bd1/gon_backup_$(date +%F-%T)"
+    
+    # "$(whoami)"@192.168.1.10:"/home/$(whoami)/.var/app/org.mozilla.Thunderbird/.thunderbird"
+}
+
+gon_backup(){
+	drive="$1"
+    case "$drive" in
+        efd0)
+            nvme_gon_backup
+        ;;
+        
+        bd1)
+            bd1_gon_backup
+        ;;
+        
+        *)
+            printf "Nothing was/will be backed up\n\n"
+        ;;
+    esac
+}
+
+
 
 start_time="$(date -u +%s)"
-backup_dir="/mnt/bd0/$(hostname)/home"
+# backup_dir="/mnt/bd0/$(hostname)/home"
 
 info "Starting backup in:
 $backup_dir"
 
-printf "Nothing was/will be backed up\n\n"
-
-sleep 1
+case $(hostname) in
+    gon)
+        gon_backup "$1"
+    ;;
+    *)
+        printf "Nothing was/will be backed up\n\n"
+    ;;
+esac
 
 end_time="$(date -u +%s)"
 convertsecs $(($end_time-$start_time))
-
-unset start_time end_time backup_dir
