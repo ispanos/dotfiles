@@ -1,6 +1,6 @@
-# ~/.bashrc
-
 #!/bin/bash
+
+# ~/.bashrc
 [[ $- != *i* ]] && return
 [ -r "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 [ -r /usr/share/bash-completion/bash_completion ] &&
