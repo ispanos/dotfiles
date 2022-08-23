@@ -3,6 +3,10 @@
 # Toggles the connection with a given device.
 # Accepts only one device's mac address at a time.
 
+notify() {
+  notify-send "$(basename "$0")" "$@"
+}
+
 device="$1"
 
 if [ $# -eq 0 ]; then
@@ -37,7 +41,9 @@ output=$(cat <&${COPROC[0]})
 dev_status="$(grep ${MAC_ADDRESS} -A9 <<< $output)"
 
 if (grep "Connected: yes" <<< "$dev_status") ; then
+    notify "Attempting to disconnect device: '${device}'"
     bluetoothctl -- disconnect ${MAC_ADDRESS}
 else
+    notify "Attempting to connect device: '${device}'"
     bluetoothctl -- connect ${MAC_ADDRESS}
 fi
