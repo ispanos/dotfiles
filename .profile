@@ -38,6 +38,13 @@ export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 [ -d "${CARGO_HOME}/bin" ] && appendpath "${CARGO_HOME}/bin"
 
+# R
+export R_LIBS_USER=${XDG_DATA_HOME:-$HOME/.local/share}/R/%p-library/%v
+mkdir -p "$(Rscript -e 'cat(Sys.getenv("R_LIBS_USER"))')"
+# export R_PROFILE_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/rprofile
+# export R_ENVIRON_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/renviron
+
+
 # Wine
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
