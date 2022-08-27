@@ -1,0 +1,123 @@
+#!/bin/bash
+
+full_backup=(
+    "$HOME/Dropbox/Backup"
+    "$HOME/Dropbox/Media Library/Music"
+    "$HOME/Dropbox/Documents"
+    "$HOME/Dropbox/Games"
+    "$HOME/Dropbox/Pictures"
+    "$HOME/Dropbox/Programs"
+    "$HOME/Dropbox/Videos"
+    "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
+    "$HOME/.mozilla"
+    "$HOME/.ssh"
+)
+
+
+basic_backup=(
+    "$HOME/Dropbox/Documents"
+    "$HOME/Dropbox/Games"
+    "$HOME/Dropbox/Pictures"
+    "$HOME/Dropbox/Programs"
+    "$HOME/Dropbox/Videos"
+    "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
+    "$HOME/.mozilla"
+    "$HOME/.ssh"
+)
+
+
+ask_delete() {
+    
+    prompt=$(
+		cat <<-EOF
+		Backup interrupted.
+		Would you like delete $backup_dir ? [y/N]:
+		EOF
+    )
+    
+    read -rep "$prompt" reply
+    if [[ $reply =~ ^[Yy]$ ]]; then
+        sudo rm -rf "$backup_dir"
+    fi
+}
+
+
+filesystem_check(){
+    backup_dir_full="$1"
+    destination="$2"
+
+    backup_dir=$(dirname backup_dir_full)
+
+    if df -P -- "$destination" "$backup_dir" | awk 'NR==2 {dev1=$1} NR==3 {exit($1!=dev1)}'; then
+        echo "$destination and $backup_dir are on the same filesystem"
+        rmdir "$backup_dir_full" 2>/dev/null || echo "$backup_dir is not empty."
+        exit 1
+    fi
+}
+
+
+_rsync() {
+    sudo rsync -aAXH --info=progress2 --prune-empty-dirs --delete "$@"
+    [[ $? -eq 0 ]] ||
+    printf "Please check the integrity of the backup," &&
+    read -rp "rsync exited with non-zero return code."
+}
+
+
+convertsecs() {
+    ((h=${1}/3600))
+    ((m=(${1}%3600)/60))
+    ((s=${1}%60))
+    # TODO: move printf
+    printf "Backup completed in %02d:%02d:%02d\n" $h $m $s
+}
+
+
+dconf_dump(){
+    dconf dump /
+}
+
+
+main() {
+
+    # echo "${basic_backup[*]}"
+
+    start_time="$(date -u +%s)"
+    start_time_short=$(date +%F-%T)
+    destination=/mnt/efd0/gon_backup
+
+    size="$1"
+    case "$size" in
+        small)
+            data_source="${basic_backup[*]}"
+        ;;
+        
+        big)
+            data_source="${full_backup[*]}"
+        ;;
+        
+        *)
+            printf "Nothing was/will be backed up\n\n"
+        ;;
+    esac
+
+    for dir in "${data_source[@]}"; do
+        filesystem_check $dir $destination
+    done
+
+    printf "%s\nStarting backup to: %s\n\n" "$start_time" "$destination"
+
+    _rsync --dry-run "$data_source" "$destination"
+    sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time_short"
+    dconf_dump > "$destination/dconf"
+
+    end_time="$(date -u +%s)"
+    convertsecs $(($end_time-$start_time))
+}
+
+
+# INTERRUPTED='False'
+
+trap 'ask_delete; exit 2' INT TERM
+
+main "$1"
