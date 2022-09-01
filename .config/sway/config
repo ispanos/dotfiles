@@ -5,15 +5,16 @@ include ~/.config/i3/config.d/*
 # inhibit_idle
 
 
-exec mako
+exec dunst
+
 input * xkb_numlock enabled
 
-exec swayidle -w \
-          timeout 7190 'swaylock -f -c 000000 -i ~/.config/wall.png' \
-          timeout 7200 'swaymsg "output * dpms off"' \
-          resume 'swaymsg "output * dpms on"' \
-          before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
-          after-resume 'swaymsg "output * dpms on"'
+# exec swayidle -w \
+#           timeout 7190 'swaylock -f -c 000000 -i ~/.config/wall.png' \
+#           timeout 7200 'swaymsg "output * dpms off"' \
+#           resume 'swaymsg "output * dpms on"' \
+#           before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
+#           after-resume 'swaymsg "output * dpms on"'
 
 set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
 set $lock2		swayidle -w  \
@@ -23,20 +24,12 @@ set $lock2		swayidle -w  \
 
 set $wmrestart 	swaymsg reload
 
-set $wmlauncher j4-dmenu-desktop \
-					--dmenu="bemenu -i \
-							--nf '#70C7D2' \
-							--nb '#193549' \
-							--sb '#2A597A' \
-							--sf '#70C7D2' \
-							--fn 'monospace-8' \
-							-p 'bemenu:'" \
-							--term='alacritty'
+set $wmlauncher wofi --show=drun --allow-images
 
-# Adwaita dark theme.
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-    #gsettings set org.gnome.desktop.interface gtk-color-scheme 'dark'
-    gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
-    gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
-}
+# output HDMI-A-1 pos 0 0 res 1920x1080 transform anticlockwise
+output HDMI-A-1 pos 0 0 res 1920x1080 transform 90
+output DVI-D-1 pos 1080 480 res 1920x1080
+
+
+# exec_always swaybg -m stretch -i "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
+exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"

@@ -18,7 +18,8 @@ if [[ $(pgrep -x i3) ]]; then
 	feh --no-fehbg --bg-max "$wallpaper"
 
 elif [[ $(pgrep -x sway) ]]; then
-	swaymsg -t output * bg "$wallpaper" fit #fill
+	killall swaybg
+	swaybg -m fill -i "$wallpaper"
 fi
 
 # Lock screen

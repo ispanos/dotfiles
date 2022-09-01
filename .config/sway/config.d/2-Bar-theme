@@ -1,0 +1,56 @@
+
+
+set $font font pango:RobotoMono-Regular 10, FontAwesome 10
+# pango:DejaVu Sanz Mono 11
+$font
+focus_on_window_activation focus
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders none
+
+set $ws1 "1:>_"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10:x"
+
+bar {
+    $font
+    tray_output primary
+    status_command i3blocks
+    strip_workspace_numbers yes
+    position top
+}
+
+# Application specific rules ($xprop find the name)
+for_window  [class="Galculator"]            floating enable
+for_window  [class="Gnome-calculator"]      floating enable move position center
+for_window  [class="Gcolor3"]               floating enable
+for_window  [class="Matplotlib"]            floating enable
+for_window  [class="R_x11"]                 floating enable
+for_window  [class="PulseAudio Equalizer"]  floating enable move position center
+for_window  [class="PulseAudio Equalizer"]  sticky enable
+for_window  [class="Skype"]                 floating enable
+for_window  [class="^Google-chrome$" instance="^crx_hkhggnncdpfibdhinjiegagmopldibha$"] floating enable move position bottom right
+
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] resize set 1078 800
+for_window [class="Pavucontrol"] move position center
+for_window [class="Pavucontrol"] border none
+
+for_window [class="qpaeq"] floating enable
+for_window [class="qpaeq"] resize set 1080 420
+for_window [class="qpaeq"] move position center
+for_window [class="qpaeq"] border none
+
+# # Gap settings
+# gaps inner 6
+# gaps outer -2
+# smart_gaps on
+# smart_borders on
