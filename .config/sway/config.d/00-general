@@ -1,0 +1,24 @@
+exec dunst
+exec nm-applet --indicator
+exec polkit_startup
+exec blueman-applet
+exec xsettingsd
+exec autotiling
+exec dropbox start -i
+
+# Needed for Gnome apps.
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK DBUS_SESSION_BUS_ADDRESS 
+
+# Allows i3 to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
+exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
+
+exec_always swayidle -w \
+    timeout 295 'sessionctl lock' \
+    timeout 300 'swaymsg output * dpms off' \
+    resume 'swaymsg output * dpms on' \
+    after-resume 'swaymsg output * enable' \
+    after-resume 'swaymsg output * dpms on' \
+    before-sleep 'playerctl pause' \
+    before-sleep 'sessionctl lock'

@@ -1,0 +1,14 @@
+# Laptop settings
+
+# Displays
+
+set $laptop eDP-1 
+set $laptopHDMI HDMI-A-1
+
+output $laptop pos 0 1080 res 1920x1080
+output $laptopHDMI pos 0 0 res 1920x1080
+
+exec_always clamshell
+
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable

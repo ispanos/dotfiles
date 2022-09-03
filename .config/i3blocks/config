@@ -3,11 +3,11 @@ separator=false
 separator_block_width=7
 markup=pango
 
-[mediaplayer]
-instance=spotify
-interval=4
-signal=8
-label=🎵
+# [mediaplayer]
+# instance=spotify
+# interval=4
+# signal=8
+# label=🎵
 
 [ip]
 interval=10
@@ -27,6 +27,9 @@ label=
 interval=10
 label=
 
+[battery]
+interval=20
+
 # [disk]
 # interval=60
 # command=disk /
@@ -35,13 +38,13 @@ label=
 label=
 interval=5
 
-# Needs xkb-switch
-[keymap]
-command=bash -c 'xkb-switch;xkb-switch -W'
-interval=persist
+# # Needs xkb-switch
+# [keymap]
+# command=bash -c 'xkb-switch;xkb-switch -W'
+# interval=persist
 
-[volume]
-interval=50
-signal=10
-interval=1
+# [volume]
+# interval=50
+# signal=10
+# interval=1
 

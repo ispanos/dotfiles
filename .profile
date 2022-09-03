@@ -75,20 +75,20 @@ export SSH_AUTH_SOCK
 # export SUDO_ASKPASS="dmenupass"
 export EDITOR="code"
 export TERMINAL="alacritty"
-# export BROWSER="firefox"
+export BROWSER="firefox"
 
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-	# init i3wm
 	i3confmerge # NEEDS FIX FOR GDM
     pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
 elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-	# init Sway
-	export XKB_DEFAULT_LAYOUT=us,gr
+	# export XKB_DEFAULT_LAYOUT=us,gr
+	# export XKB_DEFAULT_OPTIONS=grp:win_space_toggle
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-	export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
 	export QT_QPA_PLATFORM=wayland
-	export MOZ_ENABLE_WAYLAND=1
-    pgrep -x gdm || pgrep -x gdm3 || sway
+	# export MOZ_ENABLE_WAYLAND=1
+    export XDG_CURRENT_DESKTOP=sway
+    # pgrep -x gdm || pgrep -x gdm3 || WLR_DRM_DEVICES="/dev/dri/card0" sway --unsupported-gpu
+    pgrep -x gdm || pgrep -x gdm3 || sway --unsupported-gpu
 fi

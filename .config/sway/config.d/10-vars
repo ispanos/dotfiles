@@ -1,0 +1,43 @@
+# Programs
+
+set $text           gnome-text-editor
+set $fm         	nautilus -w || pcmanfm || nautilus -w
+set $calc       	"gnome-calculator || galculator || org.gnome.Calculator"
+# set $volup      	pactl set-sink-volume @DEFAULT_SINK@ +5%
+# set $voldown    	pactl set-sink-volume @DEFAULT_SINK@ -5%
+# set $volmute    	pactl set-sink-mute   @DEFAULT_SINK@ toggle && pkill -RTMIN+10 i3blocks 
+
+set $volup      	pamixer -ui 5
+set $voldown    	pamixer -ud 5
+set $volmute        pamixer --toggle-mute 
+
+set $micmute        pamixer --toggle-mute --default-source 
+
+set $mediaplay  	playerctl play-pause && pkill -RTMIN+10 i3blocks
+set $medianext  	playerctl next 		 && pkill -RTMIN+10 i3blocks
+set $mediaprev  	playerctl previous 	 && pkill -RTMIN+10 i3blocks
+set $audiosettings  pavucontrol
+set $Blue_reset     "$SUDO_ASKPASS | sudo -S systemctl restart bluetooth"
+
+set $wmrestart 	swaymsg reload
+
+set $wmlauncher wofi --show=drun --allow-images
+
+# bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $WOBSOCK
+# bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $WOBSOCK
+# bindsym XF86AudioMute exec pamixer --toggle-mute && ( [ "$(pamixer --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
+
+
+set $Pause-break  System (l)lock, (le) exit, (s) suspend, (r) reboot, (End) shutdown
+mode "$Pause-break" {
+    bindsym --release e   exec sessionctl logout  , mode "default"
+    bindsym --release s   exec sessionctl suspend , mode "default"
+    bindsym --release r   exec sessionctl reboot  , mode "default"
+    bindsym --release End exec sessionctl shutdown, mode "default"
+    bindsym --release l   exec sessionctl lock    , mode "default"
+    bindsym --release d   exec sessionctl dark    , mode "default"
+
+    bindsym Return  mode "default"
+    bindsym Escape  mode "default"
+}
+

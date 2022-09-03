@@ -1,35 +1,6 @@
 # Read `man 5 sway` for a complete reference.
 #include /etc/sway/security.d/*
-include ~/.config/i3/config.d/*
+include ~/.config/sway/config.d/*
 
-# inhibit_idle
-
-
-exec dunst
-
-input * xkb_numlock enabled
-
-# exec swayidle -w \
-#           timeout 7190 'swaylock -f -c 000000 -i ~/.config/wall.png' \
-#           timeout 7200 'swaymsg "output * dpms off"' \
-#           resume 'swaymsg "output * dpms on"' \
-#           before-sleep 'swaylock -f -c 000000 -i ~/.config/wall.png' \
-#           after-resume 'swaymsg "output * dpms on"'
-
-set $lock 		swaylock -e -f -c 000000 -i ~/.config/wall.png -t
-set $lock2		swayidle -w  \
-				timeout 1 'swaylock -e -f -c 000000 -i ~/.config/wall.png -t' \
-				timeout 2 'swaymsg "output * dpms off"' \
-				resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
-
-set $wmrestart 	swaymsg reload
-
-set $wmlauncher wofi --show=drun --allow-images
-
-# output HDMI-A-1 pos 0 0 res 1920x1080 transform anticlockwise
-output HDMI-A-1 pos 0 0 res 1920x1080 transform 90
-output DVI-D-1 pos 1080 480 res 1920x1080
-
-
-# exec_always swaybg -m stretch -i "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
-exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
+# include ~/.config/sway/desktop
+# include ~/.config/sway/laptop

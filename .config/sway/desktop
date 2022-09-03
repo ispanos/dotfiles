@@ -1,0 +1,7 @@
+# Desktop settings
+
+# Displays
+
+output HDMI-A-1 pos 0 0 res 1920x1080 transform 90
+output DVI-D-1 pos 1080 480 res 1920x1080
+input * xkb_numlock enabled

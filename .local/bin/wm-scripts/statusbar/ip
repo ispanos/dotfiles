@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 left_button(){
-    if [ `command -v nm-connection-editor` ]; then
+    if [ "$(command -v nm-connection-editor)" ]; then
         nm-connection-editor
-    elif [ `command -v nm-connection-editor` ]; then
+    else
         $TERMINAL -e nmtui
     fi
 }
