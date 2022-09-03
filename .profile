@@ -77,10 +77,10 @@ export EDITOR="code"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 
-echo "$XDG_CURRENT_DESKTOP" > ~/test.log
     # sway settings when GDM is enabled
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	export QT_QPA_PLATFORM=wayland
+	export XDG_CURRENT_DESKTOP=sway
 
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
