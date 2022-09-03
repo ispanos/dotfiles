@@ -2,6 +2,13 @@
 
 # Displays
 
-output HDMI-A-1 pos 0 0 res 1920x1080 transform 90
-output DVI-D-1 pos 1080 480 res 1920x1080
+set $LG DVI-D-1
+set $SAMS HDMI-A-1
+
+output $SAMS pos 0 0 res 1920x1080 transform 90
+output $LG pos 1080 480 res 1920x1080
+
 input * xkb_numlock enabled
+
+
+workspace $ws1 output $LG
