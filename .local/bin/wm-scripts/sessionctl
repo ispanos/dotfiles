@@ -14,7 +14,7 @@ case "$1" in
     lock)
     
         [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
-        waylock -e -f -c 000000 -i "$lockscreen" -t
+        swaylock -e -f -c 000000 -i "$lockscreen" -t
 
         # if [ -x /usr/bin/gdmflexiserver ]; then
         #     gdmflexiserver
