@@ -23,7 +23,7 @@ exec systemd-inhibit --what=handle-power-key sleep infinity
 
 exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
 
-exec QT_QPA_PLATFORM='xcb' flatpak run com.ulduzsoft.Birdtray
+# exec_always "QT_QPA_PLATFORM='xcb' flatpak run com.ulduzsoft.Birdtray"
 
 exec_always swayidle -w \
     timeout 295 'sessionctl lock' \
