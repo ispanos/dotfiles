@@ -30,8 +30,8 @@ exec swayidle -w \
     timeout 300 'sessionctl lock' \
     resume 'swaymsg output * dpms on' \
     before-sleep 'playerctl pause' \
-    before-sleep 'sessionctl instant_lock'
-    after-resume 'clamshell' \
+    before-sleep 'sessionctl instant_lock' \
+    after-resume 'clamshell'
 
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
