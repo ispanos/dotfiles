@@ -26,10 +26,12 @@ exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
 # exec_always "QT_QPA_PLATFORM='xcb' flatpak run com.ulduzsoft.Birdtray"
 
 exec swayidle -w \
-    timeout 295 'sessionctl lock' \
-    timeout 300 'swaymsg output * dpms off' \
+    timeout 295 'swaymsg output * dpms off' \
+    timeout 300 'sessionctl lock' \
     resume 'swaymsg output * dpms on' \
-    after-resume 'swaymsg output * enable' \
-    after-resume 'swaymsg output * dpms on' \
     before-sleep 'playerctl pause' \
-    before-sleep 'sessionctl lock'
+    before-sleep 'sessionctl instant_lock'
+    after-resume 'clamshell' \
+
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen

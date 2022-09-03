@@ -12,9 +12,14 @@ case "$1" in
         ;;
 
     lock)
-    
+
         [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
-        swaylock -e -f -c 000000 -i "$lockscreen" -t
+        swayidle \
+            timeout 5 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' &
+
+        swaylock -e -c 000000 -i "$lockscreen" -t
+        kill $(ps aux | grep '[s]wayidle timeout 5' | awk '{print $2}')
 
         # if [ -x /usr/bin/gdmflexiserver ]; then
         #     gdmflexiserver
@@ -24,6 +29,12 @@ case "$1" in
         #pgrep -x i3 >/dev/null &&
             # i3lock -e -f -c 000000 -i "$lockscreen" -t &&
             #sleep 300 && pgrep i3lock && xset dpms force off
+        ;;
+
+    instant_lock)
+
+        [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
+        swaylock -e -c 000000 -i "$lockscreen" -t
         ;;
 
     logout)
