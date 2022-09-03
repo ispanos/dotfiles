@@ -77,18 +77,25 @@ export EDITOR="code"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 
-# Needed with no display manager.
-[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
-if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-	i3confmerge # NEEDS FIX FOR GDM
-    pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
-elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-	# export XKB_DEFAULT_LAYOUT=us,gr
-	# export XKB_DEFAULT_OPTIONS=grp:win_space_toggle
+echo "$XDG_CURRENT_DESKTOP" > ~/test.log
+    # sway settings when GDM is enabled
 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 	export QT_QPA_PLATFORM=wayland
-	# export MOZ_ENABLE_WAYLAND=1
-    export XDG_CURRENT_DESKTOP=sway
-    # pgrep -x gdm || pgrep -x gdm3 || WLR_DRM_DEVICES="/dev/dri/card0" sway --unsupported-gpu
-    pgrep -x gdm || pgrep -x gdm3 || sway --unsupported-gpu
-fi
+
+# Needed with no display manager.
+[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
+
+
+# if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
+# 	i3confmerge # NEEDS FIX FOR GDM
+#     pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
+# elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
+# 	# export XKB_DEFAULT_LAYOUT=us,gr
+# 	# export XKB_DEFAULT_OPTIONS=grp:win_space_toggle
+# 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+# 	export QT_QPA_PLATFORM=wayland
+# 	# export MOZ_ENABLE_WAYLAND=1
+#     export XDG_CURRENT_DESKTOP=sway
+#     # pgrep -x gdm || pgrep -x gdm3 || WLR_DRM_DEVICES="/dev/dri/card0" sway --unsupported-gpu
+#     pgrep -x gdm || pgrep -x gdm3 || sway --unsupported-gpu
+# fi
