@@ -45,11 +45,11 @@ bindsym $mod+Tab exec i3_alt_tab
 	bindsym $mod+ctrl+z        	exec google-chrome --profile-directory=Default
 	bindsym $mod+Shift+z        exec google-chrome --profile-directory='Profile 1'
 	bindsym $mod+x              exec $EDITOR
-	#bindsym $mod+c              exec $fm
 	bindsym $mod+f              exec $fm
 	bindsym $mod+g              exec $calc
 	bindsym $mod+p				exec $audiosettings
 	bindsym $mod+t 				exec $text
+	bindsym $mod+c            	exec $clipboardselect
 
 # Screen Shots
 	bindsym Print               exec screenshot

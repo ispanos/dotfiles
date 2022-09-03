@@ -5,6 +5,15 @@ exec blueman-applet
 exec xsettingsd
 exec autotiling
 exec dropbox start -i
+exec_always "pkill wl-paste; wl-paste -t text --watch clipman store --no-persist"
+exec /usr/libexec/xdg-desktop-portal
+
+
+# Polkit
+exec lxpolkit
+
+# Gnome Keyring
+# exec gnome-keyring-daemon --daemonize --start --components='gpg,pkcs11,secrets,ssh'
 
 # Needed for Gnome apps.
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK DBUS_SESSION_BUS_ADDRESS 
