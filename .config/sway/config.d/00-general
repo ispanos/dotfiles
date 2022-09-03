@@ -16,7 +16,11 @@ exec lxpolkit
 # exec gnome-keyring-daemon --daemonize --start --components='gpg,pkcs11,secrets,ssh'
 
 # Needed for Gnome apps.
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK DBUS_SESSION_BUS_ADDRESS 
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+    # QT_WAYLAND_DISABLE_WINDOWDECORATION="1" QT_QPA_PLATFORM=wayland
+
 
 # Allows i3 to bind the powerbutton properly.
 exec systemd-inhibit --what=handle-power-key sleep infinity

@@ -2,12 +2,12 @@
 
 # Append our default paths
 appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
+	case ":$PATH:" in
+		*:"$1":*)
+			;;
+		*)
+			PATH="${PATH:+$PATH:}$1"
+	esac
 }
 
 # Declutter ~ // https://wiki.archlinux.org/index.php/XDG_Base_Directory
@@ -44,7 +44,6 @@ mkdir -p "$(Rscript -e 'cat(Sys.getenv("R_LIBS_USER"))')"
 # export R_PROFILE_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/rprofile
 # export R_ENVIRON_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/renviron
 
-
 # Wine
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
@@ -77,25 +76,13 @@ export EDITOR="code"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 
-    # sway settings when GDM is enabled
-	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-	export QT_QPA_PLATFORM=wayland
-	export XDG_CURRENT_DESKTOP=sway
-
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 
+# No display manager:
 
-# if [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ]; then
-# 	i3confmerge # NEEDS FIX FOR GDM
-#     pgrep -x gdm || pgrep -x gdm3 || exec startx /usr/bin/i3
-# elif [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ]; then
-# 	# export XKB_DEFAULT_LAYOUT=us,gr
-# 	# export XKB_DEFAULT_OPTIONS=grp:win_space_toggle
-# 	export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-# 	export QT_QPA_PLATFORM=wayland
-# 	# export MOZ_ENABLE_WAYLAND=1
-#     export XDG_CURRENT_DESKTOP=sway
-#     # pgrep -x gdm || pgrep -x gdm3 || WLR_DRM_DEVICES="/dev/dri/card0" sway --unsupported-gpu
-#     pgrep -x gdm || pgrep -x gdm3 || sway --unsupported-gpu
-# fi
+# [ -f /usr/bin/i3 ] && [ ! $(pgrep -x Xorg) ] &&
+# 	i3confmerge
+# 	exec startx /usr/bin/i3
+# [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ] &&
+# 	sway --unsupported-gpu
