@@ -1,14 +1,3 @@
-exec dunst
-exec nm-applet --indicator
-exec polkit_startup
-exec blueman-applet
-exec xsettingsd
-exec autotiling
-exec dropbox start -i
-exec_always "pkill wl-paste; wl-paste -t text --watch clipman store --no-persist"
-exec /usr/libexec/xdg-desktop-portal
-
-
 # Polkit
 exec lxpolkit
 
@@ -27,8 +16,6 @@ exec systemd-inhibit --what=handle-power-key sleep infinity
 
 exec_always setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
 
-# exec_always "QT_QPA_PLATFORM='xcb' flatpak run com.ulduzsoft.Birdtray"
-
 exec swayidle -w \
     timeout 295 'swaymsg output * dpms off' \
     timeout 300 'sessionctl lock' \
@@ -39,3 +26,15 @@ exec swayidle -w \
 
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
+
+exec dunst
+exec nm-applet --indicator
+exec polkit_startup
+exec blueman-applet
+exec xsettingsd
+exec autotiling
+exec dropbox start -i
+exec_always "pkill wl-paste; wl-paste -t text --watch clipman store --no-persist"
+exec /usr/libexec/xdg-desktop-portal
+
+# exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
