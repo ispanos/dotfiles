@@ -1,7 +1,5 @@
 #!/bin/sh
 
-lockscreen=/usr/share/backgrounds/gnome/libadwaita-d.jpg
-
 echo "$0 $@" | systemd-cat -t "SESSIONCTL"
 
 case "$1" in
@@ -17,7 +15,7 @@ case "$1" in
             timeout 5 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"' &
 
-        swaylock -e -c 000000 -i "$lockscreen" -t
+        swaylock
         kill $(ps aux | grep '[s]wayidle timeout 5' | awk '{print $2}')
 
         # if [ -x /usr/bin/gdmflexiserver ]; then
@@ -33,7 +31,7 @@ case "$1" in
     instant_lock)
 
         # [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
-        swaylock -e -c 000000 -i "$lockscreen" -t
+        swaylock
         ;;
 
     logout)
