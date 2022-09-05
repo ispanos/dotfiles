@@ -1,3 +1,5 @@
 color=000000
-image=/usr/share/backgrounds/gnome/libadwaita-d.jpg
-scaling=tile
+image="$HOME/.local/share/mybackground/lock.png"
+scaling=fill
+indicator-radius=100
+indicator-thickness=7

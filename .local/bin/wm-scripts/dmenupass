@@ -1,8 +1,0 @@
-#!/bin/sh
-# Fix for Ubuntu 20.10?
-QT_IM_MODULE='' XMODIFIERS='' dmenu -fn Monospace-18 \
-      -sb "#d79921"\
-      -sf "#1d2021"\
-      -nf "#000000"\
-      -nb "#000000"\
-      -p "$1" <&- && echo

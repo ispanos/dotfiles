@@ -1,0 +1,42 @@
+# Polkit
+
+# Gnome Keyring
+# exec gnome-keyring-daemon --daemonize --start --components='gpg,pkcs11,secrets,ssh'
+
+exec hash dbus-update-activation-environment 2>/dev/null && \
+    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+    # QT_WAYLAND_DISABLE_WINDOWDECORATION="1" QT_QPA_PLATFORM=wayland
+
+# Needed for Gnome apps.
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# Allows sway to bind the powerbutton properly.
+exec systemd-inhibit --what=handle-power-key sleep infinity
+
+exec {
+    polkit_startup
+    dunst
+    nm-applet --indicator
+    polkit_startup
+    blueman-applet
+    xsettingsd
+    autotiling
+    dropbox start -i
+    /usr/libexec/xdg-desktop-portal
+}
+
+
+exec_always {
+    setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
+    pkill wl-paste; wl-paste -t text --watch clipman store --no-persist
+}
+
+# exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
+
+exec swayidle -w \
+    timeout 295 'swaymsg output * dpms off' \
+    timeout 300 'sessionctl lock' \
+    resume 'swaymsg output * dpms on' \
+    before-sleep 'playerctl pause' \
+    before-sleep 'sessionctl instant_lock' \
+    after-resume 'clamshell'

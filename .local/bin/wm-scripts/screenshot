@@ -2,7 +2,7 @@
 
 [ ! -d "$HOME/Pictures/Screenshots" ] && mkdir -p "$HOME/Pictures/Screenshots"
 [ -z "$new_shot" ] &&
-new_shot="$HOME/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png"
+new_shot="$HOME/Pictures/Screenshots/$(date '+%Y-%m-%d %H-%-M-%S').png"
 
 if [[ $(pgrep -x i3) ]]; then
     if [[ "$1" == window ]]; then
