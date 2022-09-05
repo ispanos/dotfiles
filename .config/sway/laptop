@@ -8,7 +8,14 @@ set $laptopHDMI HDMI-A-1
 output $laptop pos 0 1080 res 1920x1080
 output $laptopHDMI pos 0 0 res 1920x1080
 
-exec_always clamshell
+exec_always {
+    clamshell
+    bluetoothctl power off
+}
+
+exec swayidle -w \
+    before-sleep 'bluetoothctl power off' \
+    after-resume 'clamshell'
 
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
