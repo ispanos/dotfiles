@@ -15,4 +15,4 @@ for_window  [app_id="org.gnome.Calculator"]      floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="pavucontrol"] resize set 1078 800
 for_window [app_id="pavucontrol"] move position center
-for_window [app_id="pavucontrol"] border none
+for_window [app_id="pavucontrol"] border 1px
