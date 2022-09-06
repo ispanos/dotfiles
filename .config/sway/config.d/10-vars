@@ -9,6 +9,7 @@ set $editor $EDITOR
 set $text           gnome-text-editor
 set $fm         	nautilus -w || pcmanfm || nautilus -w
 set $calc       	"gnome-calculator || galculator || org.gnome.Calculator"
+set $calendar       gnome-calendar
 
 # No wob yet
 set $WOBSOCK /dev/null
@@ -28,7 +29,7 @@ set $Blue_reset     pkexec systemctl restart bluetooth
 set $brightnessup   brightnessctl s +5%
 set $brightnessdown brightnessctl s 5%-
 
-set $wmrestart 	    swaymsg reload
+set $wmrestart 	    reload
 
 set $alt_tab        sway_alt_tab
 
