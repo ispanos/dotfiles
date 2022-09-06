@@ -17,7 +17,6 @@ exec {
     polkit_startup
     dunst
     nm-applet --indicator
-    polkit_startup
     blueman-applet
     xsettingsd
     autotiling
