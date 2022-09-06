@@ -1,42 +1,43 @@
 #!/bin/sh
 
+# [ "$XDG_CURRENT_DESKTOP" = "sway" ] }} exit
+
 echo "$0 $@" | systemd-cat -t "SESSIONCTL"
 
+sessionctl_idle() {
+    killall swayidle || echo "Just starting"
+    swayidle -w \
+        timeout 300  'swaylock -f' \
+        timeout 301  'swaymsg "output * dpms off"' \
+            resume   'swaymsg "output * dpms on"' \
+        before-sleep 'playerctl pause' \
+        before-sleep 'swaylock -f'
+}
+
 case "$1" in
+    locked_go_dark)
+        pgrep swaylock && swaymsg output '*' dpms off
+    ;;
 
-    dark)
-        sleep 1 && xset dpms force off
+    idle)
+        sessionctl_idle
         ;;
-
     lock)
-        # Hopping to change to gdmflexiserver at some point
-
-        # [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
-        swayidle \
-            timeout 5 'swaymsg "output * dpms off"' \
-            resume 'swaymsg "output * dpms on"' &
-
-        swaylock
-        kill $(ps aux | grep '[s]wayidle timeout 5' | awk '{print $2}')
+        sleep 1
+        killall -s SIGUSR1 swayidle
         ;;
-
     instant_lock)
-
-        # [ "$XDG_CURRENT_DESKTOP" = "sway" ] &&
-        swaylock
+        swaylock -f
         ;;
-
     logout)
         pgrep -x sway >/dev/null && swaymsg exit && exit
         ;;
-
     suspend)
         systemctl suspend
         ;;
     reboot)
         systemctl reboot
         ;;
-
     shutdown)
         systemctl poweroff
         ;;
