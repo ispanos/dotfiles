@@ -38,9 +38,8 @@ export HISTFILE=$ZDOTDIR/history
 [[ -f "$HISTFILE" ]] || touch $HISTFILE
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=9999
-export HISTFILESIZE=9999
+export SAVEHIST=9999
 setopt appendhistory
-SAVEHIST=100
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
@@ -85,27 +84,6 @@ fi
 
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
-
-# anaconda
-anaconda(){
-	[ ! -f /home/yiannis/anaconda3/bin/conda ] && return
-	eval "$(/home/yiannis/anaconda3/bin/conda shell.zsh hook)"
-
-	# >>> conda initialize >>>
-	# !! Contents within this block are managed by 'conda init' !!
-	__conda_setup="$('/home/yiannis/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-		eval "$__conda_setup"
-	else
-		if [ -f "/home/yiannis/anaconda3/etc/profile.d/conda.sh" ]; then
-			. "/home/yiannis/anaconda3/etc/profile.d/conda.sh"
-		else
-			export PATH="/home/yiannis/anaconda3/bin:$PATH"
-		fi
-	fi
-	unset __conda_setup
-	# <<< conda initialize <<<
-}
 
 [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] &&
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null ||
