@@ -17,9 +17,9 @@ bindsym --to-code {
 	$mod+slash          	exec $wmlauncher
 	$mod+q              	kill
 	--release $mod+Shift+q 	kill -SIGKILL
-	$mod+Shift+c        	reload
-	$mod+Shift+r        	exec $wmrestart
+	$mod+Shift+r        	reload
 }
+
 # Split Orientation / Mode / Layout
 bindsym --to-code {
 	$mod+b              split h
@@ -52,7 +52,8 @@ bindsym --to-code {
 	$mod+g              exec $calc
 	$mod+p				exec $audiosettings
 	$mod+t 				exec $text
-	$mod+c            	exec $clipboardselect
+	$mod+c        		exec $calendar
+	$mod+Shift+c		exec $clipboardselect
 }
 
 # Screen Shots
@@ -66,14 +67,15 @@ bindsym --to-code {
 # Bleutooth
 bindsym --to-code $mod+ctrl+p	exec btoggle
 # not working
-bindsym $mod+F8	exec '/usr/bin/pkexec --user root /usr/bin/systemctl restart bluetooth'
+bindsym $mod+F8	exec '/usr/bin/pkexec /usr/bin/systemctl restart bluetooth.service'
 
 # Camera
-	bindsym $mod+F11			exec camtoggle
+	bindsym $mod+F11	exec camtoggle
 
 # Session
-	bindsym $mod+Escape			mode "$Pause-break"
-	bindsym $mod+Pause          mode "$Pause-break"
+	bindsym $mod+F2		exec 'swaymsg "output * dpms on"'
+	bindsym $mod+Escape	mode "$Pause-break"
+	bindsym $mod+Pause  mode "$Pause-break"
 
 # Change Focus
 bindsym --to-code {
