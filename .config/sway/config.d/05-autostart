@@ -33,9 +33,4 @@ exec_always {
 
 # exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
 
-exec swayidle -w \
-    timeout 295 'swaymsg output * dpms off' \
-    timeout 300 'sessionctl lock' \
-    resume 'swaymsg output * dpms on' \
-    before-sleep 'playerctl pause' \
-    before-sleep 'sessionctl instant_lock'
+exec_always sessionctl idle
