@@ -48,10 +48,6 @@ mkdir -p "$(Rscript -e 'cat(Sys.getenv("R_LIBS_USER"))')"
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
-# No /.Xauthority if GDM isn't used.
-pgrep -x gdm || pgrep -x gdm3 ||
-export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This will break some DMs.
-
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 # This will break some apps that hard-code ~/.gnupg
@@ -62,7 +58,6 @@ export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 # set PATH so it includes user's private bin
 [ -d "$HOME/.local/bin" ] && appendpath "$HOME/.local/bin"
-[ -d "$HOME/.local/bin/wm-scripts" ] && appendpath "$HOME/.local/bin/wm-scripts"
 # appendpath "/var/lib/flatpak/exports/bin"
 unset appendpath
 
@@ -72,9 +67,7 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
 # export SUDO_ASKPASS="dmenupass"
-export EDITOR="code"
-export TERMINAL="alacritty"
-export BROWSER="firefox"
+
 
 # Needed with no display manager.
 [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
@@ -85,4 +78,4 @@ export BROWSER="firefox"
 # 	i3confmerge
 # 	exec startx /usr/bin/i3
 # [ -f /usr/bin/sway ] && [ ! $(pgrep -x sway) ] &&
-# 	sway --unsupported-gpu
+# 	exec /usr/local/bin/sway-ptinopedila
