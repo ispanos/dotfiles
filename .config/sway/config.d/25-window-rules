@@ -12,7 +12,10 @@ for_window  [class="Skype"]                 floating enable
 
 for_window  [app_id="org.gnome.Calculator"]      floating enable
 
-for_window [app_id="pavucontrol"] floating enable
-for_window [app_id="pavucontrol"] resize set 1078 800
-for_window [app_id="pavucontrol"] move position center
-for_window [app_id="pavucontrol"] border 1px
+for_window [app_id="pavucontrol"] floating enable, resize set 1078 800, move position center, border 1px
+
+# Zoom
+for_window [class="zoom"] border none, floating enable
+for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
+for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
