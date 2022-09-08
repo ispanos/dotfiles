@@ -1,27 +1,44 @@
 #!/bin/bash
 
-[ ! -d "$HOME/Pictures/Screenshots" ] && mkdir -p "$HOME/Pictures/Screenshots"
-[ -z "$new_shot" ] &&
-new_shot="$HOME/Pictures/Screenshots/$(date '+%Y-%m-%d %H-%-M-%S').png"
+echo "$0 $@" | systemd-cat -t "SCREENSHOT"
 
-if [[ $(pgrep -x i3) ]]; then
-    if [[ "$1" == window ]]; then
-        maim -i $(xdotool getactivewindow) "$new_shot"
-    elif [[ "$1" == area ]]; then
-        maim -s "$new_shot"
-    elif [[ "$1" == areaclipboard ]]; then
-        import png:- | xclip -selection c -t image/png
-    else
-        #maim -m 1 "$new_shot"
-        maim "$new_shot"
-    fi
 
-elif [[ $(pgrep -x sway) ]]; then
-    if [[ "$1" == window ]]; then
-       grim -g "$(slurp)" "$new_shot"
-    elif [[ "$1" == area ]]; then
-        grim -g "$(slurp)" "$new_shot"
-    else
-       grim "$new_shot"
-    fi
-fi
+SAVE_DIR="$(xdg-user-dir PICTURES)/Screenshots"
+[ ! -d "$SAVE_DIR" ] && mkdir -p "$SAVE_DIR"
+OF="$SAVE_DIR/Screenshot from $(date '+%Y-%m-%d %H-%-M-%S').png"
+
+sway_screenshot() {
+
+    case "$1" in
+    window)
+        grim -g "$(swaymsg -t get_tree |\
+            jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" - |
+            tee "$OF" | wl-copy
+    ;;
+    area)
+        grim -g "$(slurp)" "$OF" - |
+            tee "$OF" | wl-copy
+    ;;
+    monitor)
+        grim -o "$(swaymsg -t get_outputs |
+            jq -r '.[] | select(.focused) | .name')" - |
+            tee "$OF" | wl-copy
+    ;;
+    areaclipboard)
+        grim -g "$(slurp)" - | wl-copy
+    ;;
+    *)
+        grim "$OF"
+    ;;
+esac
+}
+
+
+case "$XDG_CURRENT_DESKTOP" in
+    sway)
+        sway_screenshot "$1"
+    ;;
+    *)
+        exit 1
+    ;;
+esac
