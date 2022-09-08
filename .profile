@@ -3,20 +3,10 @@
 [ -f "/usr/local/share/ptinopedila/declutter.sh" ] &&
 source "/usr/local/share/ptinopedila/declutter.sh"
 
-# Append our default paths
-appendpath () {
-	case ":$PATH:" in
-		*:"$1":*)
-			;;
-		*)
-			PATH="${PATH:+$PATH:}$1"
-	esac
-}
-
 # set PATH so it includes user's private bin
-[ -d "$HOME/.local/bin" ] && appendpath "$HOME/.local/bin"
-# appendpath "/var/lib/flatpak/exports/bin"
-unset appendpath
+PATH=$PATH:~/.local/bin
+
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
 # Gnome Keyring
 # https://wiki.archlinux.org/index.php/GNOME/Keyring#PAM_method
