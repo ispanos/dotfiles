@@ -49,7 +49,7 @@ sway_sessionctl() {
 
 case "$XDG_CURRENT_DESKTOP" in
     sway)
-        sway_screenshot "$1"
+        sway_sessionctl "$1"
     ;;
     *)
         exit 1
