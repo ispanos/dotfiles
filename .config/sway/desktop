@@ -12,3 +12,5 @@ input * xkb_numlock enabled
 
 
 workspace $ws1 output $LG
+
+# gsettings set org.blueman.plugins.powermanager auto-power-on false
