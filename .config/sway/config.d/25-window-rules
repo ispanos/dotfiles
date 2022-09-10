@@ -19,3 +19,7 @@ for_window [class="zoom"] border none, floating enable
 for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
 for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
+
+
+for_window  [app_id="seahorse-tool"]      floating enable
+for_window  [app_id="gcr-prompter"]      floating enable
