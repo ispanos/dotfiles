@@ -21,5 +21,6 @@ for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_si
 for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
 
-for_window  [app_id="seahorse-tool"]      floating enable
-for_window  [app_id="gcr-prompter"]      floating enable
+for_window  [app_id="seahorse-tool"]    floating enable
+for_window  [app_id="file-roller"]      floating enable
+for_window  [app_id="gcr-prompter"]     floating enable
