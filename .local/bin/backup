@@ -130,6 +130,7 @@ gon_backup() {
         ;;
         
         *)
+            printf "Available arguments small|big|full "
             printf "Nothing was/will be backed up\n\n"
             exit
         ;;
