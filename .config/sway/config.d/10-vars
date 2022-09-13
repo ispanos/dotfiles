@@ -9,7 +9,8 @@ set $editor $EDITOR
 set $text           gnome-text-editor
 set $fm         	nautilus -w || pcmanfm || nautilus -w
 set $calc       	"gnome-calculator || galculator || org.gnome.Calculator"
-set $calendar       gnome-calendar
+# set $calendar       gnome-calendar
+set $calendar "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -calendar"
 
 # No wob yet
 set $WOBSOCK /dev/null
