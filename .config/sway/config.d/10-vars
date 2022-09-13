@@ -37,6 +37,9 @@ set $wmlauncher     wofi --show=drun --allow-images
 
 set $clipboardselect clipman pick --tool="wofi" --max-items=30
 
+set $texting "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=signal-desktop --file-forwarding org.signal.Signal @@u %U @@"
+
+
 set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
     bindsym --to-code {

@@ -162,6 +162,8 @@ bindsym {
 	XF86PowerOff                    exec sessionctl suspend
 }
 
+bindsym XF86NotificationCenter 		exec $texting
+
 #
 # Scratchpad:
 #
