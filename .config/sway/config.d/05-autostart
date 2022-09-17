@@ -23,13 +23,14 @@ exec {
     dropbox start -i
     /usr/libexec/xdg-desktop-portal
     wlsunset -l 38 -L 24
-    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
+
 }
 
 
 exec_always {
     setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
     pkill wl-paste; wl-paste -t text --watch clipman store --no-persist
+    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
 }
 
 # exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
