@@ -15,7 +15,8 @@ exec systemd-inhibit --what=handle-power-key sleep infinity
 
 exec {
     polkit_startup
-    dunst
+    # dunst
+    swaync
     nm-applet --indicator
     blueman-applet
     xsettingsd

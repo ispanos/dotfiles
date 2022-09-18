@@ -164,6 +164,9 @@ bindsym {
 
 bindsym XF86NotificationCenter 		exec $texting
 
+# Toggle control center
+bindsym --to-code $mod+Shift+n 		exec $notifications
+
 #
 # Scratchpad:
 #

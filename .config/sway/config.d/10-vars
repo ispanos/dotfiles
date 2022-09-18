@@ -26,6 +26,7 @@ set $mediaprev  	playerctl previous 	 && pkill -RTMIN+10 i3blocks
 set $audiosettings  pavucontrol
 set $Blue_reset     pkexec systemctl restart bluetooth
 
+set $notifications swaync-client -t -sw
 
 set $brightnessup   brightnessctl s +5%
 set $brightnessdown brightnessctl s 5%-
