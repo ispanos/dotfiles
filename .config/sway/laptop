@@ -15,3 +15,5 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 # for Touchpad gestures
 # exec libinput-gestures-setup start
+
+exec log_bat
