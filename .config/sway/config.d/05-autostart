@@ -24,7 +24,6 @@ exec {
     dropbox start -i
     /usr/libexec/xdg-desktop-portal
     wlsunset -l 38 -L 24
-
 }
 
 
