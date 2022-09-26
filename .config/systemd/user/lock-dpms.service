@@ -1,0 +1,14 @@
+[Unit]
+Description=Lock idle helper service
+BindsTo=lock.target
+After=lock.target
+# RefuseManualStart=yes
+# RefuseManualStop=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=%h/.local/bin/wm-scripts/sessionctl lock-idle
+
+[Install]
+WantedBy=lock.target
