@@ -5,7 +5,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/swaylock -f -c %h/.config/swaylock/config
+ExecStart=/usr/bin/swaylock -c %h/.config/swaylock/config
 
 [Install]
 WantedBy=lock.target

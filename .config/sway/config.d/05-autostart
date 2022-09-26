@@ -36,4 +36,4 @@ exec_always {
 # exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
 
 # exec_always sessionctl idle
-exec_always systemctl --user restart wds-session.target
+exec_always systemctl --user restart sway.target

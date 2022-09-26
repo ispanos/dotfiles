@@ -5,15 +5,16 @@ args=$*
 echo "$0 $args" | systemd-cat -t "SESSIONCTL"
 
 sessionctl_idle() {
+    killall swayidle
     /usr/bin/swayidle -w \
-            timeout 295 'sessionctl lock-session' \
-            timeout 300 'swaymsg "output * dpms off"' \
-            timeout 600 'systemctl suspend' \
-            resume  'swaymsg "output * dpms on"' \
-            after-resume  'clamshell; swaymsg "output * dpms on"' \
-            before-sleep 'sessionctl lock-session' \
-            lock 'systemctl --user start lock.target' \
-            unlock 'pkill swaylock -f'
+        timeout 295 'sessionctl lock-session' \
+        timeout 300 'swaymsg "output * dpms off"' \
+        resume  'swaymsg "output * dpms on"' \
+        timeout 600 'systemctl suspend' \
+        after-resume  'clamshell' \
+        before-sleep 'sessionctl lock-session' \
+        lock 'systemctl --user start lock.target' \
+        unlock 'systemctl --user stop lock.target'
 }
 
 
