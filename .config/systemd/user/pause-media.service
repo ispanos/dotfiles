@@ -1,0 +1,11 @@
+[Unit]
+PartOf=lock.target
+BindsTo=lock.target
+After=lock.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/playerctl pause
+
+[Install]
+WantedBy=lock.target

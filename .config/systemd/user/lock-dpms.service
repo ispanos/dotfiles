@@ -1,14 +1,12 @@
 [Unit]
-Description=Lock idle helper service
+Description=Service that keeps monitors off when session is locked
+PartOf=lock.target
 BindsTo=lock.target
-After=lock.target
 # RefuseManualStart=yes
 # RefuseManualStop=yes
 
 [Service]
-Type=oneshot
-RemainAfterExit=no
-ExecStart=%h/.local/bin/wm-scripts/sessionctl lock-idle
+ExecStart=/usr/bin/swayidle -w timeout 5 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 [Install]
 WantedBy=lock.target

@@ -12,14 +12,8 @@ sessionctl_idle() {
             resume  'swaymsg "output * dpms on"' \
             after-resume  'clamshell; swaymsg "output * dpms on"' \
             before-sleep 'sessionctl lock-session' \
-            lock 'playerctl pause; swaylock -f' \
+            lock 'systemctl --user start lock.target' \
             unlock 'pkill swaylock -f'
-}
-
-lock_idle() {
-    swayidle \
-        timeout 5 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"'
 }
 
 
@@ -31,9 +25,6 @@ sway_sessionctl() {
         lock|lock-session)
             loginctl lock-session
             ;;
-        lock-idle)
-            lock_idle
-        ;;
         logout)
             swaymsg exit && exit
             ;;
