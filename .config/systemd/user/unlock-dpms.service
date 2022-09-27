@@ -1,7 +1,5 @@
 [Unit]
 PartOf=unlock.target
-BindsTo=unlock.target
-After=unlock.target
 
 [Service]
 Type=oneshot

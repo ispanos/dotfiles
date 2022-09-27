@@ -8,7 +8,7 @@ RefuseManualStop=yes
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStop=/bin/systemctl --user --no-block start unlock.target
+ExecStop=/usr/bin/systemctl --user --no-block start unlock.target
 
 [Install]
 WantedBy=lock.target

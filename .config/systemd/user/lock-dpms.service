@@ -1,12 +1,12 @@
 [Unit]
 Description=Service that keeps monitors off when session is locked
-PartOf=graphical-session.target
-# PartOf=lock.target
+PartOf=lock.target
 # BindsTo=lock.target
 # RefuseManualStart=yes
 # RefuseManualStop=yes
 
 [Service]
+Type=oneshot
 ExecStart=/usr/bin/swayidle timeout 5 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 [Install]

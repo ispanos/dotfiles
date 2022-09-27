@@ -1,11 +1,16 @@
 [Unit]
-Description=Locking script with idle manager for Wayland
+Description=Locking script for Wayland
 Documentation=man:swayidle(1)
-PartOf=graphical-session.target
+PartOf=lock.target
+RefuseManualStop=yes
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/swaylock -c %h/.config/swaylock/config
+Restart=on-failure
+RestartSec=2
+
 
 [Install]
 WantedBy=lock.target
+WantedBy=sleep.target

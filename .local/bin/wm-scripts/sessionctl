@@ -7,12 +7,12 @@ echo "$0 $args" | systemd-cat -t "SESSIONCTL"
 sessionctl_idle() {
     killall swayidle
     /usr/bin/swayidle -w \
-        timeout 295 'sessionctl lock-session' \
+        timeout 295 'loginctl lock-session' \
         timeout 300 'swaymsg "output * dpms off"' \
         resume  'swaymsg "output * dpms on"' \
         timeout 600 'systemctl suspend' \
-        after-resume  'clamshell' \
-        before-sleep 'sessionctl lock-session' \
+        before-sleep 'loginctl lock-session' \
+        after-resume  'sleep 2 && clamshell' \
         lock 'systemctl --user start lock.target' \
         unlock 'systemctl --user stop lock.target'
 }
