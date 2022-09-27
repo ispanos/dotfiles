@@ -1,9 +1,0 @@
-[Unit]
-PartOf=unlock.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/systemctl --user stop lock-dpms.service
-
-[Install]
-WantedBy=unlock.target
