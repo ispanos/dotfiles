@@ -2,11 +2,31 @@
 
 # Displays
 
-set $laptop eDP-1 
+set $laptop eDP-1
+
 set $laptopHDMI HDMI-A-1
 
-output $laptop pos 0 1080 res 1920x1080
-output $laptopHDMI pos 0 0 res 1920x1080
+set $laptopTB1 DP-3
+set $laptopTB2 DP-2
+
+output $laptopTB1 mode 1920x1080@60Hz pos 1080 490
+output $laptopTB2 mode 1920x1080@60Hz pos 1080 490
+output $laptopHDMI mode 1920x1080@60Hz pos 0 0 transform 90
+output $laptop mode 1920x1080@60Hz pos 1080 1570
+
+
+# Dual monitor setup - HDMI - type - c adaptor
+
+# output $laptop pos 0 1080 res 1920x1080
+# output $laptopTB1 pos 0 0 res 1920x1080
+# output $laptopTB2 pos 0 0 res 1920x1080
+
+
+
+# HDMI straight to LG monitor (dual mon-setup)
+
+# output $laptopHDMI pos 0 0 res 1920x1080
+# output $laptop pos 0 1080 res 1920x1080
 
 exec_always clamshell
 
