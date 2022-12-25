@@ -28,9 +28,9 @@ smart_borders on
 set $gnome-schema org.gnome.desktop.interface
 
 exec_always {
+    gsettings set $gnome-schema cursor-theme "Adwaita"
     gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
     gsettings set $gnome-schema icon-theme ''Adwaita-dark'
-    gsettings set $gnome-schema cursor-theme 'Adwaita-dark'
     # gsettings set $gnome-schema font-name 'Your font name'
 }
 
@@ -39,7 +39,6 @@ exec_always {
     gsettings set org.gnome.desktop.sound event-sounds false
     gsettings set org.gnome.desktop.sound allow-volume-above-100-percent false
 }
-
 
 client.focused          #88c0d0 #434c5e #eceff4 #8fbcbb   #88c0d0
 client.focused_inactive #88c0d0 #2e3440 #d8dee9 #4c566a   #4c566a

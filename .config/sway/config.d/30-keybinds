@@ -140,6 +140,7 @@ bindsym --to-code {
 
 # Media player controls
 bindsym {
+	Shift+XF86AudioMute             exec $mediaplay
 	XF86AudioPlay                   exec $mediaplay
 	XF86AudioNext                   exec $medianext
 	XF86AudioPrev                   exec $mediaprev

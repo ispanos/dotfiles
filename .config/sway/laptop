@@ -11,8 +11,14 @@ set $laptopTB2 DP-2
 
 output $laptopTB1 mode 1920x1080@60Hz pos 1080 490
 output $laptopTB2 mode 1920x1080@60Hz pos 1080 490
-output $laptopHDMI mode 1920x1080@60Hz pos 0 0 transform 90
+# output $laptopHDMI mode 1920x1080@60Hz pos 0 0 transform 90
 output $laptop mode 1920x1080@60Hz pos 1080 1570
+
+
+output $laptopTB1 mode 1920x1080@60Hz pos 1920 490
+output $laptopTB2 mode 1920x1080@60Hz pos 1920 490
+output $laptopHDMI mode 1920x1080@60Hz pos 0 490
+
 
 
 # Dual monitor setup - HDMI - type - c adaptor
