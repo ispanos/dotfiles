@@ -9,30 +9,31 @@ set $laptopHDMI HDMI-A-1
 set $laptopTB1 DP-3
 set $laptopTB2 DP-2
 
-output $laptopTB1 mode 1920x1080@60Hz pos 1080 490
-output $laptopTB2 mode 1920x1080@60Hz pos 1080 490
-# output $laptopHDMI mode 1920x1080@60Hz pos 0 0 transform 90
-output $laptop mode 1920x1080@60Hz pos 1080 1570
+# 3-monitors
+# vert/hor - horizontal
+#            horizontal
 
+# horizontal
+# set $topleft  mode 1920x1080@60Hz pos 0 490 
 
-output $laptopTB1 mode 1920x1080@60Hz pos 1920 490
-output $laptopTB2 mode 1920x1080@60Hz pos 1920 490
-output $laptopHDMI mode 1920x1080@60Hz pos 0 490
+# vertical
+set $topleft  mode 1920x1080@60Hz pos 0 112 transform 90
 
+set $topright mode 1920x1080@60Hz pos 1080 490
+set $botright mode 1920x1080@60Hz pos 1080 1570
 
+output $laptopTB1 $topleft
+output $laptopTB2 $topleft
+output $laptopHDMI $topright
+output $laptop $botright
 
-# Dual monitor setup - HDMI - type - c adaptor
+# 2-monitors
+# HDMI
+# Laptop
 
-# output $laptop pos 0 1080 res 1920x1080
-# output $laptopTB1 pos 0 0 res 1920x1080
-# output $laptopTB2 pos 0 0 res 1920x1080
+#output $laptopHDMI pos 0 0 res 1920x1080
+#output $laptop pos 0 1080 res 1920x1080
 
-
-
-# HDMI straight to LG monitor (dual mon-setup)
-
-# output $laptopHDMI pos 0 0 res 1920x1080
-# output $laptop pos 0 1080 res 1920x1080
 
 exec_always clamshell
 
@@ -43,3 +44,4 @@ bindswitch --reload --locked lid:off output $laptop enable
 # exec libinput-gestures-setup start
 
 exec log_bat
+exec_always setbg "/home/yiannis/Pictures/Wallpapers/tardis.jpg"

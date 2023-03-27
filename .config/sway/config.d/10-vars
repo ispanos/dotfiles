@@ -39,7 +39,7 @@ set $wmrestart 	    reload
 
 set $alt_tab        sway_alt_tab
 
-set $wmlauncher     wofi --show=drun --allow-images
+set $wmlauncher     wofi -i --show=drun --allow-images
 
 set $clipboardselect clipman pick --tool="wofi" --max-items=30
 

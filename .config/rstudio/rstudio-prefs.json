@@ -4,5 +4,6 @@
     "svn_exe_path": "~/.local/bin/svn",
     "posix_terminal_shell": "bash",
     "global_theme": "alternate",
-    "editor_theme": "Cobalt"
+    "editor_theme": "Cobalt",
+    "source_with_echo": true
 }
