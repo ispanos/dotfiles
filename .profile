@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-[ -f "/usr/local/share/ptinopedila/declutter.sh" ] &&
-source "/usr/local/share/ptinopedila/declutter.sh"
+[ -f "~/.config/declutter.sh" ] &&
+source "~/.config/declutter.sh"
 
 # set PATH so it includes user's private bin
 PATH=$PATH:~/.local/bin
