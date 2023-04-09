@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-[ -f "~/.config/declutter.sh" ] &&
-source "~/.config/declutter.sh"
+# [ -f ~/.config/declutter.sh ] &&
+source ~/.config/declutter.sh
 
 # set PATH so it includes user's private bin
 PATH=$PATH:~/.local/bin
@@ -14,7 +14,7 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
 # Needed with no display manager.
-[[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
+# [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] || return
 
 # No display manager:
 

@@ -38,6 +38,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 # R
 export R_LIBS_USER=${XDG_DATA_HOME:-$HOME/.local/share}/R/%p-library/%v
+[[ $(command -v Rscript) ]] &&
 mkdir -p "$(Rscript -e 'cat(Sys.getenv("R_LIBS_USER"))')"
 # export R_PROFILE_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/rprofile
 # export R_ENVIRON_USER=${XDG_CONFIG_HOME:-$HOME/.config}/R/renviron
@@ -49,7 +50,7 @@ export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 # This will break some apps that hard-code ~/.gnupg
-export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+# export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 [ -f "$HOME/.steampid" ] && rm "$HOME/.steampid"
 [ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"

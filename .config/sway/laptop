@@ -6,7 +6,7 @@ set $laptop eDP-1
 
 set $laptopHDMI HDMI-A-1
 
-set $laptopTB1 DP-3
+# set $laptopTB1 DP-3
 set $laptopTB2 DP-2
 
 # 3-monitors
@@ -22,7 +22,7 @@ set $topleft  mode 1920x1080@60Hz pos 0 0 transform 90
 set $topright mode 1920x1080@60Hz pos 1080 159
 set $botright mode 1920x1080@60Hz pos 1080 1239
 
-output $laptopTB1 $topleft
+# output $laptopTB1 $topleft
 output $laptopTB2 $topleft
 output $laptopHDMI $topright
 output $laptop $botright
