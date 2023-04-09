@@ -12,8 +12,6 @@ GON_BASIC_BACKUP=(
     "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
     "$HOME/.mozilla"
     "$HOME/.ssh"
-    "$HOME/.stata14"
-    "$HOME/.matlab"
 )
 
 
@@ -27,6 +25,8 @@ work_settings=(
     "$HOME/.local/MATLAB"
     "$HOME/.local/stata14"
     "$HOME/.local/stata-png-fix"
+    "$HOME/.stata14"
+    "$HOME/.matlab"
 )
 
 
