@@ -28,9 +28,9 @@ exec {
 
 exec_always {
     wlsunset -l 38 -L 24
-    setbg "/usr/share/backgrounds/gnome/libadwaita-d.jpg"
+    setbg "/home/yiannis/Pictures/Wallpapers/tardis.jpg"
     pkill wl-paste; wl-paste -t text --watch clipman store --no-persist
-    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
+    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
 }
 
 # exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"

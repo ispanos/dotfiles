@@ -50,7 +50,7 @@ export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 
 # This will break some apps that hard-code ~/.gnupg
-# export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
 [ -f "$HOME/.steampid" ] && rm "$HOME/.steampid"
 [ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"
