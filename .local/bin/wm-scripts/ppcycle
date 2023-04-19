@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CURRENT_PROFILE=$(powerprofilesctl get)
+if [[ "$CURRENT_PROFILE" == "performance" ]]; then
+    powerprofilesctl set balanced
+elif [[ "$CURRENT_PROFILE" == "balanced" ]]; then
+    powerprofilesctl set power-saver
+else
+    powerprofilesctl set performance
+fi
