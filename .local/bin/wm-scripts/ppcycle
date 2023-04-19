@@ -1,10 +1,19 @@
 #!/bin/bash
 
+notify() {
+	notify-send -t 1000 --hint=int:transient:1 "$(basename "$0")" "$@"
+}
+
 CURRENT_PROFILE=$(powerprofilesctl get)
 if [[ "$CURRENT_PROFILE" == "performance" ]]; then
     powerprofilesctl set balanced
+    ACTIVE_PROFILE="Balanced"
 elif [[ "$CURRENT_PROFILE" == "balanced" ]]; then
     powerprofilesctl set power-saver
+    ACTIVE_PROFILE="Power Saver"
 else
     powerprofilesctl set performance
+    ACTIVE_PROFILE="Performance"
 fi
+
+notify "Active Profile: $ACTIVE_PROFILE"
