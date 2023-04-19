@@ -30,7 +30,9 @@ work_settings=(
 )
 
 
-GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}" "${work_settings[@]}")
+GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}")
+
+# GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}" "${work_settings[@]}")
 
 
 list_mountpoints() {
@@ -157,7 +159,7 @@ main() {
     read -r
 
     case $(hostname) in
-        gon)
+        gon|p14s)
             gon_backup "$1" "$destination/$(hostname)_backup"
         ;;
         *)
