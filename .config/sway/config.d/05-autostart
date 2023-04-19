@@ -15,7 +15,6 @@ exec systemd-inhibit --what=handle-power-key sleep infinity
 
 exec {
     polkit_startup
-    # dunst
     swaync
     nm-applet --indicator
     blueman-applet
@@ -23,11 +22,10 @@ exec {
     autotiling
     dropbox start -i
     /usr/libexec/xdg-desktop-portal
+    wlsunset -l 38 -L 24
 }
 
-
 exec_always {
-    wlsunset -l 38 -L 24
     setbg "/home/yiannis/Pictures/Wallpapers/tardis.jpg"
     pkill wl-paste; wl-paste -t text --watch clipman store --no-persist
     # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
