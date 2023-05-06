@@ -1,0 +1,71 @@
+#!/bin/bash
+
+DIR_OUT='output'
+
+function av1_encode() {
+
+    if [[ -z $1 ]]; then
+        echo "Please specify a video file"
+        return 1
+    fi
+
+    mkdir -p "$DIR_OUT"
+
+    input_file="$1"
+    output_file="${input_file%.*}-av1-51.mkv"
+
+    [[ -f "$DIR_OUT/$output_file" ]] && echo  $output_file already exists  && return
+
+    ffmpeg -i "$input_file" \
+             -c:v libaom-av1 \
+             -b:v 0 -crf 51 \
+             -strict experimental \
+             -cpu-used 4 \
+             -threads 8 \
+             -tile-columns 4 \
+             -frame-parallel 1 \
+             -pix_fmt yuv420p \
+             -speed 4 \
+             -row-mt 1 \
+             -pass 1 \
+             -f null /dev/null \
+    &&
+    ffmpeg -i "$input_file" \
+            -c:v libaom-av1 \
+            -b:v 0 \
+            -crf 51 \
+            -strict experimental \
+            -cpu-used 4 \
+            -threads 8 \
+            -tile-columns 4 \
+            -frame-parallel 1 \
+            -pix_fmt yuv420p \
+            -speed 4 \
+            -row-mt 1 \
+            -pass 2 "$DIR_OUT/$output_file"
+
+    if [[ $? -eq 0 ]]; then
+        echo "File successfully encoded to $output_file"
+    else
+        echo $output_file error!
+        rm -f "$output_file"
+    fi
+
+    rm -f "ffmpeg2pass-0.log"
+}
+
+
+case "$1" in
+    all)
+        for file in *; do
+            if [[ -f "$file" ]]; then
+                av1_encode "$file"
+            fi
+        done
+        ;;
+    *)
+        if [[ -f "$1" ]]; then
+            av1_encode "$1"
+        fi
+        ;;
+esac
