@@ -1,3 +1,4 @@
 #!/bin/bash
 
-wofi -w 2 -i --show=drun --allow-images
+killall wofi;
+wofi -w 1 -W 400 -H 200 -i --show=drun --allow-images
