@@ -1,0 +1,3 @@
+#!/bin/bash
+
+wofi -w 2 -i --show=drun --allow-images
