@@ -41,6 +41,9 @@ export HISTSIZE=9999
 export SAVEHIST=9999
 setopt appendhistory
 
+
+## KEYS START
+
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
@@ -72,18 +75,20 @@ key[Shift-Tab]="${terminfo[kcbt]}"
 [[ -n "${key[PageDown]}"  ]] && bindkey -- "${key[PageDown]}"  end-of-buffer-or-history
 [[ -n "${key[Shift-Tab]}" ]] && bindkey -- "${key[Shift-Tab]}" reverse-menu-complete
 
-# # Finally, make sure the terminal is in application mode, when zle is
-# # active. Only then are the values from $terminfo valid.
-# if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-# 	autoload -Uz add-zle-hook-widget
-# 	function zle_application_mode_start { echoti smkx }
-# 	function zle_application_mode_stop { echoti rmkx }
-# 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-# 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
-# fi
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+	autoload -Uz add-zle-hook-widget
+	function zle_application_mode_start { echoti smkx }
+	function zle_application_mode_stop { echoti rmkx }
+	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
 
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
+
+## KEYS END
 
 [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] &&
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null ||
@@ -93,3 +98,19 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null ||
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/yiannis/.local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/yiannis/.local/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/home/yiannis/.local/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/yiannis/.local/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
