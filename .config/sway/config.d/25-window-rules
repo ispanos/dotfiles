@@ -26,3 +26,5 @@ for_window  [app_id="file-roller"]      floating enable
 for_window  [app_id="gcr-prompter"]     floating enable
 
 for_window [class="Spotify"] resize set 1500 900, floating enable
+
+for_window  [app_id="wdisplays"]     floating enable, resize set 1078 800, move position center, border 1px

@@ -168,6 +168,10 @@ bindsym XF86NotificationCenter 		exec $texting
 # Toggle control center
 bindsym --to-code $mod+Shift+n 		exec $notifications
 
+
+bindsym XF86Display		         	exec $displays
+
+
 #
 # Scratchpad:
 #
@@ -249,7 +253,6 @@ bindsym --to-code $mod+Shift+n 		exec $notifications
 # bindsym XF86MonBrightnessDown         exec
 # bindsym XF86MonBrightnessUp           exec
 # bindsym XF86AudioMedia                exec
-# bindsym XF86Display                   exec
 # bindsym XF86KbdLightOnOff             exec
 # bindsym XF86KbdBrightnessDown         exec
 # bindsym XF86KbdBrightnessUp           exec

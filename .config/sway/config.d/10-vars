@@ -60,3 +60,4 @@ mode "$Pause-break" {
     bindsym Escape  mode "default"
 }
 
+set $displays wdisplays
