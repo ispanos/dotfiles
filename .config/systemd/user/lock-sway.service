@@ -7,9 +7,8 @@ RefuseManualStop=yes
 [Service]
 Type=simple
 ExecStart=/usr/bin/swaylock -c %h/.config/swaylock/config
-Restart=on-failure
-RestartSec=2
-
+KillMode=mixed
+KillSignal=SIGUSR1
 
 [Install]
 WantedBy=lock.target
