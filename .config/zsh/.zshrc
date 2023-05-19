@@ -25,13 +25,13 @@ echo -ne '\e[5 q'
 preexec() { echo -ne '\e[5 q' ;}
 
 setopt PROMPT_SUBST
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c%{$fg[red]%}]%{$reset_color%}$%b "
+
 if [ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]; then
 	source $HOME/.local/bin/helpers/git-prompt.sh
-	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c\$(__git_ps1 \" (%s)\") %{$fg[red]%}]%{$reset_color%}$%b "
-else
-	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c %{$fg[red]%}]%{$reset_color%}$%b "
+	git_prmpt=\$(__git_ps1 \"(%s) \")
+	PS1="$git_prmpt$PS1"
 fi
-
 
 # History
 export HISTFILE=$ZDOTDIR/history
@@ -74,6 +74,10 @@ key[Shift-Tab]="${terminfo[kcbt]}"
 [[ -n "${key[PageUp]}"    ]] && bindkey -- "${key[PageUp]}"    beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}"  ]] && bindkey -- "${key[PageDown]}"  end-of-buffer-or-history
 [[ -n "${key[Shift-Tab]}" ]] && bindkey -- "${key[Shift-Tab]}" reverse-menu-complete
+
+# TTY sends different key codes. Translate them to regular.
+bindkey -s '^[[1~' '^[[H'  # home
+bindkey -s '^[[4~' '^[[F'  # end
 
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
