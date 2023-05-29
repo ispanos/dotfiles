@@ -2,7 +2,7 @@
 Description=Services which should run when session is locked
 Documentation=man:systemd.special(7)
 Requires=lock-helper.service
-BindsTo=graphical-session.target sway.service
+BindsTo=graphical-session.target sway-idle.service
 Conflicts=unlock.target
 After=graphical-session.target
 StopWhenUnneeded=yes
