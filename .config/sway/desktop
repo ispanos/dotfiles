@@ -11,6 +11,6 @@ output $LG pos 1080 480 res 1920x1080
 input * xkb_numlock enabled
 
 
-workspace $ws1 output $LG
+workspace number 1 output $LG
 
 # gsettings set org.blueman.plugins.powermanager auto-power-on false
