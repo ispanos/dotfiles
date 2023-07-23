@@ -1,13 +1,27 @@
 #!/bin/bash
 
-apt_path="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
-pacman_path="/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+exec "/usr/libexec/polkit-gnome-authentication-agent-1"
 
 
-if [[ -f "$pacman_path" ]]; then
-    $pacman_path
-elif [[ -f "$apt_path" ]]; then
-    $apt_path
-else
-    lxpolkit
-fi
+# apt_path="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
+# pacman_path="/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+# if [[ -f "$pacman_path" ]]; then
+#     $pacman_path
+# elif [[ -f "$apt_path" ]]; then
+#     $apt_path
+# else
+#     lxpolkit
+# fi
+
+# if [[ -f "/usr/libexec/polkit-gnome-authentication-agent-1" ]]; then
+#     /usr/libexec/polkit-gnome-authentication-agent-1
+# else
+#     if [[ -f "$pacman_path" ]]; then
+#         $pacman_path
+#     elif [[ -f "$apt_path" ]]; then
+#         $apt_path
+#     else
+#         lxpolkit
+#     fi
+# fi
