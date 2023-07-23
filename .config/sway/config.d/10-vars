@@ -17,8 +17,9 @@ set $WOBSOCK /dev/null
 
 # set $volup      	pamixer -ui 5 && pamixer --get-volume > $WOBSOCK
 # set $voldown    	pamixer -ud 5 && pamixer --get-volume > $WOBSOCK
-set $volmute        pamixer --toggle-mute && ( [ "$(pamixer --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
-set $micmute        pamixer --toggle-mute --default-source 
+# set $volmute        pamixer --toggle-mute && ( [ "$(pamixer --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
+set $volmute        amixer set Master toggle
+set $micmute        amixer set Capture toggle && amixer get Capture | grep '\[on\]' && notify-send "MIC switched ON" || notify-send "MIC switched OFF"
 
 set $volup          pactl set-sink-volume @DEFAULT_SINK@ +5%
 set $voldown        pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -49,12 +50,11 @@ set $texting "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=signa
 set $Pause-break  System (l)lock, (e) exit, (s) suspend, (r) reboot, (End) shutdown
 mode "$Pause-break" {
     bindsym --to-code {
-        --release e   exec sessionctl logout  , mode "default"
-        --release s   exec sessionctl suspend , mode "default"
-        --release r   exec sessionctl reboot  , mode "default"
-        --release End exec sessionctl shutdown, mode "default"
-        --release l   exec sessionctl lock    , mode "default"
-        --release d   exec sessionctl dark    , mode "default"
+        e   exec sessionctl logout  , mode "default"
+        s   exec sessionctl suspend , mode "default"
+        r   exec sessionctl reboot  , mode "default"
+        End exec sessionctl shutdown, mode "default"
+        l   exec sessionctl lock    , mode "default"
     }
     bindsym Return  mode "default"
     bindsym Escape  mode "default"
