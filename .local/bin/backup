@@ -18,6 +18,8 @@ GON_BASIC_BACKUP=(
 GON_EXTRA=(
     "$HOME/Dropbox/Backup"
     "$HOME/Dropbox/Media_Library/Music"
+    "$HOME/.var/app/org.remmina.Remmina/data/remmina"
+    "$HOME/.var/app/org.remmina.Remmina/config/remmina"
 )
 
 
@@ -97,6 +99,7 @@ filesystem_check(){
 
 _rsync() {
     sudo rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
+    # rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
 }
 
 
@@ -144,7 +147,8 @@ gon_backup() {
     printf "%s\nStarting backup to: %s\n\n" "$start_time" "$destination"
     _rsync ${data_sources_list[@]} "$destination" &&
     dconf_dump | sudo tee "$destination/dconf" >/dev/null &&
-    sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time"
+    sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time" &&
+    echo "Snapshot created"
 
     end_="$(date -u +%s)"
     convertsecs $((end_-start_))
