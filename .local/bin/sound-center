@@ -1,0 +1,19 @@
+#!/bin/bash
+
+desktop_environment="$XDG_CURRENT_DESKTOP"
+
+sound_control_command="pavucontrol"
+
+case "$desktop_environment" in
+    *GNOME*)
+        sound_control_command="gnome-control-center sound"
+        ;;
+    sway)
+        sound_control_command="pavucontrol"
+        ;;
+    *)
+        sound_control_command="pavucontrol"
+        ;;
+esac
+
+eval "$sound_control_command" &
