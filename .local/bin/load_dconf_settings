@@ -1,0 +1,11 @@
+#!/bin/bash
+
+path="$HOME/.config/dconf/dconf.ini"
+
+[[ -f "$path" ]] || { echo "File: '$path' does not exists"; exit 1; } 
+
+[[ $(command -v dconf) ]] || { echo "dconf is missing or is not in the PATH."; exit 1; } 
+
+dconf load / < ~/.config/dconf/dconf.ini
+
+echo ok
