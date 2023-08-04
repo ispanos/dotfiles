@@ -58,10 +58,10 @@ bindsym --to-code {
 
 # Screen Shots
 bindsym --to-code {
-	Print               exec screenshot
-	Shift+Print         exec screenshot window
-	ctrl+Print          exec screenshot area
-	--release ctrl+Shift+Print    exec screenshot areaclipboard
+	Print              			exec screenshot
+	$alt+Print         			exec screenshot window
+	Shift+Print        			exec screenshot area
+	--release ctrl+Shift+Print  exec screenshot areaclipboard
 }
 
 # Bleutooth
