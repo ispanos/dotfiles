@@ -72,7 +72,7 @@ main() {
 	else
 		notify "Attempting to connect device: '${device}'"
 		get_power_status || { 
-			notify "Turning on Bluethooth adapter...."M
+			notify "Turning on Bluethooth adapter...."
 			bluetoothctl power on; sleep 1; }
 		bluetoothctl -- connect ${mac_address}
 	fi
