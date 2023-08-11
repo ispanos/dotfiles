@@ -12,14 +12,14 @@ GON_BASIC_BACKUP=(
     "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
     "$HOME/.mozilla"
     "$HOME/.ssh"
+    "$HOME/.var/app/org.remmina.Remmina/data/remmina"
+    "$HOME/.var/app/org.remmina.Remmina/config/remmina"
 )
 
 
 GON_EXTRA=(
     "$HOME/Dropbox/Backup"
     "$HOME/Dropbox/Media_Library/Music"
-    "$HOME/.var/app/org.remmina.Remmina/data/remmina"
-    "$HOME/.var/app/org.remmina.Remmina/config/remmina"
 )
 
 
@@ -33,9 +33,6 @@ work_settings=(
 
 
 GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}")
-
-# GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}" "${work_settings[@]}")
-
 
 list_mountpoints() {
     lsblk -no MOUNTPOINTS
@@ -171,11 +168,11 @@ main() {
         ;;
     esac
 
-    tar \
-    --directory="$HOME/.var/app/org.mozilla.Thunderbird/" \
-    -acf \
-    "${destination}/thunderbird-$(hostname)-$(date +%F).tar.zst" \
-    .thunderbird
+    # tar \
+    # --directory="$HOME/.var/app/org.mozilla.Thunderbird/" \
+    # -acf \
+    # "${destination}/thunderbird-$(hostname)-$(date +%F).tar.zst" \
+    # .thunderbird
 
 }
 
