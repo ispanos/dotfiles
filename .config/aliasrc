@@ -15,6 +15,7 @@ alias \
 	inxi="inxi -FxxxzD"\
 	stime="/usr/bin/time -f 'Spacetime: %MK %E'"\
 	jn='jupyter notebook' \
+	reset_audio='systemctl --user restart wireplumber pipewire pipewire-pulse' \
 	reboot_uefi='systemctl reboot --firmware-setup'
 
 
