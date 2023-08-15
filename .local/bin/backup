@@ -2,7 +2,6 @@
 
 destination="$2"
 
-
 GON_BASIC_BACKUP=(
     "$HOME/Dropbox/Documents"
     "$HOME/Dropbox/Games"
@@ -16,12 +15,10 @@ GON_BASIC_BACKUP=(
     "$HOME/.var/app/org.remmina.Remmina/config/remmina"
 )
 
-
 GON_EXTRA=(
     "$HOME/Dropbox/Backup"
     "$HOME/Dropbox/Media_Library/Music"
 )
-
 
 work_settings=(
     "$HOME/.local/MATLAB"
@@ -30,7 +27,6 @@ work_settings=(
     "$HOME/.stata14"
     "$HOME/.matlab"
 )
-
 
 GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}")
 
@@ -44,21 +40,23 @@ get_mountpoint() {
     local mountpoints number
     local -i n=1
     # Sata and NVME mountpoints array
-    mountpoints=( $(list_mountpoints | grep -vE "/boot|/$|\[SWAP\]$") )
+    mountpoints=($(list_mountpoints | grep -vE "/boot|/$|\[SWAP\]$"))
     lsblk -n >&1 1>&2
     printf "\nPlease select a drive by typing the corresponding number.\n" >&1 1>&2
-    for i in "${mountpoints[@]}"; do printf "\t%s - %s\n" $n $i >&1 1>&2; ((n++)); done
+    for i in "${mountpoints[@]}"; do
+        printf "\t%s - %s\n" $n $i >&1 1>&2
+        ((n++))
+    done
     read -rep "Enter drive's number: " number
 
-    while [[ $(("$number" - 1 )) -ge "${#mountpoints[@]}" ]] || [ -z "$number" ]; do
-        echo "Number '$number' is not an available option." >&1 1>&2; unset number
+    while [[ $(("$number" - 1)) -ge "${#mountpoints[@]}" ]] || [ -z "$number" ]; do
+        echo "Number '$number' is not an available option." >&1 1>&2
+        unset number
         read -rep "Select a drive by typing the corresponding number: " number
     done
 
-    echo "${mountpoints[$(("$number" - 1 ))]}"
+    echo "${mountpoints[$(("$number" - 1))]}"
 }
-
-
 
 # ask_delete() {
 
@@ -75,8 +73,7 @@ get_mountpoint() {
 #     fi
 # }
 
-
-filesystem_check(){
+filesystem_check() {
     # 'local' must be used
     local source_dir="$1"
     local destination="$2"
@@ -93,26 +90,22 @@ filesystem_check(){
     fi
 }
 
-
 _rsync() {
     sudo rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
     # rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
 }
 
-
 convertsecs() {
-    ((h=${1}/3600))
-    ((m=(${1}%3600)/60))
-    ((s=${1}%60))
+    ((h = ${1} / 3600))
+    ((m = (${1} % 3600) / 60))
+    ((s = ${1} % 60))
     # TODO: move printf
     printf "Backup ended in %02d:%02d:%02d\n" $h $m $s
 }
 
-
-dconf_dump(){
+dconf_dump() {
     dconf dump /
 }
-
 
 gon_backup() {
 
@@ -122,18 +115,18 @@ gon_backup() {
 
     local size="$1"
     case "$size" in
-        small)
-            data_sources_list=( "${GON_BASIC_BACKUP[@]}" )
+    small)
+        data_sources_list=("${GON_BASIC_BACKUP[@]}")
         ;;
 
-        big|full)
-            data_sources_list=( "${GON_FULL_BACKUP[@]}" )
+    big | full)
+        data_sources_list=("${GON_FULL_BACKUP[@]}")
         ;;
 
-        *)
-            printf "Available arguments small|big|full "
-            printf "Nothing was/will be backed up\n\n"
-            exit
+    *)
+        printf "Available arguments small|big|full "
+        printf "Nothing was/will be backed up\n\n"
+        exit
         ;;
     esac
 
@@ -143,28 +136,31 @@ gon_backup() {
 
     printf "%s\nStarting backup to: %s\n\n" "$start_time" "$destination"
     _rsync ${data_sources_list[@]} "$destination" &&
-    dconf_dump | sudo tee "$destination/dconf" >/dev/null &&
-    sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time" &&
-    echo "Snapshot created"
+        dconf_dump | sudo tee "$destination/dconf" >/dev/null &&
+        sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time" &&
+        echo "Snapshot created"
 
     end_="$(date -u +%s)"
-    convertsecs $((end_-start_))
+    convertsecs $((end_ - start_))
 }
-
 
 # if destination not in mountpoints ask again.
 main() {
     [ -z $destination ] && destination="$(get_mountpoint)"
 
+    destination="$destination/backups"
+
     printf "Backing up '%s' to '%s' with the following argument:\n'%s'" $(hostname) $destination "$1"
     read -r
 
+    mkdir -p $destination
+
     case $(hostname) in
-        gon|p14s)
-            gon_backup "$1" "$destination/$(hostname)_backup"
+    gon | p14s)
+        gon_backup "$1" "$destination/$(hostname)_backup"
         ;;
-        *)
-            printf "Nothing was/will be backed up\n\n"
+    *)
+        printf "Nothing was/will be backed up\n\n"
         ;;
     esac
 
@@ -176,9 +172,7 @@ main() {
 
 }
 
-
 # INTERRUPTED='False'
-
 
 main "$1" "$2"
 
