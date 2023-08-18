@@ -3,10 +3,10 @@
 # [ -f ~/.config/declutter.sh ] &&
 source ~/.config/declutter.sh
 
-load_dconf_settings
-
 # set PATH so it includes user's private bin
 PATH=$PATH:~/.local/bin
+
+bash ~/.local/bin/load_dconf_settings
 
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 

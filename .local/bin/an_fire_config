@@ -26,14 +26,14 @@ for profile in $posible_profiles ; do
 		user_pref("browser.contentblocking.category", "strict");
 		user_pref("browser.newtabpage.pinned", "[
 			{\"url\":\"https://www.youtube.com/\"},
-			{\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},
+			// {\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},
 			{\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},
 			{\"url\":\"https://github.com/ispanos\",\"label\":\"github\"},
 			{\"url\":\"https://twitter.com/\",\"label\":\"twitter\"},
 			{\"url\":\"https://www.phoronix.com/scan.php?page=home\",\"label\":\"phoronix\"}
 			]");
 		user_pref("browser.protections_panel.infoMessage.seen", true);
-		user_pref("browser.startup.homepage", "file:///home/yiannis/Documents/Projects/startpage/startpage.html");
+		// user_pref("browser.startup.homepage", "file:///home/yiannis/Documents/Projects/startpage/startpage.html");
 		user_pref("browser.tabs.drawInTitlebar", true);
 		user_pref("browser.tabs.warnOnClose", false);
 		user_pref("browser.tabs.warnOnOpen", false);
