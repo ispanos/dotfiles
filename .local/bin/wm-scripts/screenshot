@@ -12,23 +12,22 @@ sway_screenshot() {
     case "$1" in
     window)
         grim -g "$(swaymsg -t get_tree |\
-            jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" - |
-            tee "$OF" | wl-copy
+            jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" - "$OF" &&
+            wl-copy < $OF
     ;;
     area)
-        grim -g "$(slurp)" "$OF" - |
-            tee "$OF" | wl-copy
+        grim -g "$(slurp)" "$OF" && wl-copy < $OF
     ;;
     monitor)
         grim -o "$(swaymsg -t get_outputs |
-            jq -r '.[] | select(.focused) | .name')" - |
-            tee "$OF" | wl-copy
+            jq -r '.[] | select(.focused) | .name')" "$OF" &&
+            wl-copy < "$OF"
     ;;
     areaclipboard)
         grim -g "$(slurp)" - | wl-copy
     ;;
     *)
-        grim "$OF"
+        grim "$OF" && wl-copy < $OF
     ;;
 esac
 }
