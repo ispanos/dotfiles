@@ -58,9 +58,10 @@ bindsym --to-code {
 
 # Screen Shots
 bindsym --to-code {
-	Print              			exec screenshot
-	$alt+Print         			exec screenshot window
-	Shift+Print        			exec screenshot area
+	Print                       exec screenshot
+	ctrl+Print                  exec screenshot monitor
+	$alt+Print                  exec screenshot window
+	Shift+Print                 exec screenshot area
 	--release ctrl+Shift+Print  exec screenshot areaclipboard
 }
 
