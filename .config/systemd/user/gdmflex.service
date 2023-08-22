@@ -7,4 +7,4 @@ ExecStart=gdmflexiserver
 
 [Install]
 WantedBy=lock.target
-WantedBy=sleep.target
+Before=sleep.target

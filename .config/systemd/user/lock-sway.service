@@ -12,4 +12,4 @@ KillSignal=SIGUSR1
 
 [Install]
 WantedBy=lock.target
-WantedBy=sleep.target
+Before=sleep.target
