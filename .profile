@@ -7,6 +7,7 @@ source ~/.config/declutter.sh
 PATH=$PATH:~/.local/bin
 
 bash ~/.local/bin/load_dconf_settings
+gsettings get org.gnome.shell enabled-extensions > "$HOME/.config/dconf/enabled-extensions"
 
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
