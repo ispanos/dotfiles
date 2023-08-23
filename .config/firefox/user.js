@@ -7,8 +7,6 @@ user_pref("browser.bookmarks.restore_default_bookmarks", false);
 user_pref("browser.bookmarks.showMobileBookmarks", true);
 user_pref("browser.contentblocking.category", "strict");
 user_pref("browser.newtabpage.pinned", "[
-{\"url\":\"https://www.youtube.com/\"},
-// {\"url\":\"https://mail.google.com/mail/u/0/#inbox\",\"label\":\"mail.google\"},
 {\"url\":\"https://www.reddit.com/\",\"label\":\"reddit\"},
 {\"url\":\"https://github.com/ispanos\",\"label\":\"github\"},
 {\"url\":\"https://twitter.com/\",\"label\":\"twitter\"},
