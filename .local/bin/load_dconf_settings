@@ -37,5 +37,8 @@ dconf load / < ~/.config/dconf/dconf.ini
 # #[org/gnome/desktop/sound]
 # #allow-volume-above-100-percent=false
 
+# Log out: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Logout "u" 0
+# Shut down: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Shutdown
+
 
 echo ok
