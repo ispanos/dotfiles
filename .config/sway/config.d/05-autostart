@@ -1,11 +1,12 @@
-# Polkit
-
 # Gnome Keyring
-# exec gnome-keyring-daemon --daemonize --start --components='gpg,pkcs11,secrets,ssh'
+# https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
+# For ssh see: https://wiki.archlinux.org/title/GNOME/Keyring#SSH_keys
 
 exec hash dbus-update-activation-environment 2>/dev/null && \
     dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
     # QT_WAYLAND_DISABLE_WINDOWDECORATION="1" QT_QPA_PLATFORM=wayland
+exec gnome-keyring-daemon --start --components='gpg,pkcs11,secrets,ssh'
+# exec gnome-keyring-daemon --daemonize --start --components='gpg,pkcs11,secrets,ssh'
 
 # Needed for Gnome apps.
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
@@ -28,10 +29,6 @@ exec {
 exec_always {
     setbg "/home/yiannis/Pictures/Wallpapers/tardis.jpg"
     pkill wl-paste; wl-paste -t text --watch clipman store --no-persist
-    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=birdtray com.ulduzsoft.Birdtray
 }
 
-# exec_always "QT_QPA_PLATFORM='offscreen' flatpak run com.ulduzsoft.Birdtray"
-
-# exec_always sessionctl idle
 exec_always systemctl --user restart sway.target sway.service
