@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export_extensions_settings() {
-    dconf dump /org/gnome/shell/extensions/$1/ #>~/.config/dconf/extensions/$1
+    dconf dump /org/gnome/shell/extensions/$1/ >~/.config/dconf/extensions/$1
 }
 
 extensions=($(/usr/bin/ls -1 ~/.config/dconf/extensions/))
