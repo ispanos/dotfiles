@@ -10,6 +10,13 @@ gsettings get org.gnome.shell enabled-extensions > "$HOME/.config/dconf/enabled-
 
 dconf load / < ~/.config/dconf/dconf.ini
 
+extensions=($(/usr/bin/ls -1 ~/.config/dconf/extensions/))
+
+for extension in ${extensions[@]}; do
+    dconf load /org/gnome/shell/extensions/$extension/ < ~/.config/dconf/extensions/$extension
+done
+
+
 # NOTES: Do not enable here!
 # Only here to remove comments from the actual config file in `.config/donf`.
 

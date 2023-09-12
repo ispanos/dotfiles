@@ -1,0 +1,10 @@
+[/]
+fixed-widths=true
+hot-sensors=['_processor_usage_', '_memory_usage_']
+include-public-ip=true
+position-in-panel=2
+show-battery=true
+show-network=true
+show-system=false
+show-voltage=false
+use-higher-precision=false

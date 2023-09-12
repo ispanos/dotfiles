@@ -1,0 +1,19 @@
+[/]
+brightness=0.0
+color=(0.0, 0.0, 0.0, 0.0)
+color-and-noise=true
+hacks-level=0
+sigma=32
+
+[dash-to-dock]
+blur=false
+
+[dash-to-panel]
+blur-original-panel=false
+
+[panel]
+blur=true
+customize=true
+sigma=1
+static-blur=false
+unblur-in-overview=false
