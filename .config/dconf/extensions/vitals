@@ -1,6 +1,6 @@
 [/]
 fixed-widths=true
-hot-sensors=['_processor_usage_', '_memory_usage_', '_temperature_thinkpad_cpu_']
+hot-sensors=['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_battery_rate_', '_battery_time_left_']
 include-public-ip=true
 position-in-panel=2
 show-battery=true
