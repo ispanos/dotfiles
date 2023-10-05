@@ -1,4 +1,5 @@
 [/]
+alphabetize=false
 fixed-widths=true
 hot-sensors=['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_battery_rate_', '_battery_time_left_']
 include-public-ip=true
@@ -7,4 +8,5 @@ show-battery=true
 show-network=true
 show-system=false
 show-voltage=false
+update-time=7
 use-higher-precision=false
