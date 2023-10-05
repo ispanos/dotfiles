@@ -3,32 +3,36 @@
 destination="$2"
 
 GON_BASIC_BACKUP=(
+    "$HOME/Desktop"
+    "$HOME/Downloads"
+    "$HOME/.mozilla"
+    "$HOME/.ssh"
+    "$HOME/.cert"
+    "$HOME/.var/app/org.remmina.Remmina/data/remmina"
+    "$HOME/.var/app/org.remmina.Remmina/config/remmina"
+    "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
     "$HOME/Dropbox/Documents"
     "$HOME/Dropbox/Games"
     "$HOME/Dropbox/Pictures"
+    "$HOME/Dropbox/Projects"
     "$HOME/Dropbox/Programs"
     "$HOME/Dropbox/Videos"
-    "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
-    "$HOME/.mozilla"
-    "$HOME/.ssh"
-    "$HOME/.var/app/org.remmina.Remmina/data/remmina"
-    "$HOME/.var/app/org.remmina.Remmina/config/remmina"
 )
 
 GON_EXTRA=(
     "$HOME/Dropbox/Backup"
-    "$HOME/Dropbox/Media_Library/Music"
+    "$HOME/Dropbox/Music"
 )
 
-work_settings=(
+WORK_SETTINGS=(
     "$HOME/.local/MATLAB"
     "$HOME/.local/stata14"
     "$HOME/.local/stata-png-fix"
-    "$HOME/.stata14"
-    "$HOME/.matlab"
+    # "$HOME/.stata14"
+    # "$HOME/.matlab"
 )
 
-GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}")
+GON_FULL_BACKUP=("${GON_BASIC_BACKUP[@]}" "${GON_EXTRA[@]}" "${WORK_SETTINGS[@]}")
 
 list_mountpoints() {
     lsblk -no MOUNTPOINTS
@@ -91,7 +95,7 @@ filesystem_check() {
 }
 
 _rsync() {
-    sudo rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
+    sudo rsync -aAXH --relative -h --info=progress2 --prune-empty-dirs --delete $@
     # rsync -aAXH -h --info=progress2 --prune-empty-dirs --delete $@
 }
 
@@ -104,7 +108,10 @@ convertsecs() {
 }
 
 dconf_dump() {
-    dconf dump /
+    dconf dump / | sudo tee $1/dconf_FULL.ini > /dev/null
+    [[ `command -v dump_dconf_extension_settings` ]] && dump_dconf_extension_settings &&
+        _rsync "$HOME/.config/dconf" "$1"
+
 }
 
 gon_backup() {
@@ -135,8 +142,8 @@ gon_backup() {
     done
 
     printf "%s\nStarting backup to: %s\n\n" "$start_time" "$destination"
-    _rsync ${data_sources_list[@]} "$destination" &&
-        dconf_dump | sudo tee "$destination/dconf" >/dev/null &&
+    sudo rsync -aAXH --relative -h --info=progress2 --prune-empty-dirs ${data_sources_list[@]} "$destination" &&
+        dconf_dump $destination &&
         sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time" &&
         echo "Snapshot created"
 
