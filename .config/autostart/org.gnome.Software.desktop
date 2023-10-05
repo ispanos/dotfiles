@@ -6,3 +6,4 @@ OnlyShowIn=GNOME;Unity;
 NotShowIn=Budgie
 NoDisplay=true
 X-GNOME-Autostart-enabled=false
+Hidden=true
