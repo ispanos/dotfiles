@@ -67,12 +67,18 @@ main() {
 	device=$(get_device_name)
 
 	if (grep "Connected: yes" <<< "$dev_status") ; then
-		notify "Attempting to disconnect device: '${device}'"
+		notify "Disconnecting: '${device}'"
+
+		# Turn off bluetooth if only one device is connected.
+		[[ $(bluetoothctl devices Connected | wc -l) == 1 ]] &&
+			bluetoothctl power off
+
 		bluetoothctl -- disconnect ${mac_address}
 	else
 		notify "Attempting to connect device: '${device}'"
 		get_power_status || { 
 			notify "Turning on Bluethooth adapter...."
+			rfkill unblock all || notify "'rfkill unblock all' failed."
 			bluetoothctl power on; sleep 1; }
 		bluetoothctl -- connect ${mac_address}
 	fi
