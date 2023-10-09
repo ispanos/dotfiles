@@ -1,6 +1,7 @@
 [/]
 alphabetize=false
-fixed-widths=true
+fixed-widths=false
+hide-icons=false
 hot-sensors=['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_battery_rate_', '_battery_time_left_']
 include-public-ip=true
 position-in-panel=2
@@ -8,5 +9,5 @@ show-battery=true
 show-network=true
 show-system=false
 show-voltage=false
-update-time=7
+update-time=10
 use-higher-precision=false
