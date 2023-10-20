@@ -1,9 +1,11 @@
 [Unit]
-Description=Update user Flatpaks
+Description=Flatpak Automatic update
+Documentation=man:flatpak(1)
 
 [Service]
-Type=oneshot
-ExecStart=/usr/bin/flatpak update -y
+Type=simple
+ExecStartPre=/bin/sh -c 'until ping -c1 google.com; do sleep 60; done;'
+ExecStart=/usr/bin/flatpak update -y --system
 
 [Install]
 WantedBy=default.target
