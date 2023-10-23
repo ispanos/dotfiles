@@ -1,34 +1,36 @@
 #!/bin/bash
 
 alias \
-    free="free --mebi"\
-	cp="cp --interactive"\
-	df="df --human-readable"\
-	diff="diff --color=auto"\
-	egrep="egrep --colour=auto"\
-	fgrep="fgrep --colour=auto"\
-	g="git"\
-	grep="grep --colour=auto"\
-	ll='ls --color=auto -alF'\
-	ls="ls --literal --human-readable --color=auto --group-directories-first "\
-	inxi="inxi -FxxxzD"\
-	stime="/usr/bin/time -f 'Spacetime: %MK %E'"\
+	free="free --mebi" \
+	cp="cp --interactive" \
+	df="df --human-readable" \
+	diff="diff --color=auto" \
+	egrep="egrep --colour=auto" \
+	fgrep="fgrep --colour=auto" \
+	g="git" \
+	grep="grep --colour=auto" \
+	ll='ls --color=auto -alF' \
+	ls="ls --literal --human-readable --color=auto --group-directories-first " \
+	inxi="inxi -FxxxzD" \
+	stime="/usr/bin/time -f 'Spacetime: %MK %E'" \
 	jn='jupyter notebook' \
 	reset_audio='systemctl --user restart wireplumber pipewire pipewire-pulse' \
 	reboot_uefi='systemctl reboot --firmware-setup'
 
-
 # Dotfiles managment
 [[ -d "$HOME/.cfg" ]] && alias \
-	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"\
+	dot="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
-[[ `command -v lsd` ]] && alias \
-	ll="lsd -al --group-directories-first"\
+[[ $(command -v lsd) ]] && alias \
+	ll="lsd -al --group-directories-first" \
 	ls="lsd --group-directories-first"
 
-# For Raspberry Pi 
-[[ `command -v /opt/vc/bin/vcgencmd` ]] && alias \
-    temp="/opt/vc/bin/vcgencmd measure_temp"
+[[ $(command -v mpv) ]] || alias \
+	mpv="flatpak run io.mpv.Mpv"
+
+# For Raspberry Pi
+[[ $(command -v /opt/vc/bin/vcgencmd) ]] && alias \
+	temp="/opt/vc/bin/vcgencmd measure_temp"
 
 # Start Virtual camera for OBS
 alias virt-cam="sudo modprobe v4l2loopback devices=1 card_label=\"OBS Cam\" exclusive_caps=1"
@@ -52,6 +54,7 @@ get_colors() {
 			printf " ${seq0}TEXT\e[m"
 			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
 		done
-		echo; echo
+		echo
+		echo
 	done
 }
