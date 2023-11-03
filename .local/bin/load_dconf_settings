@@ -1,12 +1,12 @@
 #!/bin/bash
 
+gsettings reset org.gnome.desktop.lockdown disable-lock-screen
+
 path="$HOME/.config/dconf/dconf.ini"
 
 [[ -f "$path" ]] || { echo "File: '$path' does not exists"; exit 1; } 
 
 [[ $(command -v dconf) ]] || { echo "dconf is missing or is not in the PATH."; exit 1; } 
-
-gsettings get org.gnome.shell enabled-extensions > "$HOME/.config/dconf/enabled-extensions-$(hostname)"
 
 dconf load / < ~/.config/dconf/dconf.ini
 

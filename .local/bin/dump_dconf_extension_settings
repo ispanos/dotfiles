@@ -9,3 +9,5 @@ extensions=($(/usr/bin/ls -1 ~/.config/dconf/extensions/))
 for extension in ${extensions[@]}; do
     export_extensions_settings $extension
 done
+
+gsettings get org.gnome.shell enabled-extensions > "$HOME/.config/dconf/enabled-extensions-$(hostname)"
