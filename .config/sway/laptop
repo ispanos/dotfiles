@@ -14,13 +14,14 @@ set $laptopTB2 DP-2
 #            horizontal
 
 # horizontal
-# set $topleft  mode 1920x1080@60Hz pos 0 490 
+set $topleft  mode 1920x1080@60Hz pos 0 0
+set $topright mode 1920x1080@60Hz pos 1920 0
+set $botright mode 1920x1080@60Hz pos 1920 1080
 
 # vertical
-set $topleft  mode 1920x1080@60Hz pos 0 0 transform 90
-
-set $topright mode 1920x1080@60Hz pos 1080 159
-set $botright mode 1920x1080@60Hz pos 1080 1239
+# set $topleft  mode 1920x1080@60Hz pos 0 0 transform 90
+# set $topright mode 1920x1080@60Hz pos 1080 159
+# set $botright mode 1920x1080@60Hz pos 1080 1239
 
 output $laptopTB1 $topright
 # output $laptopTB2 $topleft
@@ -34,7 +35,6 @@ output $laptop $botright
 #output $laptopHDMI pos 0 0 res 1920x1080
 #output $laptop pos 0 1080 res 1920x1080
 
-
 exec_always clamshell
 
 # bindswitch --reload --locked lid:on output $laptop disable
@@ -45,3 +45,10 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 exec log_bat
 exec_always setbg "/home/yiannis/Pictures/Wallpapers/tardis.jpg"
+
+input type:touchpad {
+       dwt enabled
+       tap disabled
+       natural_scroll enabled
+       middle_emulation enabled
+   }

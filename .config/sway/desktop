@@ -13,9 +13,3 @@ input * xkb_numlock enabled
 # workspace number 1 output $LG
 
 # gsettings set org.blueman.plugins.powermanager auto-power-on false
-
-input 1133:16514:Logitech_MX_Master_3 {
-    natural_scroll disabled
-    accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
-    pointer_accel 0.05 # set mouse sensitivity (between -1 and 1)
-}
