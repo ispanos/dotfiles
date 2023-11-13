@@ -4,21 +4,32 @@ args=$*
 
 echo "$0 $args" | systemd-cat -t "SESSIONCTL"
 
+# sessionctl_idle() {
+#     killall swayidle
+#     /usr/bin/swayidle -w \
+#         timeout 295 'loginctl lock-session' \
+#         timeout 300 'swaymsg "output * dpms off"' \
+#         resume  'swaymsg "output * dpms on"' \
+#         timeout 600 'systemctl suspend' \
+#         timeout 5 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' \
+#         resume 'if pgrep swaylock; then swaymsg "output * dpms on"; fi' \
+#         before-sleep 'loginctl lock-session' \
+#         after-resume  'sleep 2 && clamshell' \
+#         lock 'systemctl --user start lock.target' \
+#         unlock 'systemctl --user stop lock.target'
+# }
+
 sessionctl_idle() {
     killall swayidle
     /usr/bin/swayidle -w \
         timeout 295 'loginctl lock-session' \
-        timeout 300 'swaymsg "output * dpms off"' \
         resume  'swaymsg "output * dpms on"' \
-        timeout 600 'systemctl suspend' \
-        timeout 5 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' \
         resume 'if pgrep swaylock; then swaymsg "output * dpms on"; fi' \
         before-sleep 'loginctl lock-session' \
         after-resume  'sleep 2 && clamshell' \
         lock 'systemctl --user start lock.target' \
         unlock 'systemctl --user stop lock.target'
 }
-
 
 sway_sessionctl() {
     case "$1" in
