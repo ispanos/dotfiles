@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ $(command -v powerprofilesctl) ]] || exit 0
+
 notify() {
 	notify-send -t 1000 --hint=int:transient:1 "$(basename "$0")" "$@"
 }
