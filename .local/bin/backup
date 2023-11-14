@@ -7,12 +7,13 @@ GON_BACKUP_DIRS=(
     "$HOME/Desktop"
     "$HOME/Downloads"
     "$HOME/Dropbox"
-    "$HOME/.mozilla"
+    # "$HOME/.mozilla"
     "$HOME/.ssh"
     "$HOME/.cert"
     "$HOME/.var/app/org.remmina.Remmina/data/remmina"
     "$HOME/.var/app/org.remmina.Remmina/config/remmina"
     "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
+    "$HOME/.var/app/org.mozilla.firefox/.mozilla"
 )
 
 WORK_SETTINGS_DIRS=(
