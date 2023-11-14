@@ -28,6 +28,12 @@ alias \
 [[ $(command -v mpv) ]] || alias \
 	mpv="flatpak run io.mpv.Mpv"
 
+[[ $(command -v pavucontrol) ]] || alias \
+	pavucontrol="flatpak run org.pulseaudio.pavucontrol"
+
+[[ $(command -v firefox) ]] || alias \
+	firefox="flatpak run org.mozilla.firefox"
+
 # For Raspberry Pi
 [[ $(command -v /opt/vc/bin/vcgencmd) ]] && alias \
 	temp="/opt/vc/bin/vcgencmd measure_temp"
