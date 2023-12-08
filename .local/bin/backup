@@ -4,7 +4,7 @@ destination="$2"
 
 GON_BACKUP_DIRS=(
     "--exclude=$HOME/Dropbox/Media_Library/"
-    "$HOME/Desktop"
+    "$HOME/.local/share/Desktop"
     "$HOME/Downloads"
     "$HOME/Dropbox"
     # "$HOME/.mozilla"
@@ -161,6 +161,7 @@ main() {
         -h \
         --info=progress2 \
         --prune-empty-dirs \
+        --delete \
         $data_sources_list "$destination" # &&
     dconf_dump $destination &&
         sudo btrfs subvolume snapshot "$destination" "${destination}_$start_time" &&
