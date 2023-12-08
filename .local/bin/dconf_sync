@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# Check if XDG_CONFIG_HOME is set, otherwise use the default $HOME/.config
+if [ -n "$XDG_CONFIG_HOME" ]; then
+  config_dir="$XDG_CONFIG_HOME/dconf"
+else
+  config_dir="$HOME/.config/dconf"
+fi
+
+extensions_dir="$config_dir/dconf.d/extensions"
+
+# Function to export extension settings
+export_extension_settings() {
+    dconf dump "/org/gnome/shell/extensions/$1/" >"$extensions_dir/$1"
+}
+
+# Function to load settings
+load_settings() {
+    gsettings reset org.gnome.desktop.lockdown disable-lock-screen
+
+    path="$config_dir/dconf.ini"
+
+    [[ -f "$path" ]] || {
+        echo "File: '$path' does not exist"
+        exit 1
+    }
+
+    [[ $(command -v dconf) ]] || {
+        echo "dconf is missing or is not in the PATH."
+        exit 1
+    }
+
+    dconf load / <"$path"
+
+    # extensions=($(/usr/bin/ls -1 "$extensions_dir/))
+    extension_conf_paths=()
+    for f in "$extensions_dir"/*; do     
+        if [ -f "$f" ]; then
+            extension_conf_paths+=("$f")
+        fi; 
+    done
+
+
+    for extension in "${extensions[@]}"; do
+        dconf load "/org/gnome/shell/extensions/$extension/" <"$extensions_dir/$extension"
+    done
+}
+
+dump_settings() {
+    extensions=($(/usr/bin/ls -1 $extensions_dir))
+    for extension in "${extensions[@]}"; do
+        export_extension_settings "$extension"
+    done
+}
+
+# Check for flags
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    --load | -l)
+        load_settings
+        exit 0
+        ;;
+    --dump | -d)
+        dump_settings
+        exit 0
+        ;;
+    *)
+        echo "Invalid option: $1" >&2
+        exit 1
+        ;;
+    esac
+done
+
+echo "Usage: $0 [--load/-l] [--dump/-d]"
+exit 1
+
+# NOTES: Do not enable here!
+# Only here to remove comments from the actual config file in `.config/donf`.
+
+# gsettings set org.gnome.settings-daemon.plugins.power idle-brightness 100dcod
+# gsettings set org.gnome.settings-daemon.plugins.power idle-dim 'true'
+
+# gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'extend'
+# gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'mirror-primary'
+
+# gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+# gsettings set org.gnome.desktop.wm.preferences button-layout ':close'
+
+# gsettings set org.gnome.settings-daemon.plugins.power idle-brightness 100
+# gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
+
+# #[org/gnome/settings-daemon/plugins/power]
+# #idle-brightness=100
+# #idle-dim=false # This doesn't really work
+
+# gettings set org.gnome.desktop.sound allow-volume-above-100-percent false
+# gettings set org.gnome.desktop.sound allow-volume-above-100-percent true
+
+# #[org/gnome/desktop/sound]
+# #allow-volume-above-100-percent=false
+
+# Log out: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Logout "u" 0
+# Shut down: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Shutdown
