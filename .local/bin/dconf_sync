@@ -43,10 +43,6 @@ load_settings() {
         dconf load "$(echo "/$(basename "$d_conf_path" | tr "." "/" )/")" <"$d_conf_path"
     done
 
-    for extension in "${extensions[@]}"; do
-        dconf load "/org/gnome/shell/extensions/$extension/" <"$extensions_dir/$extension"
-    done
-
     extension_conf_paths=()
     for f in "$extensions_dir"/*; do     
         if [ -f "$f" ]; then
