@@ -62,6 +62,9 @@ export OCTAVE_SITE_INITFILE="$XDG_CONFIG_HOME/octave/octaverc"
 	# pkg local_list /home/<your username>/.local/share/octave/octave_packages;
 	## The local_list option must be given an absolute path. 
 
+# CUDA
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+
 
 # Wine
 [ ! -d "$XDG_DATA_HOME/wineprefixes" ] && mkdir -p "$XDG_DATA_HOME/wineprefixes"
