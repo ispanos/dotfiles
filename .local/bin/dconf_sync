@@ -32,14 +32,27 @@ load_settings() {
 
     dconf load / <"$path"
 
-    # extensions=($(/usr/bin/ls -1 "$extensions_dir/))
+    d_conf_paths=()
+    for f in "$config_dir/dconf.d"/*; do     
+        if [ -f "$f" ]; then
+            d_conf_paths+=("$f")
+        fi; 
+    done
+
+    for d_conf_path in "${d_conf_paths[@]}"; do
+        dconf load "$(echo "/$(basename "$d_conf_path" | tr "." "/" )/")" <"$d_conf_path"
+    done
+
+    for extension in "${extensions[@]}"; do
+        dconf load "/org/gnome/shell/extensions/$extension/" <"$extensions_dir/$extension"
+    done
+
     extension_conf_paths=()
     for f in "$extensions_dir"/*; do     
         if [ -f "$f" ]; then
             extension_conf_paths+=("$f")
         fi; 
     done
-
 
     for extension in "${extensions[@]}"; do
         dconf load "/org/gnome/shell/extensions/$extension/" <"$extensions_dir/$extension"
