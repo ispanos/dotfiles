@@ -1,19 +1,48 @@
 [/]
-brightness=0.0
+brightness=0.90000000000000002
 color=(0.0, 0.0, 0.0, 0.0)
-color-and-noise=true
+color-and-noise=false
 hacks-level=0
-sigma=32
+noise-amount=0.0
+sigma=16
+
+[appfolder]
+blur=true
+brightness=0.68999999999999995
+customize=false
+style-dialogs=1
+
+[applications]
+blur=false
 
 [dash-to-dock]
 blur=false
 
 [dash-to-panel]
-blur-original-panel=false
+blur-original-panel=true
+
+[hidetopbar]
+compatibility=false
+
+[lockscreen]
+blur=false
+
+[overview]
+blur=true
+style-components=3
 
 [panel]
 blur=true
+brightness=0.47999999999999998
 customize=true
-sigma=1
-static-blur=false
-unblur-in-overview=false
+override-background=true
+sigma=20
+static-blur=true
+style-panel=0
+unblur-in-overview=true
+
+[screenshot]
+blur=false
+
+[window-list]
+blur=false
