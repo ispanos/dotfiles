@@ -1,10 +1,10 @@
 [/]
-brightness=0.0
+brightness=0.77000000000000002
 color=(0.0, 0.0, 0.0, 0.0)
 color-and-noise=false
 hacks-level=0
 noise-amount=0.0
-sigma=60
+sigma=47
 
 [appfolder]
 blur=true
@@ -36,9 +36,10 @@ blur=true
 brightness=0.47999999999999998
 customize=true
 override-background=true
+override-background-dynamically=true
 sigma=20
 static-blur=true
-style-panel=0
+style-panel=2
 unblur-in-overview=true
 
 [screenshot]
