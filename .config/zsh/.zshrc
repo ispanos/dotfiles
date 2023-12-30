@@ -103,11 +103,16 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev
 [ -f /usr/bin/starship ] && eval "$(starship init zsh)"
 
 # Load zsh-syntax-highlighting; should be last.
-[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null || {
-	[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
-	source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-}
+[ -f ${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] &&
+	source ${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ||
+	{
+		[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
+			source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null ||
+			{
+				[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
+					source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+			}
+	}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
