@@ -13,6 +13,11 @@ binding='<Ctrl><Alt>Delete'
 command='systemctl suspend'
 name='Go to Sleep'
 
+[custom11]
+binding='<Control><Shift>Escape'
+command="flatpak run io.missioncenter.MissionCenter"
+name='mission-center'
+
 [custom2]
 binding='<Super>z'
 command='flatpak run org.mozilla.firefox'
