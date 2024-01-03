@@ -15,7 +15,7 @@ name='Go to Sleep'
 
 [custom11]
 binding='<Control><Shift>Escape'
-command="flatpak run io.missioncenter.MissionCenter"
+command='flatpak run io.missioncenter.MissionCenter'
 name='mission-center'
 
 [custom2]
