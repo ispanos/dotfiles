@@ -5,7 +5,7 @@ name='launch code'
 
 [custom1]
 binding='<Super>Return'
-command='gnome-terminal'
+command='xdg-terminal-exec'
 name='terminal'
 
 [custom10]
