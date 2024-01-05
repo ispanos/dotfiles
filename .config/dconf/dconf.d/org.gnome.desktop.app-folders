@@ -1,5 +1,5 @@
 [/]
-folder-children=['Utilities', 'YaST', 'Pardus', 'GamingUtilities', 'Utilities']
+folder-children=['Utilities', 'YaST', 'Pardus', 'GamingUtilities', 'Utilities', 'Office']
 
 [folders/Distrobox]
 categories=['Distrobox']
@@ -27,3 +27,7 @@ translate=false
 categories=['X-SuSE-YaST']
 name='suse-yast.directory'
 translate=true
+
+[folders/Office]
+apps=['org.libreoffice.LibreOffice.draw.desktop', 'org.libreoffice.LibreOffice.calc.desktop', 'org.libreoffice.LibreOffice.base.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice.impress.desktop', 'org.libreoffice.LibreOffice.math.desktop']
+name='Office'
