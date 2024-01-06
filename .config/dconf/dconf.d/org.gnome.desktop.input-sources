@@ -1,0 +1,5 @@
+[/]
+current=uint32 0
+mru-sources=[('xkb', 'us'), ('xkb', 'gr')]
+sources=[('xkb', 'us'), ('xkb', 'gr')]
+xkb-options=@as []
