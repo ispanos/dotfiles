@@ -1,5 +1,5 @@
 [/]
-folder-children=['Utilities', 'YaST', 'Pardus', 'Office', 'Games', 'GamingUtilities']
+folder-children=['Utilities', 'YaST', 'Pardus', 'Office', 'PhotosMedia', 'Games', 'GamingUtilities']
 
 [folders/Distrobox]
 categories=['Distrobox']
@@ -9,6 +9,11 @@ translate=false
 [folders/Office]
 apps=['org.libreoffice.LibreOffice.draw.desktop', 'org.libreoffice.LibreOffice.calc.desktop', 'org.libreoffice.LibreOffice.base.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.libreoffice.LibreOffice.impress.desktop', 'org.libreoffice.LibreOffice.math.desktop', 'com.calibre_ebook.calibre.desktop', 'com.calibre_ebook.calibre.ebook-edit.desktop', 'com.calibre_ebook.calibre.ebook-viewer.desktop', 'com.calibre_ebook.calibre.lrfviewer.desktop']
 name='Office'
+
+[folders/PhotosMedia]
+apps=['org.gnome.Loupe.desktop', 'org.gnome.gThumb.desktop', 'io.mpv.Mpv.desktop']
+name='Photos and Videos'
+translate=true
 
 [folders/Pardus]
 categories=['X-Pardus-Apps']
@@ -32,13 +37,13 @@ categories=['X-SuSE-YaST']
 name='suse-yast.directory'
 translate=true
 
-[org/gnome/desktop/app-folders/folders/Games]
+[folders/Games]
 categories=['Game']
 excluded-apps=['steam.desktop', 'net.lutris.Lutris.desktop', 'io.github.benjamimgois.goverlay.desktop', 'com.vysp3r.ProtonPlus.desktop', 'io.github.fastrizwaan.WineZGUI.desktop']
 name='Games'
 translate=false
 
-[org/gnome/desktop/app-folders/folders/GamingUtilities]
+[folders/GamingUtilities]
 apps=['protontricks.desktop', 'discover_overlay_configure.desktop', 'com.vysp3r.ProtonPlus.desktop', 'io.github.benjamimgois.goverlay.desktop', 'com.gerbilsoft.rom-properties.rp-config.desktop', 'input-remapper-gtk.desktop', 'steamos-nested-desktop.desktop']
 name='Gaming Utilities'
 translate=false
