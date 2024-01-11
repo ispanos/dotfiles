@@ -15,7 +15,8 @@ alias \
 	stime="/usr/bin/time -f 'Spacetime: %MK %E'" \
 	jn='jupyter notebook' \
 	reset_audio='systemctl --user restart wireplumber pipewire pipewire-pulse' \
-	reboot_uefi='systemctl reboot --firmware-setup'
+	reboot_uefi='systemctl reboot --firmware-setup' \
+	stopsleep='systemd-inhibit --what=sleep:handle-lid-switch:handle-suspend-key:handle-power-key read -t 999999'
 
 # Dotfiles managment
 [[ -d "$HOME/.cfg" ]] && alias \
