@@ -47,14 +47,3 @@ translate=false
 categories=['X-SuSE-YaST']
 name='suse-yast.directory'
 translate=true
-
-[org/gnome/desktop/app-folders/folders/Games]
-categories=['Game']
-excluded-apps=['steam.desktop', 'net.lutris.Lutris.desktop', 'io.github.benjamimgois.goverlay.desktop', 'com.vysp3r.ProtonPlus.desktop', 'io.github.fastrizwaan.WineZGUI.desktop']
-name='Games'
-translate=false
-
-[org/gnome/desktop/app-folders/folders/GamingUtilities]
-apps=['protontricks.desktop', 'discover_overlay_configure.desktop', 'com.vysp3r.ProtonPlus.desktop', 'io.github.benjamimgois.goverlay.desktop', 'com.gerbilsoft.rom-properties.rp-config.desktop', 'input-remapper-gtk.desktop', 'steamos-nested-desktop.desktop']
-name='Gaming Utilities'
-translate=false
