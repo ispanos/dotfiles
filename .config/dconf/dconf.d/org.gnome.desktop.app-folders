@@ -1,10 +1,5 @@
 [/]
-folder-children=['Utilities', 'YaST', 'Pardus', 'Office', 'PhotosMedia', 'Games', 'GamingUtilities']
-
-[folders/Distrobox]
-categories=['Distrobox']
-name='Distrobox'
-translate=false
+folder-children=['Utilities', 'YaST', 'Pardus', 'Office', 'PhotosMedia', 'Games', 'GamingUtilities', 'Wine']
 
 [folders/Games]
 categories=['Game']
