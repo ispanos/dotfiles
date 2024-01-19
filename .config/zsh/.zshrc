@@ -37,10 +37,15 @@ fi
 export HISTFILE=$ZDOTDIR/history
 [[ -f "$HISTFILE" ]] || touch $HISTFILE
 export HISTCONTROL=ignoredups:erasedups
-export HISTSIZE=9999
-export SAVEHIST=9999
-setopt appendhistory
+export HISTSIZE=99999
 
+export SAVEHIST=99999
+# setopt appendhistory
+# Immediate append
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
+# Add timestamp to history
+setopt EXTENDED_HISTORY
 
 ## KEYS START
 
@@ -103,16 +108,19 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev
 [ -f /usr/bin/starship ] && eval "$(starship init zsh)"
 
 # Load zsh-syntax-highlighting; should be last.
-[ -f ${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] &&
-	source ${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ||
-	{
-		[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
-			source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null ||
-			{
-				[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
-					source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-			}
-	}
+highlighting_paths=(
+	"/usr/share/fsh/fast-syntax-highlighting.plugin.zsh"
+	"${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+	"/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+	"/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+)
+# Iterate through the paths and source the first existing file
+for zsh_sh_path in "${highlighting_paths[@]}"; do
+  if [ -f "$zsh_sh_path" ]; then
+    source "$zsh_sh_path"
+    break  # Stop after the first file is found and sourced
+  fi
+done
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
