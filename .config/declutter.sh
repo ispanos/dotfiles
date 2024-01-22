@@ -75,5 +75,5 @@ export INPUTRC="${XDG_CONFIG_HOME}/inputrc"
 # This will break some apps that hard-code ~/.gnupg
 # export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 
-[ -f "$HOME/.steampid" ] && rm "$HOME/.steampid"
-[ -L "$HOME/.steampath" ] && rm "$HOME/.steampath"
+[ -f "$HOME/.steampid" ] && rm "$HOME/.steampid" || true
+[ -L "$HOME/.steampath" ] && rm "$HOME/.steampath" || true
