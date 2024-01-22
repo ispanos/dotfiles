@@ -2,7 +2,7 @@
 alphabetize=false
 fixed-widths=false
 hide-icons=false
-hot-sensors=['_processor_usage_', '_memory_usage_']
+hot-sensors=['_processor_usage_', '_memory_usage_', '__temperature_max__']
 include-public-ip=true
 position-in-panel=2
 show-battery=true
