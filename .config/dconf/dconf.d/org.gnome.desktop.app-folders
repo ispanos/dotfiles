@@ -1,6 +1,11 @@
 [/]
 folder-children=['Utilities', 'YaST', 'Pardus', 'Office', 'PhotosMedia', 'Games', 'GamingUtilities', 'Wine']
 
+[folders/Distrobox]
+categories=['Distrobox']
+name='Distrobox'
+translate=false
+
 [folders/Games]
 categories=['Game']
 excluded-apps=['steam.desktop', 'net.lutris.Lutris.desktop', 'io.github.benjamimgois.goverlay.desktop', 'com.vysp3r.ProtonPlus.desktop', 'io.github.fastrizwaan.WineZGUI.desktop']
