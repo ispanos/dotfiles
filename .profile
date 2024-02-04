@@ -5,5 +5,3 @@ source ~/.config/declutter.sh
 
 # set PATH so it includes user's private bin
 PATH=$PATH:~/.local/bin
-
-export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
