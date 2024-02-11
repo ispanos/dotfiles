@@ -148,11 +148,11 @@ main() {
     echo " $data_sources_list" | sed 's/ /"\n- "/g' | sed 's/^"//'
     read -r
 
-    mkdir -p $destination || exit 1
-
     local start_="$(date -u +%s)"
     local start_time=$(date +%F-%T)
-    local destination="$destination/$(hostname)_backup"
+    local destination="$destination/$(hostname)_backup_ostree"
+
+    mkdir -p $destination || exit 1
 
     printf "%s\nStarting backup to: %s\n\n" "$start_time" "$destination"
     sudo rsync \
