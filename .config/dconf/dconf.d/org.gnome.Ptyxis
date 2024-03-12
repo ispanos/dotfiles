@@ -1,0 +1,14 @@
+[/]
+audible-bell=false
+default-profile-uuid='b9906bd39abeb2cf97be91e665dbffd6'
+profile-uuids=['b9906bd39abeb2cf97be91e665dbffd6']
+restore-session=false
+restore-window-size=false
+visual-bell=true
+window-size=(uint32 80, uint32 24)
+
+[Profiles/b9906bd39abeb2cf97be91e665dbffd6]
+palette='campbell'
+
+[Shortcuts]
+close-tab='<Control>w'
