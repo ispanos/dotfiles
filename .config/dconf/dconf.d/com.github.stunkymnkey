@@ -1,0 +1,5 @@
+[nautilus-open-any-terminal]
+flatpak='off'
+keybindings=''
+new-tab=false
+terminal='ptyxis'
