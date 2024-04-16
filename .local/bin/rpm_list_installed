@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Print just the name of the installed package
-rpm -qa --queryformat='%{NAME} \n' $@
