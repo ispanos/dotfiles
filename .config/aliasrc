@@ -62,3 +62,7 @@ get_colors() {
 		echo
 	done
 }
+
+doc-to-pdf() {
+    flatpak run org.libreoffice.LibreOffice --headless --convert-to pdf "$@"
+}
