@@ -121,3 +121,11 @@ for zsh_sh_path in "${highlighting_paths[@]}"; do
     break  # Stop after the first file is found and sourced
   fi
 done
+
+# If Anaconda3 is installed, create a custom conda-init function instead of the official `conda init` command.
+if [ -f $HOME/.local/anaconda3/bin/conda ]; then
+    conda-init() {
+		PATH="$HOME/.local/anaconda3/bin/:$PATH"
+        eval "$($HOME/.local/anaconda3/bin/conda shell.$(basename $SHELL) hook)"
+    }
+fi
