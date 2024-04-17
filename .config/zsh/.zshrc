@@ -122,10 +122,16 @@ for zsh_sh_path in "${highlighting_paths[@]}"; do
   fi
 done
 
-# If Anaconda3 is installed, create a custom conda-init function instead of the official `conda init` command.
 if [ -f $HOME/.local/anaconda3/bin/conda ]; then
+	# If Anaconda3 is installed, use a custom conda-init
+	# function instead of the official `conda init` command.
     conda-init() {
 		PATH="$HOME/.local/anaconda3/bin/:$PATH"
         eval "$($HOME/.local/anaconda3/bin/conda shell.$(basename $SHELL) hook)"
     }
+fi
+
+if [[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]]; then
+	# If homebrew is installed, add it to PATH
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
