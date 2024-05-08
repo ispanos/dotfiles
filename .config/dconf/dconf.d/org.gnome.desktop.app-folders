@@ -27,12 +27,12 @@ name='X-Pardus-Apps.directory'
 translate=true
 
 [folders/PhotosMedia]
-apps=['org.gnome.Loupe.desktop', 'org.gnome.gThumb.desktop', 'io.mpv.Mpv.desktop']
+apps=['org.gnome.Loupe.desktop', 'org.gnome.gThumb.desktop', 'io.mpv.Mpv.desktop', 'io.github.celluloid_player.Celluloid.desktop']
 name='Photos and Videos'
 translate=true
 
 [folders/Utilities]
-apps=['gnome-abrt.desktop', 'gnome-system-log.desktop', 'nm-connection-editor.desktop', 'org.gnome.baobab.desktop', 'org.gnome.Connections.desktop', 'org.gnome.DejaDup.desktop', 'org.gnome.Dictionary.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.Evince.desktop', 'org.gnome.FileRoller.desktop', 'org.gnome.fonts.desktop', 'org.gnome.Loupe.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Usage.desktop', 'vinagre.desktop', 'org.gnome.SimpleScan.desktop', 'ca.desrt.dconf-editor.desktop', 'io.missioncenter.MissionCenter.desktop', 'com.github.tchx84.Flatseal.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.pulseaudio.pavucontrol.desktop', 'org.rncbc.qpwgraph.desktop', 'io.github.fabrialberio.pinapp.desktop', 'io.github.flattool.Warehouse.desktop', 'org.gnome.Extensions.desktop', 'firewall-config.desktop']
+apps=['gnome-abrt.desktop', 'gnome-system-log.desktop', 'nm-connection-editor.desktop', 'org.gnome.baobab.desktop', 'org.gnome.Connections.desktop', 'org.gnome.DejaDup.desktop', 'org.gnome.Dictionary.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.Evince.desktop', 'org.gnome.FileRoller.desktop', 'org.gnome.fonts.desktop', 'org.gnome.Loupe.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Usage.desktop', 'vinagre.desktop', 'org.gnome.SimpleScan.desktop', 'ca.desrt.dconf-editor.desktop', 'io.missioncenter.MissionCenter.desktop', 'com.github.tchx84.Flatseal.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.pulseaudio.pavucontrol.desktop', 'org.rncbc.qpwgraph.desktop', 'io.github.fabrialberio.pinapp.desktop', 'io.github.flattool.Warehouse.desktop', 'org.gnome.Extensions.desktop', 'firewall-config.desktop', 'remote-viewer.desktop']
 categories=['X-GNOME-Utilities']
 name='X-GNOME-Utilities.directory'
 translate=true
