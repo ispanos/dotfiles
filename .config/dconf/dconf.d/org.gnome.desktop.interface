@@ -1,6 +1,6 @@
 [/]
 clock-show-weekday=false
-color-scheme='prefer-dark'
+color-scheme='default'
 cursor-theme='Yaru'
 document-font-name='Ubuntu 12'
 enable-animations=true
