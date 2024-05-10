@@ -46,7 +46,6 @@ export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=99999
 
 export SAVEHIST=99999
-# setopt appendhistory
 # Immediate append
 setopt INC_APPEND_HISTORY
 export HISTTIMEFORMAT="[%F %T] "
@@ -105,11 +104,19 @@ bindkey "^[[1;3D" backward-word
 
 ## KEYS END
 
-[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] &&
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null || {
-	[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] &&
-	source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-}
+autosuggestions_paths=(
+	/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+	/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+)
+# Iterate through the paths and source the first existing file
+for zsh_autosug_path in "${autosuggestions_paths[@]}"; do
+  if [ -f "$zsh_autosug_path" ]; then
+    source "$zsh_autosug_path"
+    break  # Stop after the first file is found and sourced
+  fi
+done
+unset zsh_autosug_path autosuggestions_paths
+
 
 if [ -f $HOME/.local/anaconda3/bin/conda ]; then
 	# If Anaconda3 is installed, use a custom conda-init
@@ -141,4 +148,4 @@ for zsh_sh_path in "${highlighting_paths[@]}"; do
     break  # Stop after the first file is found and sourced
   fi
 done
-unset zsh_sh_path
+unset zsh_sh_path highlighting_paths
