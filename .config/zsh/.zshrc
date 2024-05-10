@@ -2,7 +2,7 @@ autoload -U colors && colors
 
 setopt autocd
 
-[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
 
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
 
@@ -11,8 +11,8 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zmodload zsh/complist
 
-[ -d "$HOME/.cache/zsh/" ] || mkdir -p "$HOME/.cache/zsh/"
-compinit -d "$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
+[ -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" ] || mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 
 # Include hidden files in autocomplete:
 _comp_options+=(globdots)
