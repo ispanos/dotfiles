@@ -22,13 +22,21 @@ echo -ne '\e[5 q'
 # Use beam shape cursor for each new prompt.
 preexec() { echo -ne '\e[5 q' ;}
 
-setopt PROMPT_SUBST
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c%{$fg[red]%}]%{$reset_color%}$%b "
+# PS1 setup
+if [[ -f /usr/bin/starship ]]; then
+	# Use starship if available
+	eval "$(starship init zsh)"
 
-if [ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]; then
-	source $HOME/.local/bin/helpers/git-prompt.sh
-	git_prmpt=\$(__git_ps1 \"(%s) \")
-	PS1="$git_prmpt$PS1"
+else
+	# Default PS1 if starship is not installed.
+	setopt PROMPT_SUBST
+	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c%{$fg[red]%}]%{$reset_color%}$%b "
+
+	if [ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]; then
+		source $HOME/.local/bin/helpers/git-prompt.sh
+		git_prmpt=\$(__git_ps1 \"(%s) \")
+		PS1="$git_prmpt$PS1"
+	fi
 fi
 
 # History
@@ -103,23 +111,6 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev
 	source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 }
 
-[ -f /usr/bin/starship ] && eval "$(starship init zsh)"
-
-# Load zsh-syntax-highlighting; should be last.
-highlighting_paths=(
-	"/usr/share/fsh/fast-syntax-highlighting.plugin.zsh"
-	"${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-	"/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-	"/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-)
-# Iterate through the paths and source the first existing file
-for zsh_sh_path in "${highlighting_paths[@]}"; do
-  if [ -f "$zsh_sh_path" ]; then
-    source "$zsh_sh_path"
-    break  # Stop after the first file is found and sourced
-  fi
-done
-
 if [ -f $HOME/.local/anaconda3/bin/conda ]; then
 	# If Anaconda3 is installed, use a custom conda-init
 	# function instead of the official `conda init` command.
@@ -133,3 +124,21 @@ if [[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]]; then
 	# If homebrew is installed, add it to PATH
 	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+# Load zsh-syntax-highlighting; should be last.
+# An array of paths for zsh-syntax-highlighting; different for each distro.
+# fsh is prefered over zsh-syntax-highlighting
+highlighting_paths=(
+	"/usr/share/fsh/fast-syntax-highlighting.plugin.zsh"
+	"${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+	"/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+	"/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+)
+# Iterate through the paths and source the first existing file
+for zsh_sh_path in "${highlighting_paths[@]}"; do
+  if [ -f "$zsh_sh_path" ]; then
+    source "$zsh_sh_path"
+    break  # Stop after the first file is found and sourced
+  fi
+done
+unset zsh_sh_path
