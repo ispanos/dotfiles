@@ -17,8 +17,6 @@
 
 autoload -U colors && colors
 
-setopt autocd
-
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
 
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
