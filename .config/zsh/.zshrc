@@ -17,8 +17,6 @@
 
 autoload -U colors && colors
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
-
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
 
 # Load and initialize the completion system ignoring insecure directories with a
@@ -299,6 +297,11 @@ fi
 if [[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]]; then
 	# If homebrew is installed, add it to PATH
 	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ]; then
+  # Source aliases from a different file. This can be used to have the same aliases both in bash and zsh.
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
 fi
 
 # Load zsh-syntax-highlighting; should be last.
