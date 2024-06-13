@@ -1,13 +1,18 @@
 [/]
 alphabetize=false
-fixed-widths=false
-hide-icons=false
-hot-sensors=['_processor_usage_', '_memory_usage_', '__temperature_max__']
+fixed-widths=true
+hide-icons=true
+hide-zeros=false
+hot-sensors=['_processor_usage_', '_memory_allocated_', '__temperature_max__']
+icon-style=0
 include-public-ip=true
+menu-centered=true
 position-in-panel=2
 show-battery=true
+show-fan=false
 show-network=true
 show-processor=true
+show-storage=false
 show-system=false
 show-voltage=false
 update-time=10
