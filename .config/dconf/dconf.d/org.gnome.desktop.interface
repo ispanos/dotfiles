@@ -1,6 +1,6 @@
 [/]
 clock-show-weekday=false
-color-scheme='default'
+color-scheme='prefer-dark'
 cursor-theme='Yaru'
 document-font-name='Ubuntu 12'
 enable-animations=true
@@ -9,7 +9,7 @@ font-antialiasing='rgba'
 font-hinting='slight'
 font-name='Ubuntu 12'
 gtk-theme='adw-gtk3-dark'
-icon-theme='Yaru-blue-dark'
+icon-theme='Adwaita'
 monospace-font-name='Ubuntu Mono 12'
 show-battery-percentage=true
 toolkit-accessibility=false
