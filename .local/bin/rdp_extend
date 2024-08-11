@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Always on the laptop
+gsettings set org.gnome.desktop.remote-desktop.rdp view-only true
+
+usage() {
+    echo "Usage: $0 [-e | --enable] | [-r | --reset]"
+    exit 1
+}
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+case "$1" in
+-e | --enable)
+    gsettings set org.gnome.desktop.remote-desktop.rdp enable true
+    gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'extend'
+    echo "Remote desktop enabled with extend mode."
+    ;;
+-r | --reset)
+    gsettings set org.gnome.desktop.remote-desktop.rdp enable false
+    gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'mirror-primary'
+    echo "Remote desktop reset to mirror-primary mode."
+    ;;
+*)
+    usage
+    ;;
+esac
