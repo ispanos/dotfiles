@@ -7,19 +7,14 @@ GON_BACKUP_DIRS=(
     "$HOME/.local/share/Desktop"
     "$HOME/Downloads"
     "$HOME/Dropbox"
-    # "$HOME/.mozilla"
+    "$HOME/Zotero"
     "$HOME/.ssh"
     "$HOME/.cert"
     "$HOME/.var/app/org.remmina.Remmina/data/remmina"
     "$HOME/.var/app/org.remmina.Remmina/config/remmina"
     "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird"
     "$HOME/.var/app/org.mozilla.firefox/.mozilla"
-)
-
-WORK_SETTINGS_DIRS=(
-    "$HOME/.local/MATLAB"
-    "$HOME/.local/stata14"
-    "$HOME/.local/stata-png-fix"
+    "$HOME/.zotero"
 )
 
 SMALL_EXCLUDE_DIRS=(
@@ -114,7 +109,8 @@ get_data_sources() {
         ;;
 
     big | full)
-        data_sources_list=("${GON_BACKUP_DIRS[@]}" "${WORK_SETTINGS_DIRS[@]}")
+        # data_sources_list=("${GON_BACKUP_DIRS[@]}" "${MORE[@]}")
+        data_sources_list=("${GON_BACKUP_DIRS[@]}")
         ;;
 
     *)
