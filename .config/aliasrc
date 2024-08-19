@@ -38,6 +38,9 @@ alias \
 [[ $(command -v firefox) ]] || alias \
 	firefox="flatpak run org.mozilla.firefox"
 
+[[ $(command -v rsync) ]] || alias \
+	qrsync="rsync -aAXH --info=progress2"
+
 get_colors() {
 	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
 	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
