@@ -43,7 +43,6 @@ get_device_name() {
 	bluetoothctl info $mac_address | grep "Name:" | awk -F: '{print $2}'
 }
 
-
 get_power_status(){
 	powered="$(bluetoothctl show | grep "Powered:" | awk -F": " '{print $2}')"
 	[[ "$powered" == "yes" ]]
@@ -67,6 +66,7 @@ main() {
 	device=$(get_device_name)
 
 	if (grep "Connected: yes" <<< "$dev_status") ; then
+	# if (is_connected "$mac_address"); then
 		notify "Disconnecting: '${device}'"
 
 		# Turn off bluetooth if only one device is connected.
@@ -76,6 +76,7 @@ main() {
 		bluetoothctl -- disconnect ${mac_address}
 	else
 		notify "Attempting to connect device: '${device}'"
+		# _connect $mac_address
 		get_power_status || { 
 			notify "Turning on Bluethooth adapter...."
 			rfkill unblock all || notify "'rfkill unblock all' failed."
@@ -86,3 +87,59 @@ main() {
 
 
 main $@
+
+# The following need rework:
+
+exit
+
+# get_device_name() {
+# 	mac_address="$1"
+# 	bluetoothctl info $mac_address | grep "Name:" | awk -F: '{print $2}'
+# }
+
+_connect() {
+	max_attempts=5
+	attempt_count=0
+
+	mac_address="$1"
+
+	get_power_status || {
+		notify "Turning on Bluethooth adapter...."
+		rfkill unblock all || notify "'rfkill unblock all' failed."
+		bluetoothctl power on
+		sleep 1
+	}
+	bluetoothctl -- connect ${mac_address}
+
+	while [ $attempt_count -lt $max_attempts ]; do
+		connection_info=$(bluetoothctl connect $mac_address) && sleep 1
+		# connect_status="$(grep -q "Connection successful" <<<$connection_info)"
+		# echo connect_status=$connect_status
+ 
+		# if [ $connect_status -eq 0 ]; then
+		if grep -q "Connection successful" <<<$connection_info; then
+		
+			# Connection successful
+			break
+		else
+			# Connection failed
+			((attempt_count++))
+		fi
+	done
+
+	if [ $attempt_count -eq $max_attempts ]; then
+		# If connection failed 5 times, restart services
+		notify "Connection attempts failed. Restarting services..."
+		systemctl --user restart wireplumber pipewire pipewire-pulse && sleep 3
+		bluetoothctl -- connect ${mac_address}
+	fi
+
+}
+
+is_connected() {
+	mac_address="$1"
+	mac_info=$(bluetoothctl info $mac_address)
+	dev_status="$(grep ${mac_address} -A9 <<<$mac_info)"
+	grep "Connected: yes" <<<"$dev_status"
+	return $?
+}
