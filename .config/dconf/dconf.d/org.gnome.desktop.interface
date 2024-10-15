@@ -1,7 +1,7 @@
 [/]
 clock-show-weekday=false
 color-scheme='prefer-dark'
-cursor-theme='Yaru'
+cursor-theme='Adwaita'
 document-font-name='Ubuntu 12'
 enable-animations=true
 enable-hot-corners=false
