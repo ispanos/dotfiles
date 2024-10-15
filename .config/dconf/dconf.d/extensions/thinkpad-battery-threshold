@@ -1,5 +1,6 @@
 [/]
 color-mode=false
+disabled-start-bat0-value=0
 end-bat0=86
 indicator-mode='NEVER'
 show-current-values=false
