@@ -1,0 +1,6 @@
+[/]
+action-middle-click-titlebar='minimize'
+button-layout=':close'
+focus-mode='sloppy'
+num-workspaces=10
+title-bar-font='Ubuntu Bold 12'

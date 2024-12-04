@@ -1,0 +1,14 @@
+[/]
+discover-settings=true
+highlight-current-line=true
+indent-style='space'
+restore-session=false
+right-margin-position=80
+show-grid=false
+show-line-numbers=true
+show-map=false
+show-right-margin=true
+style-scheme='classic-dark'
+style-variant='dark'
+tab-width=4
+use-system-font=false
