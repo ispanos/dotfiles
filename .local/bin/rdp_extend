@@ -1,29 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
-# Always on the laptop
-gsettings set org.gnome.desktop.remote-desktop.rdp view-only true
+usage() { echo "Usage: $0 --enable | --disable"; exit 1; }
 
-usage() {
-    echo "Usage: $0 [-e | --enable] | [-r | --reset]"
-    exit 1
-}
+(( $# == 1 )) || usage
 
-if [ "$#" -ne 1 ]; then
-    usage
-fi
+SCHEMA=org.gnome.desktop.remote-desktop.rdp   # dconf path in your screenshot
 
-case "$1" in
--e | --enable)
-    gsettings set org.gnome.desktop.remote-desktop.rdp enable true
-    gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'extend'
-    echo "Remote desktop enabled with extend mode."
-    ;;
--r | --reset)
-    gsettings set org.gnome.desktop.remote-desktop.rdp enable false
-    gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'mirror-primary'
-    echo "Remote desktop reset to mirror-primary mode."
-    ;;
-*)
-    usage
-    ;;
+case $1 in
+  --enable|-e)
+      grdctl rdp enable
+      grdctl rdp enable-view-only        # or “disable-view-only” if you want input
+    #   grdctl rdp set-screen-share-mode extend   # GNOME 45+
+    #   gsettings set $SCHEMA screen-share-mode 'extend'
+      dconf write /org/gnome/desktop/remote-desktop/rdp/screen-share-mode "'extend'"
+      sleep 1
+      extend_display
+      # ssh user@ip -f "flatpak run org.remmina.Remmina -c ~/.var/app/org.remmina.Remmina/data/remmina/config_name.remmina"
+      echo "RDP enabled (extend mode, view-only)."
+      ;;
+  --disable|-r|--reset)
+      grdctl rdp disable
+    #   grdctl rdp set-screen-share-mode mirror-primary || true
+    #   dconf write /org/gnome/desktop/remote-desktop/rdp/screen-share-mode "['mirror-primary']"
+      dconf reset /org/gnome/desktop/remote-desktop/rdp/screen-share-mode
+      echo "RDP disabled."
+      ;;
+  *) usage ;;
 esac
