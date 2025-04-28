@@ -1,5 +1,7 @@
 [/]
+action-double-click-titlebar='toggle-maximize'
 action-middle-click-titlebar='minimize'
+action-right-click-titlebar='menu'
 button-layout=':close'
 focus-mode='sloppy'
 num-workspaces=10

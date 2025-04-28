@@ -1,4 +1,6 @@
 [/]
 enable-fullscreen=true
+indicator-position-max=5
 show-indicator='only-active'
 show-notifications=false
+toggle-state=false
