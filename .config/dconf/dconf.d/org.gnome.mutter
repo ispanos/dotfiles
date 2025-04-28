@@ -1,0 +1,9 @@
+[/]
+dynamic-workspaces=false
+edge-tiling=false
+workspaces-only-on-primary=false
+
+[keybindings]
+switch-monitor=['XF86Display']
+toggle-tiled-left=@as []
+toggle-tiled-right=@as []

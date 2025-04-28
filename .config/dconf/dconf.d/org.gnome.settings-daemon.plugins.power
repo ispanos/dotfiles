@@ -1,0 +1,6 @@
+[/]
+power-button-action='suspend'
+sleep-inactive-ac-timeout=2700
+sleep-inactive-ac-type='suspend'
+sleep-inactive-battery-timeout=1200
+sleep-inactive-battery-type='suspend'
