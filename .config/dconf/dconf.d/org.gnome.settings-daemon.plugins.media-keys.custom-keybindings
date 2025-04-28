@@ -30,7 +30,7 @@ name='editor'
 
 [custom4]
 binding='<Primary><Super>z'
-command='chromium-browser'
+command='flatpak run org.chromium.Chromium'
 name='chromium personal'
 
 [custom5]
