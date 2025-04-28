@@ -1,0 +1,8 @@
+[/]
+click-policy='single'
+default-folder-viewer='list-view'
+fts-enabled=true
+migrated-gtk-settings=true
+search-filter-time-type='last_modified'
+search-view='list-view'
+show-create-link=true
