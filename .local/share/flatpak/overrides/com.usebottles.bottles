@@ -1,2 +1,2 @@
 [Context]
-filesystems=/var/home/ion/.var/app/com.valvesoftware.Steam/data/Steam;/var/home/ion/.local/share/applications
+filesystems=/var/home/ion/Games;/var/home/ion/.local/share/applications;/var/home/ion/.var/app/com.valvesoftware.Steam/data/Steam
