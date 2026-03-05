@@ -12,7 +12,7 @@ name='launch code'
 
 [custom-keybindings/custom1]
 binding='<Super>Return'
-command='xdg-terminal-exec'
+command='/usr/bin/ptyxis --new-window'
 name='terminal'
 
 [custom-keybindings/custom10]
