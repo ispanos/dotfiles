@@ -1,0 +1,2 @@
+ujust install-ptinopedila-brew
+# ujust setup-vms
