@@ -23,6 +23,7 @@
     cm = commit -m
     amend = commit -a -amend
 	permission-reset = !git diff -p -R --no-ext-diff --no-color --diff-filter=M | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
+	wdiff = diff --word-diff=color
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
