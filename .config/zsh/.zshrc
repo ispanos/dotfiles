@@ -271,18 +271,34 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
 
-autosuggestions_paths=(
-	/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-	/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-)
-# Iterate through the paths and source the first existing file
-for zsh_autosug_path in "${autosuggestions_paths[@]}"; do
-  if [ -f "$zsh_autosug_path" ]; then
-    source "$zsh_autosug_path"
-    break  # Stop after the first file is found and sourced
+if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Load zsh-autosuggestions once.
+if (( ! $+functions[_zsh_autosuggest_start] )); then
+  autosuggestions_paths=()
+
+  if [[ -n ${HOMEBREW_PREFIX:-} ]]; then
+    autosuggestions_paths+=(
+      "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    )
   fi
-done
-unset zsh_autosug_path autosuggestions_paths
+
+  autosuggestions_paths+=(
+    "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  )
+
+  for zsh_autosug_path in "${autosuggestions_paths[@]}"; do
+    if [[ -f "$zsh_autosug_path" ]]; then
+      source "$zsh_autosug_path"
+      break
+    fi
+  done
+
+  unset zsh_autosug_path autosuggestions_paths
+fi
 
 
 if [ -f $HOME/.local/anaconda3/bin/conda ]; then
@@ -294,30 +310,36 @@ if [ -f $HOME/.local/anaconda3/bin/conda ]; then
     }
 fi
 
-if [[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]]; then
-	# If homebrew is installed, add it to PATH
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ]; then
   # Source aliases from a different file. This can be used to have the same aliases both in bash and zsh.
   source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
 fi
 
-# Load zsh-syntax-highlighting; should be last.
-# An array of paths for zsh-syntax-highlighting; different for each distro.
-# fsh is prefered over zsh-syntax-highlighting
-highlighting_paths=(
-	"/usr/share/fsh/fast-syntax-highlighting.plugin.zsh"
-	"${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-	"/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-	"/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-)
-# Iterate through the paths and source the first existing file
-for zsh_sh_path in "${highlighting_paths[@]}"; do
-  if [ -f "$zsh_sh_path" ]; then
-    source "$zsh_sh_path"
-    break  # Stop after the first file is found and sourced
+# Keep this block at the end of .zshrc.
+if (( ! ${+FAST_HIGHLIGHT_STYLES} && ! ${+ZSH_HIGHLIGHT_STYLES} )); then
+  highlighting_paths=(
+    "${XDG_DATA_HOME:-$HOME/.local/share}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+  )
+
+  if [[ -n ${HOMEBREW_PREFIX:-} ]]; then
+    highlighting_paths+=(
+      "$HOMEBREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+    )
   fi
-done
-unset zsh_sh_path highlighting_paths
+
+  highlighting_paths+=(
+    "/usr/share/fsh/fast-syntax-highlighting.plugin.zsh"
+    "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  )
+
+  for zsh_sh_path in "${highlighting_paths[@]}"; do
+    if [[ -f "$zsh_sh_path" ]]; then
+      source "$zsh_sh_path"
+      break
+    fi
+  done
+
+  unset zsh_sh_path highlighting_paths
+fi
