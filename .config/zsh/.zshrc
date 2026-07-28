@@ -41,31 +41,6 @@ _comp_options+=(globdots)
 
 
 #
-# Cursor and PS1
-#
-
-# Use beam shape cursor on startup.
-echo -ne '\e[5 q'
-# Use beam shape cursor for each new prompt.
-preexec() { echo -ne '\e[5 q' ;}
-
-if [[ -f /usr/bin/starship ]]; then
-	# Use starship if available
-	eval "$(starship init zsh)"
-
-else
-	# Default PS1 if starship is not installed.
-	setopt PROMPT_SUBST
-	PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c%{$fg[red]%}]%{$reset_color%}$%b "
-
-	if [ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]; then
-		source $HOME/.local/bin/helpers/git-prompt.sh
-		git_prmpt=\$(__git_ps1 \"(%s) \")
-		PS1="$git_prmpt$PS1"
-	fi
-fi
-
-#
 # History
 #
 
@@ -315,6 +290,29 @@ if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc" ]; then
   # Source aliases from a different file. This can be used to have the same aliases both in bash and zsh.
   source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasrc"
 fi
+
+#
+# Cursor and PS1
+#
+
+# Use beam shape cursor on startup.
+echo -ne '\e[5 q'
+# Use beam shape cursor for each new prompt.
+preexec() { echo -ne '\e[5 q' ;}
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+else
+    setopt PROMPT_SUBST
+    PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%c%{$fg[red]%}]%{$reset_color%}$%b "
+
+    if [[ -f "$HOME/.local/bin/helpers/git-prompt.sh" ]]; then
+        source "$HOME/.local/bin/helpers/git-prompt.sh"
+        git_prmpt=\$(__git_ps1 \"(%s) \")
+        PS1="$git_prmpt$PS1"
+    fi
+fi
+
 
 # Keep this block at the end of .zshrc.
 if (( ! ${+FAST_HIGHLIGHT_STYLES} && ! ${+ZSH_HIGHLIGHT_STYLES} )); then
