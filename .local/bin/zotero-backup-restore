@@ -1,0 +1,377 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+# ==============================================================================
+# Configuration
+# ==============================================================================
+
+APP_ID="org.zotero.Zotero"
+
+# Zotero database, metadata, and internally stored attachments.
+ZOTERO_DATA_DIR="$HOME/Zotero"
+
+# Zotero profile, including preferences and installed plugins.
+ZOTERO_PROFILE_DIR="$HOME/.zotero"
+
+# External linked attachments managed by ZotMoov.
+ZOTMOOV_DIR="$HOME/Documents/zotero_lib"
+
+# Parent directory in which timestamped backups will be created.
+BACKUP_ROOT="$HOME/Downloads/non-synced backups/Zotero_backups"
+
+# ==============================================================================
+
+usage() {
+    cat <<EOF_USAGE
+Usage:
+  $(basename "$0") --backup
+  $(basename "$0") --restore [BACKUP_DIRECTORY]
+  $(basename "$0") --help
+
+Options:
+  --backup
+      Create a new timestamped backup.
+
+  --restore [BACKUP_DIRECTORY]
+      Restore from BACKUP_DIRECTORY.
+
+      If no directory is given, restore from the newest timestamped
+      backup found inside:
+
+          $BACKUP_ROOT
+
+Examples:
+  $(basename "$0") --backup
+
+  $(basename "$0") --restore
+
+  $(basename "$0") --restore \\
+      "$BACKUP_ROOT/2026-07-29_16-30-00"
+EOF_USAGE
+}
+
+die() {
+    printf 'Error: %s\n' "$*" >&2
+    exit 1
+}
+
+require_command() {
+    command -v "$1" >/dev/null 2>&1 ||
+        die "Required command not found: $1"
+}
+
+require_directory() {
+    local directory="$1"
+    local description="$2"
+
+    [[ -d "$directory" ]] ||
+        die "$description does not exist: $directory"
+}
+
+check_safe_restore_target() {
+    local directory
+    directory="$(realpath -m "$1")"
+
+    case "$directory" in
+        "/" | "$HOME")
+            die "Refusing to use unsafe restore target: $directory"
+            ;;
+    esac
+}
+
+get_zotero_pids() {
+    {
+        # Match the usual native and Flatpak process names.
+        pgrep -u "$UID" -x "zotero" 2>/dev/null || true
+        pgrep -u "$UID" -x "zotero-bin" 2>/dev/null || true
+
+        # Also detect installations where Zotero appears in the executable
+        # path or command line rather than as the process name.
+        pgrep -u "$UID" -f \
+            '(^|[[:space:]/])(zotero|zotero-bin)([[:space:]]|$)' \
+            2>/dev/null || true
+    } |
+        awk -v current_pid="$$" '$1 != current_pid' |
+        sort -un
+}
+
+ensure_zotero_closed() {
+    local answer
+    local pid_list
+    local attempt
+    local -a zotero_pids
+    local -a remaining_pids
+
+    mapfile -t zotero_pids < <(get_zotero_pids)
+
+    if (( ${#zotero_pids[@]} == 0 )); then
+        return 0
+    fi
+
+    printf '\nZotero appears to be running:\n\n'
+
+    pid_list="$(IFS=,; printf '%s' "${zotero_pids[*]}")"
+    ps -o pid=,comm=,args= -p "$pid_list" 2>/dev/null || true
+
+    cat <<'EOF_PROMPT'
+
+Zotero must be completely closed before the backup or restore can continue.
+
+  [y] Yes — terminate Zotero now
+  [N] No  — abort so I can close Zotero myself
+
+Selecting No, or pressing Enter, will cancel the current operation.
+After closing Zotero yourself, run the command again.
+EOF_PROMPT
+
+    read -r -p "Choice [N]: " answer
+
+    case "${answer,,}" in
+        y | yes)
+            printf '\nRequesting Zotero to terminate...\n'
+
+            # SIGTERM requests a graceful shutdown. The script deliberately
+            # does not escalate to SIGKILL.
+            kill -TERM "${zotero_pids[@]}" 2>/dev/null || true
+
+            # Wait for up to approximately ten seconds.
+            for ((attempt = 0; attempt < 50; attempt++)); do
+                sleep 0.2
+
+                mapfile -t remaining_pids < <(get_zotero_pids)
+
+                if (( ${#remaining_pids[@]} == 0 )); then
+                    printf 'Zotero has closed.\n'
+                    return 0
+                fi
+            done
+
+            printf '\nZotero did not terminate completely.\n' >&2
+            printf 'The following Zotero processes are still running:\n\n' >&2
+
+            pid_list="$(IFS=,; printf '%s' "${remaining_pids[*]}")"
+            ps -o pid=,comm=,args= -p "$pid_list" 2>/dev/null >&2 || true
+
+            die "Close Zotero manually and run the command again."
+            ;;
+
+        *)
+            printf '\nNo processes were terminated.\n'
+            printf 'Close Zotero completely, then run the command again.\n'
+            exit 1
+            ;;
+    esac
+}
+
+latest_backup() {
+    [[ -d "$BACKUP_ROOT" ]] || return 1
+
+    find "$BACKUP_ROOT" \
+        -mindepth 1 \
+        -maxdepth 1 \
+        -type d \
+        -name '20??-??-??_??-??-??' \
+        -printf '%T@ %p\n' |
+        sort -nr |
+        head -n 1 |
+        cut -d' ' -f2-
+}
+
+backup_directory() {
+    local source="$1"
+    local destination="$2"
+    local description="$3"
+
+    printf '\nBacking up %s:\n  %s\n' "$description" "$source"
+
+    mkdir -p "$destination"
+
+    rsync \
+        -aH \
+        --human-readable \
+        --info=progress2 \
+        "$source/" \
+        "$destination/"
+}
+
+restore_directory() {
+    local source="$1"
+    local destination="$2"
+    local description="$3"
+
+    printf '\nRestoring %s:\n' "$description"
+    printf '  From: %s\n' "$source"
+    printf '  To:   %s\n' "$destination"
+
+    mkdir -p "$destination"
+
+    # --delete removes files from the destination that are absent from the
+    # backup, making the restored directory match the snapshot exactly.
+    rsync \
+        -aH \
+        --delete \
+        --human-readable \
+        --info=progress2 \
+        "$source/" \
+        "$destination/"
+}
+
+create_backup() {
+    local timestamp
+    local backup_dir
+
+    require_directory "$ZOTERO_DATA_DIR" "Zotero data directory"
+    require_directory "$ZOTERO_PROFILE_DIR" "Zotero profile directory"
+    require_directory "$ZOTMOOV_DIR" "ZotMoov attachment directory"
+
+    ensure_zotero_closed
+
+    timestamp="$(date +'%Y-%m-%d_%H-%M-%S')"
+    backup_dir="$BACKUP_ROOT/$timestamp"
+
+    [[ ! -e "$backup_dir" ]] ||
+        die "Backup destination already exists: $backup_dir"
+
+    mkdir -p "$backup_dir"
+
+    backup_directory \
+        "$ZOTERO_DATA_DIR" \
+        "$backup_dir/zotero-data" \
+        "Zotero data"
+
+    backup_directory \
+        "$ZOTERO_PROFILE_DIR" \
+        "$backup_dir/zotero-profile" \
+        "Zotero profile"
+
+    backup_directory \
+        "$ZOTMOOV_DIR" \
+        "$backup_dir/zotmoov-files" \
+        "ZotMoov attachments"
+
+    cat >"$backup_dir/backup-info.txt" <<EOF_INFO
+Backup created: $(date --iso-8601=seconds)
+Flatpak application ID, when applicable: $APP_ID
+
+Original Zotero data directory:
+$ZOTERO_DATA_DIR
+
+Original Zotero profile directory:
+$ZOTERO_PROFILE_DIR
+
+Original ZotMoov attachment directory:
+$ZOTMOOV_DIR
+EOF_INFO
+
+    # Save diagnostic Flatpak information when available. This does not copy
+    # ~/.var/app/org.zotero.Zotero or any other Flatpak application data.
+    if command -v flatpak >/dev/null 2>&1; then
+        flatpak info "$APP_ID" \
+            >"$backup_dir/flatpak-info.txt" 2>&1 || true
+
+        flatpak override --user --show "$APP_ID" \
+            >"$backup_dir/flatpak-overrides.txt" 2>&1 || true
+    fi
+
+    printf '\nBackup completed successfully:\n%s\n' "$backup_dir"
+}
+
+restore_backup() {
+    local backup_dir="${1:-}"
+    local answer
+
+    if [[ -z "$backup_dir" ]]; then
+        backup_dir="$(latest_backup)" ||
+            die "No timestamped backups found in: $BACKUP_ROOT"
+
+        printf 'Using newest backup:\n%s\n' "$backup_dir"
+    fi
+
+    backup_dir="$(realpath -m "$backup_dir")"
+
+    require_directory "$backup_dir" "Backup directory"
+    require_directory "$backup_dir/zotero-data" "Zotero data backup"
+    require_directory "$backup_dir/zotero-profile" "Zotero profile backup"
+    require_directory "$backup_dir/zotmoov-files" "ZotMoov attachment backup"
+
+    check_safe_restore_target "$ZOTERO_DATA_DIR"
+    check_safe_restore_target "$ZOTERO_PROFILE_DIR"
+    check_safe_restore_target "$ZOTMOOV_DIR"
+
+    cat <<EOF_WARNING
+
+The following backup will be restored:
+
+  $backup_dir
+
+Destination directories:
+
+  Zotero data:    $ZOTERO_DATA_DIR
+  Zotero profile: $ZOTERO_PROFILE_DIR
+  ZotMoov files:  $ZOTMOOV_DIR
+
+Files currently in those directories but absent from the backup will be deleted.
+EOF_WARNING
+
+    read -r -p "Continue with the restore? [y/N] " answer
+
+    case "${answer,,}" in
+        y | yes)
+            ;;
+        *)
+            printf 'Restore cancelled.\n'
+            exit 0
+            ;;
+    esac
+
+    ensure_zotero_closed
+
+    restore_directory \
+        "$backup_dir/zotero-data" \
+        "$ZOTERO_DATA_DIR" \
+        "Zotero data"
+
+    restore_directory \
+        "$backup_dir/zotero-profile" \
+        "$ZOTERO_PROFILE_DIR" \
+        "Zotero profile"
+
+    restore_directory \
+        "$backup_dir/zotmoov-files" \
+        "$ZOTMOOV_DIR" \
+        "ZotMoov attachments"
+
+    printf '\nRestore completed successfully.\n'
+    printf 'You can now start Zotero.\n'
+}
+
+require_command rsync
+require_command pgrep
+require_command ps
+require_command realpath
+
+case "${1:-}" in
+    --backup)
+        [[ $# -eq 1 ]] ||
+            die "--backup does not accept additional arguments"
+
+        create_backup
+        ;;
+
+    --restore)
+        [[ $# -le 2 ]] ||
+            die "--restore accepts at most one backup directory"
+
+        restore_backup "${2:-}"
+        ;;
+
+    --help | -h)
+        usage
+        ;;
+
+    *)
+        usage
+        exit 1
+        ;;
+esac
