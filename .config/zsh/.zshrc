@@ -15,6 +15,23 @@
 
 # Many settings were copied from https://github.com/ublue-os/bluefin/
 
+# Keep colon-separated search paths idempotent when profile scripts and this
+# file both configure them. INFOPATH does not have a built-in tied Zsh array.
+typeset -gU path fpath
+typeset -gTU INFOPATH infopath
+
+# Configure Homebrew before compinit so its Zsh completions are discoverable.
+# Keep system binaries ahead of Homebrew binaries, matching upstream uBlue.
+_homebrew_prefix="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
+if [[ -x "$_homebrew_prefix/bin/brew" ]]; then
+  eval "$("$_homebrew_prefix/bin/brew" shellenv zsh | /bin/sed '\|^export PATH=|d')"
+  path=("${(@)path:#$_homebrew_prefix/bin}")
+  path=("${(@)path:#$_homebrew_prefix/sbin}")
+  path+=("$_homebrew_prefix/bin" "$_homebrew_prefix/sbin")
+  export PATH
+fi
+unset _homebrew_prefix
+
 autoload -U colors && colors
 
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
@@ -23,7 +40,7 @@ autoload -U colors && colors
 # cache time of 20 hours, so it should almost always regenerate the first time a
 # shell is opened each day.
 autoload -Uz compinit
-_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/prezto/zcompdump"
+_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/prezto/zcompdump-v2"
 # #q expands globs in conditional expressions
 if [[ $_comp_path(#qNmh-20) ]]; then
   # -C (skip function check) implies -i (skip security check).
@@ -245,10 +262,6 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' l
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
-
-if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 
 # Load zsh-autosuggestions once.
 if (( ! $+functions[_zsh_autosuggest_start] )); then
