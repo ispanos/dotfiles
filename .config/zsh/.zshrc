@@ -289,12 +289,24 @@ if (( ! $+functions[_zsh_autosuggest_start] )); then
 fi
 
 
-if [ -f $HOME/.local/anaconda3/bin/conda ]; then
-	# If Anaconda3 is installed, use a custom conda-init
-	# function instead of the official `conda init` command.
-    conda-init() {
-		PATH="$HOME/.local/anaconda3/bin/:$PATH"
-        eval "$($HOME/.local/anaconda3/bin/conda shell.$(basename $SHELL) hook)"
+if [[ -x "$HOME/.local/anaconda3/bin/conda" ]]; then
+    # Initialize Conda only when it is first used. The environment override
+    # keeps base inactive without requiring a ~/.condarc file.
+    conda() {
+        local conda_exe="$HOME/.local/anaconda3/bin/conda"
+        local conda_hook
+
+        if ! conda_hook=$(CONDA_AUTO_ACTIVATE_BASE=false \
+            "$conda_exe" shell.zsh hook); then
+            print -u2 "Unable to initialize Conda from $conda_exe"
+            return 1
+        fi
+
+        if ! eval "$conda_hook"; then
+            print -u2 "Unable to evaluate Conda's Zsh hook"
+            return 1
+        fi
+        conda "$@"
     }
 fi
 
