@@ -220,6 +220,7 @@ restore_directory() {
 create_backup() {
     local timestamp
     local backup_dir
+    local staging_dir
 
     require_directory "$ZOTERO_DATA_DIR" "Zotero data directory"
     require_directory "$ZOTERO_PROFILE_DIR" "Zotero profile directory"
@@ -229,28 +230,32 @@ create_backup() {
 
     timestamp="$(date +'%Y-%m-%d_%H-%M-%S')"
     backup_dir="$BACKUP_ROOT/$timestamp"
+    staging_dir="$BACKUP_ROOT/.${timestamp}.incomplete.$$"
 
     [[ ! -e "$backup_dir" ]] ||
         die "Backup destination already exists: $backup_dir"
+    [[ ! -e "$staging_dir" ]] ||
+        die "Backup staging directory already exists: $staging_dir"
 
-    mkdir -p "$backup_dir"
+    mkdir -p "$BACKUP_ROOT"
+    mkdir "$staging_dir"
 
     backup_directory \
         "$ZOTERO_DATA_DIR" \
-        "$backup_dir/zotero-data" \
+        "$staging_dir/zotero-data" \
         "Zotero data"
 
     backup_directory \
         "$ZOTERO_PROFILE_DIR" \
-        "$backup_dir/zotero-profile" \
+        "$staging_dir/zotero-profile" \
         "Zotero profile"
 
     backup_directory \
         "$ZOTMOOV_DIR" \
-        "$backup_dir/zotmoov-files" \
+        "$staging_dir/zotmoov-files" \
         "ZotMoov attachments"
 
-    cat >"$backup_dir/backup-info.txt" <<EOF_INFO
+    cat >"$staging_dir/backup-info.txt" <<EOF_INFO
 Backup created: $(date --iso-8601=seconds)
 Flatpak application ID, when applicable: $APP_ID
 
@@ -268,11 +273,15 @@ EOF_INFO
     # ~/.var/app/org.zotero.Zotero or any other Flatpak application data.
     if command -v flatpak >/dev/null 2>&1; then
         flatpak info "$APP_ID" \
-            >"$backup_dir/flatpak-info.txt" 2>&1 || true
+            >"$staging_dir/flatpak-info.txt" 2>&1 || true
 
         flatpak override --user --show "$APP_ID" \
-            >"$backup_dir/flatpak-overrides.txt" 2>&1 || true
+            >"$staging_dir/flatpak-overrides.txt" 2>&1 || true
     fi
+
+    # Publish the backup only after every required copy has completed. An
+    # interrupted backup remains hidden and cannot be selected by latest_backup.
+    mv -- "$staging_dir" "$backup_dir"
 
     printf '\nBackup completed successfully:\n%s\n' "$backup_dir"
 }

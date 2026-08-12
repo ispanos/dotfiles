@@ -1,5 +1,0 @@
-#!/bin/bash
-
-[ -f "/usr/bin/svn" ] ||
-{ echo error 2>&1; }&& exit
-svn --config-dir ~/.config/subversion 

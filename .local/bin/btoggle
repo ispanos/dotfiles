@@ -40,7 +40,7 @@ get_mac_address() {
 }
 
 get_device_name() {
-	bluetoothctl info $mac_address | grep "Name:" | awk -F: '{print $2}'
+	bluetoothctl info "$mac_address" | grep "Name:" | awk -F: '{print $2}'
 }
 
 get_power_status(){
@@ -50,18 +50,25 @@ get_power_status(){
 
 main() {
 
-	mac_address=$(get_mac_address "$1")
-	echo $mac_address
+	local mac_address
+	local output
+	local dev_status
+	local device
+	mac_address=$(get_mac_address "${1:-}")
+	printf '%s\n' "$mac_address"
 
-	is_mac_address "$mac_address" || echo "Given mac address: '${mac_address}' is invalid."
+	if ! is_mac_address "$mac_address"; then
+		printf "Given MAC address '%s' is invalid.\n" "$mac_address" >&2
+		return 2
+	fi
 
 	# coproc bluetoothctl
 	# echo -e 'info ${mac_address}\nexit' >&${COPROC[1]}
 	# output=$(cat <&${COPROC[0]})
 
-	output=$(bluetoothctl info $mac_address)
+	output=$(bluetoothctl info "$mac_address")
 
-	dev_status="$(grep ${mac_address} -A9 <<< $output)"
+	dev_status="$(grep -F -A9 -- "$mac_address" <<< "$output")"
 
 	device=$(get_device_name)
 
@@ -73,7 +80,7 @@ main() {
 		[[ $(bluetoothctl devices Connected | wc -l) == 1 ]] &&
 			bluetoothctl power off
 
-		bluetoothctl -- disconnect ${mac_address}
+		bluetoothctl -- disconnect "$mac_address"
 	else
 		notify "Attempting to connect device: '${device}'"
 		# _connect $mac_address
@@ -81,12 +88,12 @@ main() {
 			notify "Turning on Bluethooth adapter...."
 			rfkill unblock all || notify "'rfkill unblock all' failed."
 			bluetoothctl power on; sleep 1; }
-		bluetoothctl -- connect ${mac_address}
+		bluetoothctl -- connect "$mac_address"
 	fi
 }
 
 
-main $@
+main "$@"
 
 # The following need rework:
 

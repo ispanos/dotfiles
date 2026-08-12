@@ -25,10 +25,11 @@ temps() {
 
 
 	nvme_temps(){
-		for drive in $(/usr/bin/ls /dev/nvme[0-1]n[0-1]); do
+		for drive in /dev/nvme[0-1]n[0-1]; do
+			[ -e "$drive" ] || continue
 			printf "| "
 			printf '%s:\t\t' "$drive"
-			sudo nvme smart-log /dev/nvme0n1 | grep '^temperature' | cut -d"(" -f 1 | awk -F: '{ gsub(/ /,""); print $2}'
+			sudo nvme smart-log "$drive" | grep '^temperature' | cut -d"(" -f 1 | awk -F: '{ gsub(/ /,""); print $2}'
 		done
 	}
 	
@@ -74,7 +75,7 @@ temps() {
 	python -c 'print("-" * 30)'
 	message "| DRIVE TEMPS" --no-top
 	/usr/bin/ls /dev/sd[a-z] >/dev/null 2>&1 && hdd_temps
-	/usr/bin/ls /dev/nvme[0-1]n[0-1] >/dev/null 2>&1 && nvme_temps
+	compgen -G '/dev/nvme[0-1]n[0-1]' >/dev/null && nvme_temps
 	gpu_temps
 	printf "| "
 	python -c 'print("-" * 28)'

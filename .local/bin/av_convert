@@ -11,10 +11,13 @@ function av1_encode() {
 
     mkdir -p "$DIR_OUT"
 
-    input_file="$1"
-    output_file="${input_file%.*}-av1-51.mkv"
+    local input_file="$1"
+    local output_file
+    local output_path
+    output_file="$(basename "${input_file%.*}")-av1-51.mkv"
+    output_path="$DIR_OUT/$output_file"
 
-    [[ -f "$DIR_OUT/$output_file" ]] && echo  $output_file already exists  && return
+    [[ -f "$output_path" ]] && echo "$output_file already exists" && return
 
     ffmpeg -i "$input_file" \
              -c:v libaom-av1 \
@@ -42,13 +45,13 @@ function av1_encode() {
             -pix_fmt yuv420p \
             -speed 4 \
             -row-mt 1 \
-            -pass 2 "$DIR_OUT/$output_file"
+            -pass 2 "$output_path"
 
     if [[ $? -eq 0 ]]; then
         echo "File successfully encoded to $output_file"
     else
-        echo $output_file error!
-        rm -f "$output_file"
+        echo "$output_file error!"
+        rm -f -- "$output_path"
     fi
 
     rm -f "ffmpeg2pass-0.log"

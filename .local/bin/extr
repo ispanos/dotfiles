@@ -4,24 +4,42 @@
 # Default behavior: Extract archive into new directory
 # Behavior with `-c` option: Extract contents into current directory
 
-while getopts "hc" o; do case "${o}" in
-    c) extracthere="True" ;;
-    *) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
-esac done
+usage() {
+    printf 'Usage: %s [-c] ARCHIVE\n' "$(basename "$0")"
+    printf '  -c  Extract into the current directory.\n'
+    printf '  -h, --help  Show this help.\n'
+}
 
-if [ -z "$extracthere" ]; then
-    archive="$(readlink -f "$*")" &&
-    directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')" &&
-    mkdir -p "$directory" &&
-    cd "$directory" || exit
-else
-    archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)")"
+extract_here=false
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        -c) extract_here=true; shift ;;
+        -h | --help) usage; exit 0 ;;
+        --) shift; break ;;
+        -*) usage >&2; exit 2 ;;
+        *) break ;;
+    esac
+done
+
+if [ "$#" -ne 1 ]; then
+    usage >&2
+    exit 2
 fi
 
-[ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
+archive="$(readlink -f -- "$1")" || exit 1
 
-if [ -f "$archive" ] ; then
-    case "$archive" in
+if [ ! -f "$archive" ]; then
+    printf 'File "%s" not found.\n' "$archive" >&2
+    exit 1
+fi
+
+if ! "$extract_here"; then
+    directory="$(printf '%s\n' "$archive" | sed 's/\.[^\/.]*$//')"
+    mkdir -p -- "$directory" || exit
+    cd -- "$directory" || exit
+fi
+
+case "$archive" in
         *.tar.bz2|*.tar.xz|*.tbz2) tar xvjf "$archive" ;;
         *.tar.gz|*.tgz) tar xvzf "$archive" ;;
         *.lzma) unlzma "$archive" ;;
@@ -35,7 +53,4 @@ if [ -f "$archive" ] ; then
         *.xz) unxz "$archive" ;;
         *.exe) cabextract "$archive" ;;
         *) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
-    esac
-else
-    printf "File \"%s\" not found.\\n" "$archive"
-fi
+esac
