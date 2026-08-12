@@ -14,6 +14,7 @@ Commands:
 dconf_sync audit   # check tracked values for common personal-data leaks
 dconf_sync export  # update the allowlisted values from this device
 dconf_sync apply   # write the allowlisted values to this device
+dconf_sync test    # run the automated test suite
 ```
 
 The old `--dump`/`-d` and `--load`/`-l` flags remain as aliases.
@@ -79,8 +80,8 @@ background export could leave device-specific working-tree changes that
 conflict with a later pull. Manual export keeps `git diff` as the review and
 approval boundary.
 
-Run the automated tests from the dotfiles repository with:
+Run the automated tests from any directory with:
 
 ```sh
-python3 -m unittest discover -s .local/bin/tests -v
+dconf_sync test
 ```

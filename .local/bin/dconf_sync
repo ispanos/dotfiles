@@ -22,6 +22,7 @@ Commands:
   export, --dump, -d  Update only keys already present in the tracked files
   apply,  --load, -l  Apply only keys present in the tracked files
   audit               Check tracked values for common personal-data leaks
+  test                Run the automated test suite
   help, --help, -h    Show this help
 
 The tracked keyfiles are the allowlist. Adding a key is an explicit edit; export
@@ -284,6 +285,27 @@ def audit_all(config: Config) -> None:
     print(f"dconf_sync: audit passed ({len(originals)} files)")
 
 
+def run_tests() -> None:
+    tests_dir = Path(__file__).resolve().parent / "tests"
+    if not tests_dir.is_dir():
+        raise SyncError(f"test directory not found: {tests_dir}")
+    try:
+        subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                str(tests_dir),
+                "-v",
+            ],
+            check=True,
+        )
+    except subprocess.CalledProcessError as error:
+        raise SyncError("test suite failed") from error
+
+
 def open_lock() -> int:
     filename = f"dconf-sync-{os.getuid()}.lock"
     candidates: list[Path] = []
@@ -333,13 +355,16 @@ def main(arguments: list[str] | None = None) -> int:
     if command == "help":
         print(USAGE, end="")
         return 0
-    if command not in {"export", "apply", "audit"}:
+    if command not in {"export", "apply", "audit", "test"}:
         print(USAGE, file=sys.stderr, end="")
         print(f"dconf_sync: unknown command: {command}", file=sys.stderr)
         return 1
 
     lock_descriptor: int | None = None
     try:
+        if command == "test":
+            run_tests()
+            return 0
         lock_descriptor = open_lock()
         config = Config.from_environment()
         if command == "audit":

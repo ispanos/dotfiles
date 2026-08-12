@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import importlib.machinery
 import importlib.util
+import io
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 
@@ -43,6 +45,10 @@ class DconfSyncTests(unittest.TestCase):
         path.write_text(content, encoding="utf-8")
         return path
 
+    def run_quietly(self, function, *arguments) -> None:
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            function(*arguments)
+
     def test_base_paths(self) -> None:
         root = self.write("dconf.ini", "[org/example]\nkey=true\n")
         schema = self.write("dconf.d/org.gnome.Example", "[/]\nkey=true\n")
@@ -67,7 +73,7 @@ class DconfSyncTests(unittest.TestCase):
             }
         )
 
-        dconf_sync.export_all(self.config, backend)
+        self.run_quietly(dconf_sync.export_all, self.config, backend)
 
         self.assertEqual(
             path.read_text(encoding="utf-8"),
@@ -82,7 +88,7 @@ class DconfSyncTests(unittest.TestCase):
         )
         backend = FakeDconf()
 
-        dconf_sync.apply_all(self.config, backend)
+        self.run_quietly(dconf_sync.apply_all, self.config, backend)
 
         self.assertIn(("/desktop/example/root-key", "@as []"), backend.writes)
         self.assertIn(
@@ -100,8 +106,9 @@ class DconfSyncTests(unittest.TestCase):
             }
         )
 
-        with self.assertRaises(dconf_sync.SyncError):
-            dconf_sync.export_all(self.config, backend)
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            with self.assertRaises(dconf_sync.SyncError):
+                dconf_sync.export_all(self.config, backend)
 
         self.assertEqual(first.read_text(encoding="utf-8"), "[/]\nvalue='old'\n")
         self.assertEqual(second.read_text(encoding="utf-8"), "[/]\nvalue='old'\n")
