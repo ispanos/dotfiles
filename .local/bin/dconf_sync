@@ -1,137 +1,363 @@
-#!/bin/bash
+#!/usr/bin/env python3
+"""Synchronize an explicit allowlist of dconf keys."""
 
-set -e
+from __future__ import annotations
 
-# Check if XDG_CONFIG_HOME is set, otherwise use the default $HOME/.config
-if [ -n "$XDG_CONFIG_HOME" ]; then
-    config_dir="$XDG_CONFIG_HOME/dconf"
-else
-    config_dir="$HOME/.config/dconf"
-fi
+import fcntl
+import os
+import re
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Protocol
 
-extensions_dir="$config_dir/dconf.d/extensions"
 
-# Function to load settings
-load_settings() {
-    gsettings reset org.gnome.desktop.lockdown disable-lock-screen
-    
-    path="$config_dir/dconf.ini"
-    
-    [[ -f "$path" ]] || {
-        echo "File: '$path' does not exist"
-        exit 1
+USAGE = """Usage: dconf_sync COMMAND
+
+Commands:
+  export, --dump, -d  Update only keys already present in the tracked files
+  apply,  --load, -l  Apply only keys present in the tracked files
+  audit               Check tracked values for common personal-data leaks
+  help, --help, -h    Show this help
+
+The tracked keyfiles are the allowlist. Adding a key is an explicit edit; export
+will never discover and add keys from a dconf subtree.
+"""
+
+SECTION_RE = re.compile(r"^\[(.*)]$")
+PATH_RE = re.compile(r"/(?:var/)?home/|/Users/|/run/media/|/media/|file://", re.I)
+EMAIL_RE = re.compile(r"[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}")
+URL_CREDENTIAL_RE = re.compile(r"https?://[^/\s]+:[^/@\s]+@", re.I)
+QUERY_SECRET_RE = re.compile(
+    r"[?&](?:access_token|auth|key|password|secret|token)=", re.I
+)
+
+
+class SyncError(Exception):
+    """An expected error that should be shown without a traceback."""
+
+
+@dataclass(frozen=True)
+class Config:
+    config_home: Path
+
+    @classmethod
+    def from_environment(cls) -> Config:
+        home = Path(os.environ.get("HOME", str(Path.home())))
+        return cls(Path(os.environ.get("XDG_CONFIG_HOME", home / ".config")))
+
+    @property
+    def dconf_dir(self) -> Path:
+        return self.config_home / "dconf"
+
+    @property
+    def settings_dir(self) -> Path:
+        return self.dconf_dir / "dconf.d"
+
+    @property
+    def extensions_dir(self) -> Path:
+        return self.settings_dir / "extensions"
+
+    def files(self) -> list[Path]:
+        files: list[Path] = []
+        root_file = self.dconf_dir / "dconf.ini"
+        if root_file.is_file():
+            files.append(root_file)
+
+        if self.settings_dir.is_dir():
+            files.extend(
+                path
+                for path in sorted(self.settings_dir.iterdir())
+                if path.is_file()
+            )
+        if self.extensions_dir.is_dir():
+            files.extend(
+                path
+                for path in sorted(self.extensions_dir.iterdir())
+                if path.is_file()
+            )
+
+        if not files:
+            raise SyncError(f"no dconf keyfiles found in {self.dconf_dir}")
+        return files
+
+    def base_path(self, path: Path) -> str:
+        if path == self.dconf_dir / "dconf.ini":
+            return "/"
+        if path.parent == self.extensions_dir:
+            return f"/org/gnome/shell/extensions/{path.name}/"
+        return f"/{path.name.replace('.', '/')}/"
+
+
+@dataclass(frozen=True)
+class Setting:
+    line_index: int
+    key: str
+    value: str
+    full_key: str
+    newline: str
+
+
+@dataclass(frozen=True)
+class AuditIssue:
+    path: Path
+    line_number: int
+    message: str
+    line: str
+
+    def __str__(self) -> str:
+        return f"{self.path}:{self.line_number}: {self.message}: {self.line}"
+
+
+class DconfBackend(Protocol):
+    def read(self, key: str) -> str | None: ...
+
+    def write(self, key: str, value: str) -> None: ...
+
+
+class CommandDconf:
+    def __init__(self) -> None:
+        if shutil.which("dconf") is None:
+            raise SyncError("dconf is missing or not in PATH")
+
+    @staticmethod
+    def _run(arguments: list[str]) -> subprocess.CompletedProcess[str]:
+        try:
+            return subprocess.run(
+                ["dconf", *arguments],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        except subprocess.CalledProcessError as error:
+            detail = error.stderr.strip() or error.stdout.strip() or str(error)
+            raise SyncError(f"dconf {' '.join(arguments[:1])} failed: {detail}") from error
+
+    def read(self, key: str) -> str | None:
+        value = self._run(["read", key]).stdout.rstrip("\r\n")
+        return value or None
+
+    def write(self, key: str, value: str) -> None:
+        self._run(["write", key, value])
+
+
+def split_newline(line: str) -> tuple[str, str]:
+    if line.endswith("\r\n"):
+        return line[:-2], "\r\n"
+    if line.endswith("\n"):
+        return line[:-1], "\n"
+    return line, ""
+
+
+def full_key(base: str, section: str, key: str) -> str:
+    section = section.strip("/")
+    return f"{base}{section + '/' if section else ''}{key}"
+
+
+def settings_in(text: str, base: str) -> Iterable[Setting]:
+    section = ""
+    for index, line in enumerate(text.splitlines(keepends=True)):
+        content, newline = split_newline(line)
+        section_match = SECTION_RE.fullmatch(content)
+        if section_match:
+            section = section_match.group(1)
+            continue
+        if "=" not in content or content.startswith(("#", ";")):
+            continue
+        key, value = content.split("=", 1)
+        yield Setting(index, key, value, full_key(base, section, key), newline)
+
+
+def audit_text(path: Path, text: str) -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    home = os.environ.get("HOME")
+    for number, raw_line in enumerate(text.splitlines(), start=1):
+        if "=" not in raw_line:
+            continue
+        value = raw_line.split("=", 1)[1]
+        if PATH_RE.search(value) or (home and f"{home.rstrip('/')}/" in value):
+            issues.append(AuditIssue(path, number, "personal or machine-local path", raw_line))
+        if EMAIL_RE.search(value):
+            issues.append(AuditIssue(path, number, "possible email address", raw_line))
+        if URL_CREDENTIAL_RE.search(value) or QUERY_SECRET_RE.search(value):
+            issues.append(AuditIssue(path, number, "possible credential-bearing URL", raw_line))
+    return issues
+
+
+def audit_candidates(candidates: dict[Path, str], failure_message: str) -> None:
+    issues = [
+        issue
+        for path, text in candidates.items()
+        for issue in audit_text(path, text)
+    ]
+    if issues:
+        for issue in issues:
+            print(issue, file=sys.stderr)
+        raise SyncError(failure_message)
+
+
+def read_files(paths: Iterable[Path]) -> dict[Path, str]:
+    try:
+        return {path: path.read_text(encoding="utf-8") for path in paths}
+    except OSError as error:
+        raise SyncError(f"cannot read {error.filename}: {error.strerror}") from error
+
+
+def render_export(
+    path: Path, text: str, base: str, backend: DconfBackend
+) -> tuple[str, list[str]]:
+    lines = text.splitlines(keepends=True)
+    warnings: list[str] = []
+    for setting in settings_in(text, base):
+        current = backend.read(setting.full_key)
+        if current is None:
+            warnings.append(f"{setting.full_key} is unset; keeping tracked value")
+            continue
+        lines[setting.line_index] = f"{setting.key}={current}{setting.newline}"
+    return "".join(lines), warnings
+
+
+def replace_atomically(path: Path, text: str) -> None:
+    mode = stat.S_IMODE(path.stat().st_mode)
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            delete=False,
+        ) as output:
+            temporary = Path(output.name)
+            output.write(text)
+            output.flush()
+            os.fsync(output.fileno())
+        temporary.chmod(mode)
+        os.replace(temporary, path)
+    except OSError as error:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+        raise SyncError(f"cannot update {path}: {error.strerror}") from error
+
+
+def export_all(config: Config, backend: DconfBackend) -> None:
+    originals = read_files(config.files())
+    candidates: dict[Path, str] = {}
+    warnings: list[str] = []
+
+    for path, text in originals.items():
+        candidate, file_warnings = render_export(
+            path, text, config.base_path(path), backend
+        )
+        candidates[path] = candidate
+        warnings.extend(file_warnings)
+
+    audit_candidates(candidates, "audit failed; no settings were changed")
+    for warning in warnings:
+        print(f"dconf_sync: warning: {warning}", file=sys.stderr)
+
+    changed = 0
+    for path, candidate in candidates.items():
+        if candidate != originals[path]:
+            replace_atomically(path, candidate)
+            print(f"updated {path.relative_to(config.config_home)}")
+            changed += 1
+    print(f"dconf_sync: export complete ({changed} changed, {len(candidates)} checked)")
+
+
+def apply_all(config: Config, backend: DconfBackend) -> None:
+    originals = read_files(config.files())
+    audit_candidates(originals, "audit failed; no settings were applied")
+    for path, text in originals.items():
+        for setting in settings_in(text, config.base_path(path)):
+            backend.write(setting.full_key, setting.value)
+    print(f"dconf_sync: applied {len(originals)} files")
+
+
+def audit_all(config: Config) -> None:
+    originals = read_files(config.files())
+    audit_candidates(originals, "audit failed; no settings were changed")
+    print(f"dconf_sync: audit passed ({len(originals)} files)")
+
+
+def open_lock() -> int:
+    filename = f"dconf-sync-{os.getuid()}.lock"
+    candidates: list[Path] = []
+    if runtime_dir := os.environ.get("XDG_RUNTIME_DIR"):
+        candidates.append(Path(runtime_dir))
+    candidates.append(Path(os.environ.get("TMPDIR", tempfile.gettempdir())))
+    last_error: OSError | None = None
+    for directory in candidates:
+        if not str(directory):
+            continue
+        try:
+            descriptor = os.open(directory / filename, os.O_WRONLY | os.O_CREAT, 0o600)
+            try:
+                fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError as error:
+                os.close(descriptor)
+                raise SyncError("another sync is already running") from error
+            except OSError:
+                os.close(descriptor)
+                raise
+            return descriptor
+        except SyncError:
+            raise
+        except OSError as error:
+            last_error = error
+    detail = last_error.strerror if last_error else "no usable runtime directory"
+    raise SyncError(f"cannot create lock: {detail}")
+
+
+def main(arguments: list[str] | None = None) -> int:
+    arguments = sys.argv[1:] if arguments is None else arguments
+    if len(arguments) > 1:
+        print(USAGE, file=sys.stderr, end="")
+        print("dconf_sync: too many arguments", file=sys.stderr)
+        return 1
+
+    command = arguments[0] if arguments else "help"
+    aliases = {
+        "--dump": "export",
+        "-d": "export",
+        "--load": "apply",
+        "-l": "apply",
+        "--help": "help",
+        "-h": "help",
     }
-    
-    [[ $(command -v dconf) ]] || {
-        echo "dconf is missing or is not in the PATH."
-        exit 1
-    }
-    
-    dconf load / <"$path"
-    
-    d_conf_paths=()
-    for f in "$config_dir/dconf.d"/*; do
-        if [ -f "$f" ]; then
-            d_conf_paths+=("$f")
-        fi
-    done
-    
-    for d_conf_path in "${d_conf_paths[@]}"; do
-        dconf load "$(echo "/$(basename "$d_conf_path" | tr "." "/")/")" <"$d_conf_path"
-    done
-    
-    extension_conf_paths=()
-    for f in "$extensions_dir"/*; do
-        if [ -f "$f" ]; then
-            extension_conf_paths+=("$f")
-        fi
-    done
-    
-    for extension in "${extension_conf_paths[@]}"; do
-        dconf load "/org/gnome/shell/extensions/$(basename $extension)/" <"$extension"
-    done
-}
+    command = aliases.get(command, command)
+    if command == "help":
+        print(USAGE, end="")
+        return 0
+    if command not in {"export", "apply", "audit"}:
+        print(USAGE, file=sys.stderr, end="")
+        print(f"dconf_sync: unknown command: {command}", file=sys.stderr)
+        return 1
+
+    lock_descriptor: int | None = None
+    try:
+        lock_descriptor = open_lock()
+        config = Config.from_environment()
+        if command == "audit":
+            audit_all(config)
+        else:
+            backend = CommandDconf()
+            if command == "export":
+                export_all(config, backend)
+            else:
+                apply_all(config, backend)
+        return 0
+    except SyncError as error:
+        print(f"dconf_sync: {error}", file=sys.stderr)
+        return 1
+    finally:
+        if lock_descriptor is not None:
+            os.close(lock_descriptor)
 
 
-# # Function to export extension settings
-# export_extension_settings() {
-#     dconf dump "/org/gnome/shell/extensions/$1/" >"$extensions_dir/$1"
-# }
-
-dump_settings() {
-    # extensions=($(/usr/bin/ls -1 $extensions_dir))
-    # for extension in "${extensions[@]}"; do
-    # export_extension_settings "$extension"
-    # done
-    
-    d_conf_paths=()
-    for f in "$config_dir/dconf.d"/*; do
-        if [ -f "$f" ]; then
-            d_conf_paths+=("$f")
-        fi
-    done
-    
-    for d_conf_path in "${d_conf_paths[@]}"; do
-        dconf dump "$(echo "/$(basename "$d_conf_path" | tr "." "/")/")" >"$d_conf_path"
-    done
-    
-    extension_conf_paths=()
-    for f in "$extensions_dir"/*; do
-        if [ -f "$f" ]; then
-            extension_conf_paths+=("$f")
-        fi
-    done
-    
-    for extension in "${extension_conf_paths[@]}"; do
-        dconf dump "/org/gnome/shell/extensions/$(basename $extension)/" >"$extension"
-    done
-}
-
-# Check for flags
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --load | -l)
-            load_settings
-            exit 0
-        ;;
-        --dump | -d)
-            dump_settings
-            exit 0
-        ;;
-        *)
-            echo "Invalid option: $1" >&2
-            exit 1
-        ;;
-    esac
-done
-
-echo "Usage: $0 [--load/-l] [--dump/-d]"
-exit 1
-
-# NOTES: Do not enable here!
-# Only here to remove comments from the actual config file in `.config/donf`.
-
-# gsettings set org.gnome.settings-daemon.plugins.power idle-brightness 100dcod
-# gsettings set org.gnome.settings-daemon.plugins.power idle-dim 'true'
-
-# gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'extend'
-# gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode 'mirror-primary'
-
-# gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
-# gsettings set org.gnome.desktop.wm.preferences button-layout ':close'
-
-# gsettings set org.gnome.settings-daemon.plugins.power idle-brightness 100
-# gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
-
-# #[org/gnome/settings-daemon/plugins/power]
-# #idle-brightness=100
-# #idle-dim=false # This doesn't really work
-
-# gettings set org.gnome.desktop.sound allow-volume-above-100-percent false
-# gettings set org.gnome.desktop.sound allow-volume-above-100-percent true
-
-# #[org/gnome/desktop/sound]
-# #allow-volume-above-100-percent=false
-
-# Log out: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Logout "u" 0
-# Shut down: busctl --user call org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager Shutdown
+if __name__ == "__main__":
+    raise SystemExit(main())
