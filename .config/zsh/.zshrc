@@ -338,6 +338,11 @@ else
     fi
 fi
 
+# Put interactive SSH logins into a persistent tmux session.
+if [[ -n ${SSH_TTY:-} && -z ${TMUX:-} && -z ${NO_AUTO_TMUX:-} ]] \
+    && command -v tmux >/dev/null 2>&1; then
+  exec tmux new-session -A -D -s remote
+fi
 
 # Keep this block at the end of .zshrc.
 if (( ! ${+FAST_HIGHLIGHT_STYLES} && ! ${+ZSH_HIGHLIGHT_STYLES} )); then
