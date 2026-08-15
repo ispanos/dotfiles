@@ -338,10 +338,48 @@ else
     fi
 fi
 
-# Put interactive SSH logins into a persistent tmux session.
+# Prompt for a tmux session during interactive SSH logins.
 if [[ -n ${SSH_TTY:-} && -z ${TMUX:-} && -z ${NO_AUTO_TMUX:-} ]] \
     && command -v tmux >/dev/null 2>&1; then
-  exec tmux new-session -A -D -s remote
+  typeset -a tmux_sessions tmux_choices
+  tmux_sessions=(${(f)"$(tmux list-sessions -F '#S' 2>/dev/null)"})
+  tmux_choices=(
+    "${tmux_sessions[@]}"
+    "[Create new session]"
+    "[Continue without tmux]"
+  )
+
+  tmux_old_ps3=$PS3
+  PS3="Select a tmux session: "
+  select tmux_choice in "${tmux_choices[@]}"; do
+    case "$tmux_choice" in
+      "[Create new session]")
+        read "tmux_name?New session name: "
+        if [[ -z $tmux_name ]]; then
+          print "A non-empty session name is required."
+        else
+          exec tmux new-session -s "$tmux_name"
+          print "Could not create tmux session: $tmux_name"
+        fi
+        ;;
+
+      "[Continue without tmux]")
+        break
+        ;;
+
+      "")
+        print "Invalid selection."
+        ;;
+
+      *)
+        exec tmux attach-session -t "$tmux_choice"
+        print "Could not attach to tmux session: $tmux_choice"
+        ;;
+    esac
+  done
+
+  PS3=$tmux_old_ps3
+  unset tmux_sessions tmux_choices tmux_choice tmux_name tmux_old_ps3
 fi
 
 # Keep this block at the end of .zshrc.
