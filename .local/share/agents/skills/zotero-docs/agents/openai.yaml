@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zotero Docs"
+  short_description: "Search locally cloned official Zotero docs"
+  default_prompt: "Use $zotero-docs to answer this Zotero question from the official local documentation."

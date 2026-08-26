@@ -1,0 +1,4 @@
+interface:
+  display_name: "LaTeX Writing"
+  short_description: "Write maintainable LaTeX source"
+  default_prompt: "Use $latex-writing to revise this LaTeX source while preserving its meaning and rendered output."
