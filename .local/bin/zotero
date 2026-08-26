@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Let tools expecting a native zotero command launch the Flatpak installation.
+exec /usr/bin/flatpak run \
+  --branch=stable \
+  --arch=x86_64 \
+  --command=zotero \
+  org.zotero.Zotero "$@"
