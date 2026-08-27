@@ -15,7 +15,7 @@ alias \
 	jn='jupyter notebook' \
 	reset_audio='systemctl --user restart wireplumber pipewire pipewire-pulse' \
 	reboot_uefi='systemctl reboot --firmware-setup' \
-	stopsleep='systemd-inhibit --what=sleep:handle-lid-switch:handle-suspend-key:handle-power-key:idle sleep 365d'\
+	stopsleep='systemd-inhibit --what=sleep:idle:handle-lid-switch:handle-power-key:handle-suspend-key --who="$USER" --why="Keep desktop awake while locked and lid closed" --mode=block sleep infinity'\
 	check_bat='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 
 # Dotfiles managment
