@@ -1,0 +1,1 @@
+/var/home/ion/.local/bin/helpers/configure_xdg_user_dirs.sh
