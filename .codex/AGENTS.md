@@ -39,6 +39,14 @@ I do not have a great system for organizing system related notes and to-do's yet
 - A question is a request for an answer, not for changes. Questions authorize read-only inspection and diagnostics, but not edits, installations, commits, messages, or other state changes. If the message opens with "how hard would it be", "what are your thoughts", "how do we", "is it possible", "can we do x to get y", or otherwise asks rather than instructs: answer the questions, don't edit files.
 - If the answer is obvious and the change is trivial, answer and prompt me before you apply the change.
 
+## Evidence and inference
+
+- When I ask about the contents or state of a specific file, host, repository, or system, inspect that exact source before answering.
+- Never present reconstructed, remembered, likely, or inferred content as observed fact.
+- If you cannot inspect the exact source, say so before answering and label any inference or hypothesis explicitly.
+- When reporting exact configuration, identify the file or command that provided the evidence.
+- Treat questions such as "what did we add?" as retrieval requests, not requests to generate a plausible equivalent.
+
 ## Skill installation
 
 - User-installed skills live in the real `~/.agents/skills` directory.
