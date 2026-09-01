@@ -1,4 +1,0 @@
-interface:
-  display_name: "Markdown Math"
-  short_description: "Write portable math for VS Code and Obsidian"
-  default_prompt: "Use $markdown-math to write Markdown math that renders in VS Code and Obsidian."
