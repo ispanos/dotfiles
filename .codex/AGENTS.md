@@ -41,8 +41,5 @@ I do not have a great system for organizing system related notes and to-do's yet
 
 ## Skill installation
 
-- User-installed skills live in `~/.local/share/agents/skills`.
-- `~/.agents/skills` is a symlink to that directory.
-- When installing or updating a skill, install directly into `~/.local/share/agents/skills`.
-- Never replace, remove, or recreate the `~/.agents/skills` symlink.
-- Before modifying skills, verify the symlink and destination.
+- User-installed skills live in the real `~/.agents/skills` directory.
+- When installing or updating a skill, write directly to `~/.agents/skills`.
