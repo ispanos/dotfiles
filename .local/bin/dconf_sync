@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+import argparse
+import ast
+import html
 import fcntl
 import os
 import re
@@ -16,17 +19,22 @@ from pathlib import Path
 from typing import Iterable, Protocol
 
 
-USAGE = """Usage: dconf_sync COMMAND
+USAGE = """Usage: dconf_sync COMMAND [OPTIONS]
 
 Commands:
-  export, --dump, -d  Update only keys already present in the tracked files
+  export, --dump, -d  Update tracked keys and referenced custom shortcuts
   apply,  --load, -l  Apply only keys present in the tracked files
+  diff [--html] [--color auto|always|never]
+                      Compare saved and live values without syncing
+  show                Open an HTML view of all saved values
   audit               Check tracked values for common personal-data leaks
   test                Run the automated test suite
   help, --help, -h    Show this help
 
-The tracked keyfiles are the allowlist. Adding a key is an explicit edit; export
-will never discover and add keys from a dconf subtree.
+The tracked keyfiles are the allowlist, with one exception: export also captures
+name, command, and binding for shortcuts referenced by custom-keybindings.
+Settings live in $XDG_CONFIG_HOME/dconf_sync (default: ~/.config/dconf_sync).
+Diff uses color on terminals. HTML reports open with xdg-open and print their path.
 """
 
 SECTION_RE = re.compile(r"^\[(.*)]$")
@@ -53,7 +61,7 @@ class Config:
 
     @property
     def dconf_dir(self) -> Path:
-        return self.config_home / "dconf"
+        return self.config_home / "dconf_sync"
 
     @property
     def settings_dir(self) -> Path:
@@ -222,6 +230,273 @@ def render_export(
     return "".join(lines), warnings
 
 
+MEDIA_BASE = "/org/gnome/settings-daemon/plugins/media-keys/"
+SHORTCUT_LIST = MEDIA_BASE + "custom-keybindings"
+SHORTCUT_PREFIX = SHORTCUT_LIST + "/"
+
+
+def shortcut_paths(value: str) -> list[str]:
+    """Parse the string-array form emitted by dconf, without executing it."""
+    raw = value.removeprefix("@as ").strip()
+    try:
+        paths = ast.literal_eval(raw)
+    except (ValueError, SyntaxError) as error:
+        raise SyncError("invalid custom-keybindings string array") from error
+    if not isinstance(paths, list) or any(
+        not isinstance(path, str)
+        or not re.fullmatch(re.escape(SHORTCUT_PREFIX) + r"[A-Za-z0-9_-]+/", path)
+        for path in paths
+    ):
+        raise SyncError("custom-keybindings must contain paths under " + SHORTCUT_PREFIX)
+    return list(dict.fromkeys(paths))
+
+
+class Snapshot:
+    """Read each live key once and reuse it throughout the export preview."""
+
+    def __init__(self, backend: DconfBackend) -> None:
+        self.backend = backend
+        self.values: dict[str, str | None] = {}
+
+    def read(self, key: str) -> str | None:
+        if key not in self.values:
+            self.values[key] = self.backend.read(key)
+        return self.values[key]
+
+
+def add_setting(text: str, base: str, key: str, value: str) -> str:
+    section, name = key.removeprefix(base).rsplit("/", 1)
+    lines = text.splitlines(keepends=True)
+    for index, line in enumerate(lines):
+        if line.strip() == f"[{section}]":
+            if not lines[index].endswith("\n"):
+                lines[index] += "\n"
+            lines.insert(index + 1, f"{name}={value}\n")
+            return "".join(lines)
+    return text.rstrip("\n") + f"\n\n[{section}]\n{name}={value}\n"
+
+
+def export_preview(
+    config: Config, originals: dict[Path, str], backend: Snapshot
+) -> tuple[dict[Path, str], list[str]]:
+    candidates: dict[Path, str] = {}
+    warnings: list[str] = []
+    tracked = {
+        setting.full_key
+        for path, text in originals.items()
+        for setting in settings_in(text, config.base_path(path))
+    }
+    for path, text in originals.items():
+        base = config.base_path(path)
+        candidate, notices = render_export(path, text, base, backend)
+        warnings.extend(notices)
+        if any(setting.full_key == SHORTCUT_LIST for setting in settings_in(text, base)):
+            live_list = backend.read(SHORTCUT_LIST)
+            if live_list is not None:
+                for shortcut in shortcut_paths(live_list):
+                    for field in ("name", "command", "binding"):
+                        key = shortcut + field
+                        if key in tracked:
+                            continue
+                        value = backend.read(key)
+                        if value is None:
+                            warnings.append(f"{key} is unset; cannot capture this shortcut field")
+                        else:
+                            candidate = add_setting(candidate, base, key, value)
+                            tracked.add(key)
+        candidates[path] = candidate
+    return candidates, warnings
+
+
+@dataclass(frozen=True)
+class Difference:
+    path: Path
+    key: str
+    saved: str | None
+    live: str | None
+
+    @property
+    def status(self) -> str:
+        return "NEW" if self.saved is None else "UNSET" if self.live is None else "CHANGED"
+
+    @property
+    def effect(self) -> str:
+        if self.saved is None:
+            return "Export adds this key. Apply leaves it alone until it is saved."
+        if self.live is None:
+            return "Export keeps the saved value. Apply writes the saved value."
+        return "Export saves the live value. Apply restores the saved value."
+
+
+@dataclass
+class Report:
+    differences: list[Difference]
+    checked: int
+    warnings: list[str]
+
+    @property
+    def summary(self) -> str:
+        count = len(self.differences)
+        noun = "difference" if count == 1 else "differences"
+        return f"{count} {noun} · {self.checked} keys checked"
+
+
+def compare(config: Config, backend: DconfBackend) -> Report:
+    originals = read_files(config.files())
+    snapshot = Snapshot(backend)
+    candidates, warnings = export_preview(config, originals, snapshot)
+    differences: list[Difference] = []
+    checked = 0
+    for path, text in originals.items():
+        base = config.base_path(path)
+        saved = {s.full_key: s.value for s in settings_in(text, base)}
+        keys = dict.fromkeys([*saved, *(s.full_key for s in settings_in(candidates[path], base))])
+        for key in keys:
+            checked += 1
+            live = snapshot.read(key)
+            if saved.get(key) != live:
+                differences.append(Difference(path, key, saved.get(key), live))
+        for label, content in (("Apply", text), ("Export", candidates[path])):
+            warnings.extend(f"{label} blocked: {issue}" for issue in audit_text(path, content))
+    return Report(differences, checked, list(dict.fromkeys(warnings)))
+
+
+def display_value(value: str | None, missing: str) -> str:
+    # Put long arrays on separate lines so shortcut lists remain readable.
+    if value is not None and len(value) > 100:
+        try:
+            array = ast.literal_eval(value.removeprefix("@as "))
+        except (ValueError, SyntaxError):
+            array = None
+        if isinstance(array, list) and all(isinstance(entry, str) for entry in array):
+            return "[\n" + "\n".join("  " + repr(entry) + "," for entry in array) + "\n]"
+    # Escape control characters, including terminal escape sequences.
+    return missing if value is None else "".join(
+        char if char.isprintable() else repr(char)[1:-1] for char in value
+    )
+
+
+def terminal_report(report: Report, config: Config, color: bool) -> str:
+    def paint(text: str, code: str) -> str:
+        return f"\033[{code}m{text}\033[0m" if color else text
+
+    lines = [report.summary,
+             "Saved = files on disk | Live = current dconf values", ""]
+    previous: Path | None = None
+    for item in report.differences:
+        if item.path != previous:
+            lines.append(paint(str(item.path.relative_to(config.dconf_dir)), "1"))
+            previous = item.path
+        key = item.key.removeprefix(config.base_path(item.path))
+        lines.extend([
+            paint(f"  {item.status}  {key}", "1;33"),
+            paint("    Saved: " + display_value(item.saved, "[not saved]").replace("\n", "\n           "), "31"),
+            paint("    Live:  " + display_value(item.live, "[unset; no explicit value]").replace("\n", "\n           "), "32"),
+            "    " + item.effect, "",
+        ])
+    if not report.differences:
+        lines.append("No drift in the compared keys.")
+    lines.extend(paint("Warning: " + display_value(warning, ""), "33") for warning in report.warnings)
+    lines.append("Scope: tracked keys and referenced custom shortcuts. No settings changed.")
+    return "\n".join(lines)
+
+
+HTML_STYLE = """
+body{font:16px/1.5 system-ui,sans-serif;background:#f3f5f8;color:#182230;margin:0;padding:32px}
+main{max-width:1100px;margin:auto}h1{font-size:32px;margin-bottom:4px}h2{font-size:17px;overflow-wrap:anywhere}
+article{background:white;border:1px solid #d6dce5;border-radius:12px;padding:20px;margin:20px 0}
+.status{font-size:12px;font-weight:700;color:#7a4900}code,pre{font:14px/1.6 monospace;overflow-wrap:anywhere;white-space:pre-wrap}
+.values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+section{padding:14px;border-radius:8px;min-width:0}.saved{background:#fff0f0;border-left:4px solid #b42318}
+.live{background:#ecfdf3;border-left:4px solid #067647}h3{margin:0;font-size:14px}p{color:#475467}
+aside{background:#fff4ce;padding:16px;border-radius:8px}li{overflow-wrap:anywhere}
+@media(max-width:700px){body{padding:16px}.values{grid-template-columns:1fr}}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid #e4e7ec}th{width:45%;font-weight:500}td pre{margin:0}nav ul{columns:2}a{color:#175cd3}article{scroll-margin-top:16px}@media(max-width:700px){nav ul{columns:1}}
+"""
+
+
+def html_document(title: str, content: str) -> str:
+    return (
+        '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        '<title>' + html.escape(title) + '</title><style>' + HTML_STYLE
+        + '</style></head><body><main><h1>' + html.escape(title) + '</h1>'
+        + content + '</main></body></html>'
+    )
+
+
+def saved_html(config: Config) -> str:
+    originals = read_files(config.files())
+    sections: list[str] = []
+    navigation: list[str] = []
+    count = 0
+    for index, (path, text) in enumerate(originals.items()):
+        label = html.escape(str(path.relative_to(config.dconf_dir)))
+        navigation.append(f'<li><a href="#file-{index}">{label}</a></li>')
+        rows: list[str] = []
+        for setting in settings_in(text, config.base_path(path)):
+            count += 1
+            rows.append('<tr><th scope="row"><code>' + html.escape(setting.full_key)
+                        + '</code></th><td><pre>'
+                        + html.escape(display_value(setting.value, "")) + '</pre></td></tr>')
+        sections.append(f'<article id="file-{index}"><h2>{label}</h2>'
+                        '<table><thead><tr><th>Key</th><th>Saved value</th></tr></thead><tbody>'
+                        + ''.join(rows) + '</tbody></table></article>')
+    content = (f'<p>{count} saved keys across {len(originals)} files</p>'
+               '<p>Source: <code>' + html.escape(str(config.dconf_dir))
+               + '</code>. Saved values only. No live settings were read or changed.</p>'
+               '<nav aria-label="Configuration files"><h2>Files</h2><ul>'
+               + ''.join(navigation) + '</ul></nav>' + ''.join(sections))
+    return html_document("Saved dconf settings", content)
+
+
+def open_html(document: str, prefix: str) -> None:
+    with tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", prefix=prefix, suffix=".html", delete=False
+    ) as output:
+        output.write(document)
+    print(output.name, flush=True)
+    try:
+        subprocess.run(["xdg-open", output.name], check=True)
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise SyncError(f"report saved at {output.name}, but xdg-open failed: {error}") from error
+
+
+def html_report(report: Report, config: Config) -> str:
+    escape = html.escape
+    cards: list[str] = []
+    for item in report.differences:
+        cards.append(
+            '<article><div class="status">' + item.status + '</div><h2>'
+            + escape(str(item.path.relative_to(config.dconf_dir))) + '</h2><code>'
+            + escape(item.key) + '</code><div class="values"><section class="saved"><h3>Saved</h3><pre>'
+            + escape(display_value(item.saved, "[not saved]"))
+            + '</pre></section><section class="live"><h3>Live</h3><pre>'
+            + escape(display_value(item.live, "[unset; no explicit value]"))
+            + '</pre></section></div><p>' + escape(item.effect) + '</p></article>'
+        )
+    notices = ''.join('<li>' + escape(warning) + '</li>' for warning in report.warnings)
+    content = (
+        f"<p>{report.summary}</p>"
+        "<p>Apply restores saved values to this device. Export saves live values to disk.</p>"
+        "<p>Scope: tracked keys and referenced custom shortcuts. No settings changed. "
+        "Unset means no explicit dconf value, not a resolved application default.</p>"
+        + (''.join(cards) or '<article>No drift in the compared keys.</article>')
+        + ('<aside><h2>Warnings</h2><ul>' + notices + '</ul></aside>' if notices else '')
+    )
+    return html_document("Saved settings vs. live settings", content)
+
+
+def diff_all(config: Config, backend: DconfBackend, as_html: bool, color: str) -> None:
+    report = compare(config, backend)
+    if as_html:
+        open_html(html_report(report, config), "dconf-diff-")
+    else:
+        use_color = color == "always" or (color == "auto" and sys.stdout.isatty() and "NO_COLOR" not in os.environ)
+        print(terminal_report(report, config, use_color))
+
+
 def replace_atomically(path: Path, text: str) -> None:
     mode = stat.S_IMODE(path.stat().st_mode)
     temporary: Path | None = None
@@ -247,15 +522,7 @@ def replace_atomically(path: Path, text: str) -> None:
 
 def export_all(config: Config, backend: DconfBackend) -> None:
     originals = read_files(config.files())
-    candidates: dict[Path, str] = {}
-    warnings: list[str] = []
-
-    for path, text in originals.items():
-        candidate, file_warnings = render_export(
-            path, text, config.base_path(path), backend
-        )
-        candidates[path] = candidate
-        warnings.extend(file_warnings)
+    candidates, warnings = export_preview(config, originals, Snapshot(backend))
 
     audit_candidates(candidates, "audit failed; no settings were changed")
     for warning in warnings:
@@ -337,6 +604,17 @@ def open_lock() -> int:
 
 def main(arguments: list[str] | None = None) -> int:
     arguments = sys.argv[1:] if arguments is None else arguments
+    if arguments and arguments[0] == "diff":
+        parser = argparse.ArgumentParser(prog="dconf_sync diff")
+        parser.add_argument("--html", action="store_true", help="open a temporary HTML report with xdg-open")
+        parser.add_argument("--color", choices=("auto", "always", "never"), default="auto")
+        options = parser.parse_args(arguments[1:])
+        try:
+            diff_all(Config.from_environment(), CommandDconf(), options.html, options.color)
+            return 0
+        except (SyncError, OSError) as error:
+            print(f"dconf_sync: {error}", file=sys.stderr)
+            return 1
     if len(arguments) > 1:
         print(USAGE, file=sys.stderr, end="")
         print("dconf_sync: too many arguments", file=sys.stderr)
@@ -355,7 +633,7 @@ def main(arguments: list[str] | None = None) -> int:
     if command == "help":
         print(USAGE, end="")
         return 0
-    if command not in {"export", "apply", "audit", "test"}:
+    if command not in {"export", "apply", "audit", "test", "show"}:
         print(USAGE, file=sys.stderr, end="")
         print(f"dconf_sync: unknown command: {command}", file=sys.stderr)
         return 1
@@ -365,8 +643,11 @@ def main(arguments: list[str] | None = None) -> int:
         if command == "test":
             run_tests()
             return 0
-        lock_descriptor = open_lock()
         config = Config.from_environment()
+        if command == "show":
+            open_html(saved_html(config), "dconf-saved-")
+            return 0
+        lock_descriptor = open_lock()
         if command == "audit":
             audit_all(config)
         else:
@@ -376,7 +657,7 @@ def main(arguments: list[str] | None = None) -> int:
             else:
                 apply_all(config, backend)
         return 0
-    except SyncError as error:
+    except (SyncError, OSError) as error:
         print(f"dconf_sync: {error}", file=sys.stderr)
         return 1
     finally:
