@@ -62,5 +62,5 @@ name='sound-center'
 
 [custom-keybindings/custom9]
 binding='<Super>d'
-command='wofi_menu'
-name='Wofi'
+command='raffi -u native'
+name='Raffi'
