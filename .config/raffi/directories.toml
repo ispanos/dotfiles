@@ -1,0 +1,18 @@
+# Hidden directories and symlinks are always excluded.
+# A name without / matches directory names anywhere under home.
+# A path containing / is relative to home; excluded directories prune their subtree.
+# Shell-style wildcards (*, ?, [abc]) are supported. Matching is case-sensitive.
+exclude = [
+  "node_modules",
+  "__pycache__",
+  "~/Downloads/non-synced backups",
+  # "Downloads",
+  # "Projects/example/build",
+  # "Projects/*/vendor",
+]
+
+# New directories appear after this many seconds, or after:
+# ~/.local/bin/helpers/raffi-directories refresh
+# Changes to this exclusion list invalidate the cache immediately.
+cache_seconds = 300
+max_results = 100

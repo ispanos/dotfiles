@@ -1,0 +1,22 @@
+general:
+  ui_type: native
+  no_icons: true
+
+addons:
+  calculator:
+    enabled: false
+  currency:
+    enabled: false
+  file_browser:
+    enabled: false
+  script_filters:
+    - name: "Directories: Enter opens Files; Alt+Enter opens Terminal"
+      keyword: dir
+      command: "${HOME}/.local/bin/helpers/raffi-directories"
+      args: [search, "--"]
+      action: '"${HOME}/.local/bin/helpers/raffi-directories" files {value}'
+      secondary_action: '"${HOME}/.local/bin/helpers/raffi-directories" terminal {value}'
+
+directory_search:
+  binary: "true"
+  description: "Type dir followed by a directory name"

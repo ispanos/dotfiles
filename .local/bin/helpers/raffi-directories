@@ -1,0 +1,178 @@
+#!/usr/bin/python3
+"""Directory search and opening actions for Raffi script filters."""
+import argparse
+import base64
+import binascii
+import fcntl
+import fnmatch
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import time
+import tomllib
+
+
+class Directories:
+    def __init__(self, root: Path, config: Path, cache_dir: Path) -> None:
+        self.root = root.resolve()
+        self.cache_dir = cache_dir
+        settings = tomllib.loads(config.read_text())
+        self.exclusions: list[str] = settings.get('exclude', [])
+        self.cache_seconds: int = settings.get('cache_seconds', 300)
+        self.limit: int = settings.get('max_results', 100)
+        if not isinstance(self.exclusions, list) or not all(isinstance(x, str) for x in self.exclusions):
+            raise ValueError('exclude must be a list of strings')
+        if self.cache_seconds < 0 or self.limit < 1:
+            raise ValueError('cache_seconds must be nonnegative and max_results positive')
+
+    def allowed(self, path: Path) -> bool:
+        """Apply policy to every ancestor, without resolving away symlinks."""
+        try:
+            parts = path.relative_to(self.root).parts
+        except ValueError:
+            return False
+        current = self.root
+        for part in parts:
+            if part in ('.', '..') or part.startswith('.'):
+                return False
+            current /= part
+            if current.is_symlink():
+                return False
+            if self.excluded(current):
+                return False
+        return path.is_dir()
+
+    def excluded(self, path: Path) -> bool:
+        relative = path.relative_to(self.root).as_posix()
+        for pattern in self.exclusions:
+            pattern = pattern.removeprefix('~/').strip('/')
+            target = relative if '/' in pattern else path.name
+            if fnmatch.fnmatchcase(target, pattern):
+                return True
+        return False
+
+    def signature(self) -> dict:
+        return {'root': str(self.root), 'exclude': self.exclusions, 'format': 1}
+
+    def scan(self) -> list[str]:
+        paths = [str(self.root)]
+        for parent, children, _files in os.walk(self.root, followlinks=False):
+            # os.walk has already checked directory types and we pruned each ancestor.
+            children[:] = sorted(name for name in children
+                                 if not name.startswith('.')
+                                 and not (Path(parent) / name).is_symlink()
+                                 and not self.excluded(Path(parent) / name))
+            paths.extend(str(Path(parent) / name) for name in children)
+        return paths
+
+    def index(self, force: bool = False) -> list[str]:
+        self.cache_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+        cache = self.cache_dir / 'directories.json'
+        with (self.cache_dir / 'directories.lock').open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            if not force:
+                try:
+                    saved = json.loads(cache.read_text())
+                    if (saved['signature'] == self.signature()
+                            and 0 <= time.time() - saved['created'] < self.cache_seconds):
+                        return saved['paths']
+                except (OSError, ValueError, KeyError, TypeError):
+                    pass
+            paths = self.scan()
+            payload = {'signature': self.signature(), 'created': time.time(), 'paths': paths}
+            with tempfile.NamedTemporaryFile('w', dir=self.cache_dir, delete=False) as handle:
+                json.dump(payload, handle)
+                temporary = Path(handle.name)
+            temporary.replace(cache)
+            return paths
+
+    def refresh(self) -> None:
+        self.index(force=True)
+
+    def search(self, query: str) -> list[dict[str, str]]:
+        if query.startswith(('~/', '/')) or query == '~':
+            expanded = str(self.root) + query[1:] if query.startswith('~') else query
+            if query == '~' or query.endswith('/'):
+                parent, term = Path(expanded), ''
+            else:
+                parent, term = Path(expanded).parent, Path(expanded).name
+            if not self.allowed(parent):
+                return []
+            try:
+                paths = sorted(str(p) for p in parent.iterdir() if self.allowed(p))
+            except OSError:
+                return []
+        else:
+            paths, term = self.index(), query
+        # Match home-relative names rather than a shared /var/home/... prefix.
+        prefix_length = len(str(self.root)) + 1
+        labels = ['~/' + p[prefix_length:] for p in paths]
+        mapping = dict(zip(labels, paths))
+        if term:
+            env = {k: v for k, v in os.environ.items() if not k.startswith('FZF_')}
+            result = subprocess.run(
+                ['/usr/bin/fzf', '--read0', '--print0', '--scheme=path', '--filter', term],
+                input=b'\0'.join(os.fsencode(p) for p in labels), capture_output=True, env=env,
+                timeout=10, check=False,
+            )
+            if result.returncode not in (0, 1):
+                raise RuntimeError(result.stderr.decode(errors='replace'))
+            labels = [os.fsdecode(p) for p in result.stdout.split(b'\0') if p]
+        items: list[dict[str, str]] = []
+        for label in labels:
+            path = Path(mapping[label])
+            if not self.allowed(path):
+                continue
+            items.append({
+                'title': path.name if path != self.root else 'Home',
+                'subtitle': label,
+                # Raffi substitutes this into sh -c. Only a shell-safe opaque token crosses it.
+                'arg': base64.urlsafe_b64encode(os.fsencode(path)).decode('ascii'),
+            })
+            if len(items) >= self.limit:
+                break
+        return items
+
+    def open(self, mode: str, token: str) -> None:
+        try:
+            raw = base64.b64decode(token, altchars=b'-_', validate=True)
+            path = Path(os.fsdecode(raw))
+        except (ValueError, binascii.Error) as error:
+            raise ValueError('Invalid directory selection') from error
+        if not self.allowed(path):
+            raise ValueError('Directory is missing, excluded, hidden, a symlink, or outside home')
+        if mode == 'files':
+            command = ['/usr/bin/nautilus', str(path)]
+        elif mode == 'terminal':
+            command = ['/usr/bin/ptyxis', '--new-window', '--working-directory', str(path)]
+        else:
+            raise ValueError('Unknown opening action')
+        subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, start_new_session=True)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('mode', choices=['search', 'files', 'terminal', 'refresh'])
+    parser.add_argument('value', nargs='?', default='')
+    args = parser.parse_args()
+    home = Path.home()
+    browser = Directories(home, home / '.config/raffi/directories.toml',
+                          Path(os.environ.get('XDG_CACHE_HOME', str(home / '.cache'))) / 'raffi-directories')
+    if args.mode == 'search':
+        print(json.dumps({'items': browser.search(args.value)}))
+    elif args.mode == 'refresh':
+        browser.refresh()
+    else:
+        browser.open(args.mode, args.value)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as error:
+        print(f'raffi-directories: {error}', file=sys.stderr)
+        sys.exit(1)
