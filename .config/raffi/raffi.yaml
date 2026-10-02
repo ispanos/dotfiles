@@ -10,13 +10,23 @@ addons:
   file_browser:
     enabled: false
   script_filters:
-    - name: "Directories: Enter opens Files; Alt+Enter opens Terminal"
-      keyword: dir
-      command: "${HOME}/.local/bin/helpers/raffi-directories"
-      args: [search, "--"]
-      action: '"${HOME}/.local/bin/helpers/raffi-directories" files {value}'
-      secondary_action: '"${HOME}/.local/bin/helpers/raffi-directories" terminal {value}'
+  - name: "Directories: Enter opens Files; Alt+Enter opens Terminal"
+    keyword: dir
+    command: "${HOME}/.local/bin/helpers/raffi-directories"
+    args: [search, "--"]
+    action: '"${HOME}/.local/bin/helpers/raffi-directories" files {value}'
+    secondary_action: '"${HOME}/.local/bin/helpers/raffi-directories" terminal {value}'
 
+  - name: Word lookup
+    keyword: word
+    command: 
+      /var/home/ion/Projects/ublue-os/ptinopedila/files/shared/usr/libexec/ptinopedila/word-lookup
+    args:
+    - --raffi
+    - --
+    action: 
+      /var/home/ion/Projects/ublue-os/ptinopedila/files/shared/usr/libexec/ptinopedila/word-lookup
+      --encoded -- {value}
 directory_search:
   binary: "true"
   description: "Type dir followed by a directory name"
